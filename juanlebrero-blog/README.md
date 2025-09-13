@@ -37,8 +37,15 @@ juanlebrero-blog/
 
 ## 📝 Writing Posts
 
-1. Create new post in `content/en/post/`
-2. Use proper frontmatter:
+### Quick Start
+```bash
+# Create new post with folder structure
+./new-post.sh "Your Post Title"
+```
+
+### Manual Creation
+1. Create new post folder in `content/en/post/your-post-slug/`
+2. Add `index.md` with proper frontmatter:
    ```yaml
    ---
    date: 2025-01-13T16:37:45-03:00
@@ -47,6 +54,7 @@ juanlebrero-blog/
    type: post
    ---
    ```
+3. Add images in `content/en/post/your-post-slug/images/`
 
 ## 🔄 Workflow
 
