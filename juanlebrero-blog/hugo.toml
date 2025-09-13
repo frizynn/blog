@@ -1,0 +1,67 @@
+baseURL = 'https://juanlebrero.com/'
+languageCode = 'en-us'
+title = 'Juan Lebrero'
+theme = 'hugo-brewm'
+enableGitInfo = true
+canonifyURLs = true
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = true
+enableMissingTranslationPlaceholders = true
+enableRobotsTXT = true
+
+[frontmatter]
+    date = [':default']
+    expiryDate = ['expiryDate', 'unpublishdate', ':default']
+    lastmod = ['lastmod', ':default']
+
+[markup]
+    [markup.tableOfContents]
+        startLevel = 2
+        endLevel = 3
+        ordered = false
+    [markup.highlight]
+        codeFences = true
+        lineNoStart = 1
+        lineNos = false
+        lineNumbersInTable = true
+        noClasses = false
+        tabWidth = 4
+    [markup.goldmark]
+        [markup.goldmark.renderer]
+            unsafe = true
+
+[outputs]
+    home = ['html', 'rss', 'json']
+
+[taxonomies]
+    category = "categories"
+    tag = "tags"
+    series = "series"
+    stage = "stage"
+    author = "author"
+
+[params]
+    title = "Juan Lebrero"
+    description = "Personal blog of Juan Lebrero"
+    copyright = "© 2025 Juan Lebrero"
+    extMeta = true
+    coffeeStat = true
+    unifiedFooter = true
+    
+    [params.author]
+        name = 'Juan Lebrero'
+        email = 'juan@juanlebrero.com'
+    
+    [params.home]
+        disableSlide = false
+        disableListing = false
+        featuredListing = ['categories', 'series']
+    
+    [params.posts]
+        justifying = false
+        noIndent = false
+        sfdefault = false
+        colophon = true
+        disableHistory = false
+        related = true
+        share = true
