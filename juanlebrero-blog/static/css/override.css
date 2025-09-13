@@ -1,56 +1,95 @@
-/* Override hugo-brewm colors - Warm earth palette */
+/* Override hugo-brewm colors - Neutral grey palette */
 :root {
-    /* Custom warm earth palette */
-    --bg-dark: #B87C4C !important;           /* Warm Brown */
-    --fg-dark: #F7F4EA !important;           /* Cream/Off-White */
-    --bg-dark-less: #EBD9D1 !important;      /* Light Beige */
-    --fg-dark-less: #A8BBA3 !important;      /* Sage Green */
-    --bg-dark-more: #B87C4C !important;      /* Warm Brown (same as default) */
-    --fg-dark-more: #F7F4EA !important;      /* Cream/Off-White */
-    --ac-dark: #A8BBA3 !important;           /* Sage Green as accent */
-    --ac-dark-less: #A8BBA3 !important;      /* Sage Green */
-    --ac-dark-more: #A8BBA3 !important;      /* Sage Green */
+    /* Custom neutral grey palette */
+    --bg-dark: #37353E !important;           /* Dark Grey */
+    --fg-dark: #D3DAD9 !important;           /* Light Grey */
+    --bg-dark-less: #44444E !important;      /* Medium Grey */
+    --fg-dark-less: #715A5A !important;      /* Muted Brown-Grey */
+    --bg-dark-more: #37353E !important;      /* Dark Grey (same as default) */
+    --fg-dark-more: #D3DAD9 !important;      /* Light Grey */
+    --ac-dark: #715A5A !important;           /* Muted Brown-Grey as accent */
+    --ac-dark-less: #715A5A !important;      /* Muted Brown-Grey */
+    --ac-dark-more: #715A5A !important;      /* Muted Brown-Grey */
 }
 
 /* Force dark mode colors */
 @media (prefers-color-scheme: dark) {
     body {
-        --bg: #B87C4C !important;            /* Warm Brown */
-        --fg: #F7F4EA !important;            /* Cream/Off-White */
-        --ac: #A8BBA3 !important;            /* Sage Green */
-        --mid: #EBD9D1 !important;           /* Light Beige */
+        --bg: #37353E !important;            /* Dark Grey */
+        --fg: #D3DAD9 !important;            /* Light Grey */
+        --ac: #715A5A !important;            /* Muted Brown-Grey */
+        --mid: #44444E !important;           /* Medium Grey */
     }
 }
 
 /* Less contrast dark mode */
 @media (prefers-color-scheme: dark) and (prefers-contrast: less) {
     body {
-        --bg: #EBD9D1 !important;            /* Light Beige */
-        --fg: #A8BBA3 !important;            /* Sage Green */
-        --ac: #A8BBA3 !important;            /* Sage Green */
-        --mid: #A8BBA3 !important;           /* Sage Green */
+        --bg: #44444E !important;            /* Medium Grey */
+        --fg: #715A5A !important;            /* Muted Brown-Grey */
+        --ac: #715A5A !important;            /* Muted Brown-Grey */
+        --mid: #715A5A !important;           /* Muted Brown-Grey */
     }
 }
 
 /* More contrast dark mode */
 @media (prefers-color-scheme: dark) and (prefers-contrast: more) {
     body {
-        --bg: #B87C4C !important;            /* Warm Brown */
-        --fg: #F7F4EA !important;            /* Cream/Off-White */
-        --ac: #A8BBA3 !important;            /* Sage Green */
-        --mid: #EBD9D1 !important;           /* Light Beige */
+        --bg: #37353E !important;            /* Dark Grey */
+        --fg: #D3DAD9 !important;            /* Light Grey */
+        --ac: #715A5A !important;            /* Muted Brown-Grey */
+        --mid: #44444E !important;           /* Medium Grey */
     }
 }
 
 /* Additional overrides for specific elements */
 body {
-    background-color: var(--bg) !important;
-    color: var(--fg) !important;
+    background-color: #37353E !important;
+    color: #D3DAD9 !important;
 }
 
 #background-body,
 .background {
-    background-color: var(--bg) !important;
+    background-color: #37353E !important;
+}
+
+/* Force specific elements */
+html {
+    background-color: #37353E !important;
+}
+
+body > main,
+body > header,
+body > footer {
+    background-color: #37353E !important;
+    color: #D3DAD9 !important;
+}
+
+/* Force all text elements */
+h1, h2, h3, h4, h5, h6, p, span, div, a, li, td, th {
+    color: #D3DAD9 !important;
+}
+
+/* Force links */
+a {
+    color: #715A5A !important;
+}
+
+a:hover {
+    color: #D3DAD9 !important;
+}
+
+/* Force cards and containers */
+.card, .post, .entry, article {
+    background-color: #44444E !important;
+    color: #D3DAD9 !important;
+}
+
+/* Force tags and buttons */
+.tag, .btn, button {
+    background-color: #715A5A !important;
+    color: #D3DAD9 !important;
+    border-color: #715A5A !important;
 }
 
 /* Smooth transitions */
