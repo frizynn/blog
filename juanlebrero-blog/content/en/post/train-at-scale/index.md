@@ -2,6 +2,7 @@
 title: "Entrenamiento a Gran Escala: FSDP, QLoRA, y más."
 date: 2025-01-27T00:00:00Z
 draft: false
+type: post
 author: "Juan Francisco Lebrero"
 description: ""
 tags: ["LoRA", "QLoRA", "LLMs", "finetuning", "cuantización", "4-bit", "deepspeed", "fsdp", "zero", "precisión", "JAX", "bfloat16", "fp16"]
