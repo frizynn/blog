@@ -1,44 +1,44 @@
-/* Override hugo-brewm colors - Custom palette */
+/* Override hugo-brewm colors - Warm earth palette */
 :root {
-    /* Custom dark palette */
-    --bg-dark: #19183B !important;           /* Dark Blue/Navy */
-    --fg-dark: #E7F2EF !important;           /* Very Light Blue-Grey/Off-White */
-    --bg-dark-less: #708993 !important;      /* Muted Blue-Grey */
-    --fg-dark-less: #A1C2BD !important;      /* Light Blue-Green/Mint */
-    --bg-dark-more: #19183B !important;      /* Dark Blue/Navy (same as default) */
-    --fg-dark-more: #E7F2EF !important;      /* Very Light Blue-Grey/Off-White */
-    --ac-dark: #A1C2BD !important;           /* Light Blue-Green/Mint as accent */
-    --ac-dark-less: #A1C2BD !important;      /* Light Blue-Green/Mint */
-    --ac-dark-more: #A1C2BD !important;      /* Light Blue-Green/Mint */
+    /* Custom warm earth palette */
+    --bg-dark: #B87C4C !important;           /* Warm Brown */
+    --fg-dark: #F7F4EA !important;           /* Cream/Off-White */
+    --bg-dark-less: #EBD9D1 !important;      /* Light Beige */
+    --fg-dark-less: #A8BBA3 !important;      /* Sage Green */
+    --bg-dark-more: #B87C4C !important;      /* Warm Brown (same as default) */
+    --fg-dark-more: #F7F4EA !important;      /* Cream/Off-White */
+    --ac-dark: #A8BBA3 !important;           /* Sage Green as accent */
+    --ac-dark-less: #A8BBA3 !important;      /* Sage Green */
+    --ac-dark-more: #A8BBA3 !important;      /* Sage Green */
 }
 
 /* Force dark mode colors */
 @media (prefers-color-scheme: dark) {
     body {
-        --bg: #19183B !important;            /* Dark Blue/Navy */
-        --fg: #E7F2EF !important;            /* Very Light Blue-Grey/Off-White */
-        --ac: #A1C2BD !important;            /* Light Blue-Green/Mint */
-        --mid: #708993 !important;           /* Muted Blue-Grey */
+        --bg: #B87C4C !important;            /* Warm Brown */
+        --fg: #F7F4EA !important;            /* Cream/Off-White */
+        --ac: #A8BBA3 !important;            /* Sage Green */
+        --mid: #EBD9D1 !important;           /* Light Beige */
     }
 }
 
 /* Less contrast dark mode */
 @media (prefers-color-scheme: dark) and (prefers-contrast: less) {
     body {
-        --bg: #708993 !important;            /* Muted Blue-Grey */
-        --fg: #A1C2BD !important;            /* Light Blue-Green/Mint */
-        --ac: #A1C2BD !important;            /* Light Blue-Green/Mint */
-        --mid: #A1C2BD !important;           /* Light Blue-Green/Mint */
+        --bg: #EBD9D1 !important;            /* Light Beige */
+        --fg: #A8BBA3 !important;            /* Sage Green */
+        --ac: #A8BBA3 !important;            /* Sage Green */
+        --mid: #A8BBA3 !important;           /* Sage Green */
     }
 }
 
 /* More contrast dark mode */
 @media (prefers-color-scheme: dark) and (prefers-contrast: more) {
     body {
-        --bg: #19183B !important;            /* Dark Blue/Navy */
-        --fg: #E7F2EF !important;            /* Very Light Blue-Grey/Off-White */
-        --ac: #A1C2BD !important;            /* Light Blue-Green/Mint */
-        --mid: #708993 !important;           /* Muted Blue-Grey */
+        --bg: #B87C4C !important;            /* Warm Brown */
+        --fg: #F7F4EA !important;            /* Cream/Off-White */
+        --ac: #A8BBA3 !important;            /* Sage Green */
+        --mid: #EBD9D1 !important;           /* Light Beige */
     }
 }
 
