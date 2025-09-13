@@ -1,0 +1,6 @@
+/* Social icons in header (right-aligned, minimal) */
+#menu .social-inline { margin-left: auto; display: inline-flex; align-items: center; }
+#menu .social-inline .social-icons { display: inline-flex; align-items: center; gap: 2px; }
+#menu .social-inline .social-icons a { padding: 6px; opacity: .85; }
+#menu .social-inline .social-icons a:hover { opacity: 1; }
+#menu .social-inline .social-icons a svg { width: 20px; height: 20px; }

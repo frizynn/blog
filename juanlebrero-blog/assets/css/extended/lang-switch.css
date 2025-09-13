@@ -1,0 +1,27 @@
+/* PaperMod: nicer language switcher */
+.logo-switches { display: inline-flex; align-items: center; gap: 6px; }
+.lang-switch { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; padding: 0; }
+.lang-switch .sep { opacity: 0.45; color: var(--tertiary); list-style: none; margin: 0 4px; }
+.lang-switch li { list-style: none; margin: 0; padding: 0; }
+.lang-switch a {
+  display: inline-block;
+  padding: 6px 10px;
+  line-height: 1;
+  border-radius: 999px;
+  background-color: var(--entry);
+  color: var(--primary);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.lang-switch a:hover {
+  background-color: var(--secondary);
+  color: var(--theme);
+  border-color: var(--secondary);
+}
+.lang-switch a:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+

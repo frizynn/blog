@@ -1,22 +1,23 @@
 ---
-title: "Entrenamiento a Gran Escala: FSDP, QLoRA, y más."
+title: "Large-Scale Training: FSDP, QLoRA, and More"
 date: 2025-01-27T00:00:00Z
 draft: false
 type: post
+language: "en"
 author: "Juan Francisco Lebrero"
 description: ""
-tags: ["LoRA", "QLoRA", "LLMs", "finetuning", "cuantización", "4-bit", "deepspeed", "fsdp", "zero", "precisión", "JAX", "bfloat16", "fp16"]
-categories: ["IA", "LLMs"]
+tags: ["LoRA", "QLoRA", "LLMs", "finetuning", "quantization", "4-bit", "deepspeed", "fsdp", "zero", "precision", "JAX", "bfloat16", "fp16"]
+categories: ["AI", "LLMs"]
 ---
 
 
-Para poder entrenar modelos a gran escala, necesitamos entender diversos conceptos que nos van a ayudar a optimizar el rendimiento y la estabilidad del entrenamiento. Por eso, en esta guía, vamos a ver conceptos como precisión numérica, paralelización de datos, cuantización, LoRA, y más.
+To train models at large scale, we need to understand various concepts that will help us optimize performance and training stability. That's why in this guide, we'll look at concepts like numerical precision, data parallelism, quantization, LoRA, and more.
 
 
-## Precisión numérica
+## Numerical Precision
 
 
-La elección del formato numérico (FP32, FP16, BF16, FP8, INT8, etc.) constituye uno de los factores más determinantes para el rendimiento, el uso de memoria y la estabilidad del entrenamiento de modelos de gran escala. Por eso, es importante entender como funciona la precisión numérica y como afecta al rendimiento de los modelos, lo que se explicará en esta sección.
+The choice of numerical format (FP32, FP16, BF16, FP8, INT8, etc.) constitutes one of the most determining factors for performance, memory usage, and stability of large-scale model training. That's why it's important to understand how numerical precision works and how it affects model performance, which will be explained in this section.
 
 
 

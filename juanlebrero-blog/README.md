@@ -31,7 +31,7 @@ juanlebrero-blog/
 ## 🛠️ Technology Stack
 
 - **Static Site Generator**: Hugo
-- **Theme**: hugo-brewm
+- Previous theme (removed): hugo-brewm
 - **Hosting**: GitHub Pages
 - **Domain**: juanlebrero.com
 

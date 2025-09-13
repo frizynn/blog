@@ -1,0 +1,191 @@
+/* PaperMod Custom CSS - Dark Theme Override */
+:root {
+    /* PaperMod Dark Theme Variables */
+    --theme: "dark";
+    --primary: #37353E;
+    --primary-hover: #44444E;
+    --primary-rgb: 55, 53, 62;
+    --primary-contrast: #D3DAD9;
+    --primary-contrast-hover: #ffffff;
+    --primary-contrast-rgb: 211, 218, 217;
+    --primary-shade: #2a2830;
+    --primary-tint: #4b4952;
+    
+    /* Background and foreground */
+    --bg: #37353E;
+    --bg-secondary: #44444E;
+    --bg-tertiary: #2a2830;
+    --bg-card: #44444E;
+    --bg-code: #2a2830;
+    --fg: #D3DAD9;
+    --fg-secondary: #715A5A;
+    --fg-tertiary: #9ca3af;
+    
+    /* Accent colors */
+    --accent: #715A5A;
+    --accent-hover: #8a6b6b;
+    --accent-rgb: 113, 90, 90;
+    --accent-contrast: #D3DAD9;
+    --accent-contrast-hover: #ffffff;
+    --accent-contrast-rgb: 211, 218, 217;
+    
+    /* Border and shadow */
+    --border: #44444E;
+    --border-hover: #715A5A;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.4);
+    
+    /* Link colors */
+    --link: #715A5A;
+    --link-hover: #D3DAD9;
+    --link-visited: #8a6b6b;
+    
+    /* Code colors */
+    --code-bg: #2a2830;
+    --code-fg: #D3DAD9;
+    --code-border: #44444E;
+    
+    /* Selection colors */
+    --selection: #715A5A;
+    --selection-bg: rgba(113, 90, 90, 0.2);
+}
+
+/* Force dark theme */
+[data-theme="dark"] {
+    --theme: "dark";
+    --bg: #37353E;
+    --bg-secondary: #44444E;
+    --bg-tertiary: #2a2830;
+    --bg-card: #44444E;
+    --bg-code: #2a2830;
+    --fg: #D3DAD9;
+    --fg-secondary: #715A5A;
+    --fg-tertiary: #9ca3af;
+    --accent: #715A5A;
+    --accent-hover: #8a6b6b;
+    --border: #44444E;
+    --border-hover: #715A5A;
+    --link: #715A5A;
+    --link-hover: #D3DAD9;
+    --link-visited: #8a6b6b;
+    --code-bg: #2a2830;
+    --code-fg: #D3DAD9;
+    --code-border: #44444E;
+    --selection: #715A5A;
+    --selection-bg: rgba(113, 90, 90, 0.2);
+}
+
+/* Override PaperMod default styles */
+body {
+    background-color: var(--bg) !important;
+    color: var(--fg) !important;
+}
+
+/* Header styling */
+.header {
+    background-color: var(--bg) !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+
+/* Navigation */
+.nav {
+    background-color: var(--bg) !important;
+}
+
+.nav a {
+    color: var(--fg) !important;
+}
+
+.nav a:hover {
+    color: var(--accent) !important;
+}
+
+/* Main content */
+.main {
+    background-color: var(--bg) !important;
+}
+
+/* Cards and posts */
+.post {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--fg) !important;
+}
+
+.post-title a {
+    color: var(--fg) !important;
+}
+
+.post-title a:hover {
+    color: var(--accent) !important;
+}
+
+/* Links */
+a {
+    color: var(--link) !important;
+}
+
+a:hover {
+    color: var(--link-hover) !important;
+}
+
+a:visited {
+    color: var(--link-visited) !important;
+}
+
+/* Code blocks */
+pre, code {
+    background-color: var(--code-bg) !important;
+    color: var(--code-fg) !important;
+    border: 1px solid var(--code-border) !important;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--bg) !important;
+    border-top: 1px solid var(--border) !important;
+    color: var(--fg) !important;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--fg) !important;
+}
+
+.theme-toggle:hover {
+    background-color: var(--accent) !important;
+    color: var(--accent-contrast) !important;
+}
+
+/* Search */
+.search {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--fg) !important;
+}
+
+/* Tags and categories */
+.tag, .category {
+    background-color: var(--accent) !important;
+    color: var(--accent-contrast) !important;
+    border: 1px solid var(--accent) !important;
+}
+
+.tag:hover, .category:hover {
+    background-color: var(--accent-hover) !important;
+    color: var(--accent-contrast-hover) !important;
+}
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .header, .main, .footer {
+        background-color: var(--bg) !important;
+    }
+}

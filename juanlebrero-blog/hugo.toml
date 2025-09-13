@@ -1,68 +1,78 @@
 baseURL = 'https://juanlebrero.com/'
 languageCode = 'en-us'
 title = 'Juan Lebrero'
-theme = 'hugo-brewm'
-enableGitInfo = true
-canonifyURLs = true
-defaultContentLanguage = 'en'
-defaultContentLanguageInSubdir = true
-enableMissingTranslationPlaceholders = true
-enableRobotsTXT = true
+theme = 'hugo-PaperMod'
 
-[frontmatter]
-    date = [':default']
-    expiryDate = ['expiryDate', 'unpublishdate', ':default']
-    lastmod = ['lastmod', ':default']
+# Multilingual configuration
+[languages]
+[languages.en]
+languageName = "English"
+weight = 1
+contentDir = "content/en"
 
-[markup]
-    [markup.tableOfContents]
-        startLevel = 2
-        endLevel = 3
-        ordered = false
-    [markup.highlight]
-        codeFences = true
-        lineNoStart = 1
-        lineNos = false
-        lineNumbersInTable = true
-        noClasses = false
-        tabWidth = 4
-    [markup.goldmark]
-        [markup.goldmark.renderer]
-            unsafe = true
+[languages.es]
+languageName = "Español"
+weight = 2
+contentDir = "content/es"
 
-[outputs]
-    home = ['html', 'rss', 'json']
-
-[taxonomies]
-    category = "categories"
-    tag = "tags"
-    series = "series"
-    stage = "stage"
-    author = "author"
-
+# Default language parameters
 [params]
-    title = "Juan Lebrero"
-    description = "Personal blog of Juan Lebrero"
-    copyright = "© 2025 Juan Lebrero"
-    extMeta = true
-    coffeeStat = true
-    unifiedFooter = true
-    favicon = { ico = "/favicon.ico", png = "/favicon.png" }
-    
-    [params.author]
-        name = 'Juan Lebrero'
-        email = 'juan@juanlebrero.com'
-    
-    [params.home]
-        disableSlide = false
-        disableListing = false
-        featuredListing = ['categories', 'series']
-    
-    [params.posts]
-        justifying = false
-        noIndent = false
-        sfdefault = false
-        colophon = true
-        disableHistory = false
-        related = true
-        share = true
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+mainSections = ["post", "posts"]
+
+# Social icons
+[[params.socialIcons]]
+name = "twitter"
+url = "https://x.com/lebrious"
+
+[[params.socialIcons]]
+name = "linkedin"
+url = "https://www.linkedin.com/in/lebrero-juan-francisco/"
+
+# Menu configuration
+[menu]
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "Posts"
+url = "/posts/"
+weight = 2
+
+# English menu
+[languages.en.menu]
+[[languages.en.menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[languages.en.menu.main]]
+name = "Posts"
+url = "/posts/"
+weight = 2
+
+# Spanish menu
+[languages.es.menu]
+[[languages.es.menu.main]]
+name = "Inicio"
+url = "/es/"
+weight = 1
+
+[[languages.es.menu.main]]
+name = "Posts"
+url = "/es/posts/"
+weight = 2
+
+# Home hero content (per language)
+[languages.en.params]
+[languages.en.params.homeInfoParams]
+Title = "Juan Lebrero"
+Content = "AI/ML engineer. I write about LLMs, large‑scale training, and practical ML."
+
+[languages.es.params]
+[languages.es.params.homeInfoParams]
+Title = "Juan Lebrero"
+Content = "Ingeniero de IA/ML. Escribo sobre LLMs, entrenamiento a escala y ML práctico."

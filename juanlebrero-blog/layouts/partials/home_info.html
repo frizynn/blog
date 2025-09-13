@@ -1,0 +1,16 @@
+{{- /* Custom home info with CTA and scroll anchor */}}
+{{- $p := or .Language.Params.homeInfoParams site.Params.homeInfoParams -}}
+{{- with $p }}
+<article class="first-entry home-info hero minimal">
+  <header class="entry-header">
+    <h1>{{ .Title | markdownify }}</h1>
+  </header>
+  <div class="entry-content">
+    {{ .Content | markdownify }}
+  </div>
+  <div class="hero-actions">
+    <a class="link-cta" href="{{ "posts/" | relLangURL }}">{{ cond (eq $.Lang "es") "Ver posts →" "Read posts →" }}</a>
+  </div>
+</article>
+<div id="posts" aria-hidden="true"></div>
+{{- end -}}
