@@ -1,61 +1,77 @@
 /* Custom color scheme - PaperMod inspired */
 :root {
     /* Default contrast - softer colors */
-    --ac-light: #2563eb;
-    --fg-light: #1f2937;
-    --bg-light: #f8fafc;
-    --midtone: #64748b;
-    --fg-dark: #f1f5f9;
-    --bg-dark: #0f172a;
-    --ac-dark: #f59e0b;
+    --ac-light: #2563eb !important;
+    --fg-light: #1f2937 !important;
+    --bg-light: #f8fafc !important;
+    --midtone: #64748b !important;
+    --fg-dark: #e2e8f0 !important;
+    --bg-dark: #1e293b !important;
+    --ac-dark: #f59e0b !important;
 
     /* Less contrast - even softer */
-    --ac-light-less: #3b82f6;
-    --fg-light-less: #374151;
-    --bg-light-less: #f1f5f9;
-    --midtone-less: #6b7280;
-    --fg-dark-less: #e2e8f0;
-    --bg-dark-less: #1e293b;
-    --ac-dark-less: #fbbf24;
+    --ac-light-less: #3b82f6 !important;
+    --fg-light-less: #374151 !important;
+    --bg-light-less: #f1f5f9 !important;
+    --midtone-less: #6b7280 !important;
+    --fg-dark-less: #cbd5e1 !important;
+    --bg-dark-less: #334155 !important;
+    --ac-dark-less: #fbbf24 !important;
 
     /* More contrast - still readable but not harsh */
-    --ac-light-more: #1d4ed8;
-    --fg-light-more: #111827;
-    --bg-light-more: #ffffff;
-    --midtone-more: #4b5563;
-    --fg-dark-more: #f9fafb;
-    --bg-dark-more: #000000;
-    --ac-dark-more: #f59e0b;
+    --ac-light-more: #1d4ed8 !important;
+    --fg-light-more: #111827 !important;
+    --bg-light-more: #ffffff !important;
+    --midtone-more: #4b5563 !important;
+    --fg-dark-more: #f1f5f9 !important;
+    --bg-dark-more: #0f172a !important;
+    --ac-dark-more: #f59e0b !important;
 
     /* Highlight colors */
-    --hl: #fef3c7;
-    
-    /* Additional PaperMod-inspired colors */
-    --theme: #f8fafc;
-    --entry: #ffffff;
-    --primary: #1f2937;
-    --secondary: #6b7280;
-    --tertiary: #d1d5db;
-    --content: #374151;
-    --hljs-bg: #f1f5f9;
-    --code-bg: #f8fafc;
-    --border: #e5e7eb;
+    --hl: #fef3c7 !important;
 }
 
-/* Dark mode adjustments */
-[data-theme="dark"] {
-    --theme: #0f172a;
-    --entry: #1e293b;
-    --primary: #f1f5f9;
-    --secondary: #94a3b8;
-    --tertiary: #475569;
-    --content: #cbd5e1;
-    --hljs-bg: #1e293b;
-    --code-bg: #0f172a;
-    --border: #334155;
+/* Light mode - PaperMod inspired */
+@media (prefers-color-scheme: light) {
+    body {
+        --bg: var(--bg-light) !important;
+        --fg: var(--fg-light) !important;
+        --ac: var(--ac-light) !important;
+        --mid: var(--midtone) !important;
+    }
+}
+
+/* Dark mode - softer colors */
+@media (prefers-color-scheme: dark) {
+    body {
+        --bg: var(--bg-dark) !important;
+        --fg: var(--fg-dark) !important;
+        --ac: var(--ac-dark) !important;
+        --mid: var(--midtone) !important;
+    }
+}
+
+/* Less contrast mode */
+@media (prefers-contrast: less) {
+    body {
+        --bg: var(--bg-dark-less) !important;
+        --fg: var(--fg-dark-less) !important;
+        --ac: var(--ac-dark-less) !important;
+        --mid: var(--midtone-less) !important;
+    }
+}
+
+/* More contrast mode */
+@media (prefers-contrast: more) {
+    body {
+        --bg: var(--bg-dark-more) !important;
+        --fg: var(--fg-dark-more) !important;
+        --ac: var(--ac-dark-more) !important;
+        --mid: var(--midtone-more) !important;
+    }
 }
 
 /* Smooth transitions */
 * {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
 }
