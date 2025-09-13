@@ -1,0 +1,59 @@
+/* Override hugo-brewm colors - PaperMod inspired */
+:root {
+    /* Override the default dark colors with softer ones */
+    --bg-dark: #1e293b !important;
+    --fg-dark: #e2e8f0 !important;
+    --bg-dark-less: #334155 !important;
+    --fg-dark-less: #cbd5e1 !important;
+    --bg-dark-more: #0f172a !important;
+    --fg-dark-more: #f1f5f9 !important;
+    --ac-dark: #f59e0b !important;
+    --ac-dark-less: #fbbf24 !important;
+    --ac-dark-more: #f59e0b !important;
+}
+
+/* Force dark mode colors */
+@media (prefers-color-scheme: dark) {
+    body {
+        --bg: #1e293b !important;
+        --fg: #e2e8f0 !important;
+        --ac: #f59e0b !important;
+        --mid: #64748b !important;
+    }
+}
+
+/* Less contrast dark mode */
+@media (prefers-color-scheme: dark) and (prefers-contrast: less) {
+    body {
+        --bg: #334155 !important;
+        --fg: #cbd5e1 !important;
+        --ac: #fbbf24 !important;
+        --mid: #6b7280 !important;
+    }
+}
+
+/* More contrast dark mode */
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+    body {
+        --bg: #0f172a !important;
+        --fg: #f1f5f9 !important;
+        --ac: #f59e0b !important;
+        --mid: #4b5563 !important;
+    }
+}
+
+/* Additional overrides for specific elements */
+body {
+    background-color: var(--bg) !important;
+    color: var(--fg) !important;
+}
+
+#background-body,
+.background {
+    background-color: var(--bg) !important;
+}
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
