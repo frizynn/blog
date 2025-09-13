@@ -1,0 +1,61 @@
+/* Custom color scheme - PaperMod inspired */
+:root {
+    /* Default contrast - softer colors */
+    --ac-light: #2563eb;
+    --fg-light: #1f2937;
+    --bg-light: #f8fafc;
+    --midtone: #64748b;
+    --fg-dark: #f1f5f9;
+    --bg-dark: #0f172a;
+    --ac-dark: #f59e0b;
+
+    /* Less contrast - even softer */
+    --ac-light-less: #3b82f6;
+    --fg-light-less: #374151;
+    --bg-light-less: #f1f5f9;
+    --midtone-less: #6b7280;
+    --fg-dark-less: #e2e8f0;
+    --bg-dark-less: #1e293b;
+    --ac-dark-less: #fbbf24;
+
+    /* More contrast - still readable but not harsh */
+    --ac-light-more: #1d4ed8;
+    --fg-light-more: #111827;
+    --bg-light-more: #ffffff;
+    --midtone-more: #4b5563;
+    --fg-dark-more: #f9fafb;
+    --bg-dark-more: #000000;
+    --ac-dark-more: #f59e0b;
+
+    /* Highlight colors */
+    --hl: #fef3c7;
+    
+    /* Additional PaperMod-inspired colors */
+    --theme: #f8fafc;
+    --entry: #ffffff;
+    --primary: #1f2937;
+    --secondary: #6b7280;
+    --tertiary: #d1d5db;
+    --content: #374151;
+    --hljs-bg: #f1f5f9;
+    --code-bg: #f8fafc;
+    --border: #e5e7eb;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] {
+    --theme: #0f172a;
+    --entry: #1e293b;
+    --primary: #f1f5f9;
+    --secondary: #94a3b8;
+    --tertiary: #475569;
+    --content: #cbd5e1;
+    --hljs-bg: #1e293b;
+    --code-bg: #0f172a;
+    --border: #334155;
+}
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
