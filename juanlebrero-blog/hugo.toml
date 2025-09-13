@@ -47,7 +47,7 @@ enableRobotsTXT = true
     extMeta = true
     coffeeStat = true
     unifiedFooter = true
-    favicon = "/favicon.ico"
+    images = ["/favicon.ico"]
     
     [params.author]
         name = 'Juan Lebrero'
