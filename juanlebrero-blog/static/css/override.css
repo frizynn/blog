@@ -1,44 +1,44 @@
-/* Override hugo-brewm colors - PaperMod inspired */
+/* Override hugo-brewm colors - Custom palette */
 :root {
-    /* Override the default dark colors with softer ones */
-    --bg-dark: #1e293b !important;
-    --fg-dark: #e2e8f0 !important;
-    --bg-dark-less: #334155 !important;
-    --fg-dark-less: #cbd5e1 !important;
-    --bg-dark-more: #0f172a !important;
-    --fg-dark-more: #f1f5f9 !important;
-    --ac-dark: #f59e0b !important;
-    --ac-dark-less: #fbbf24 !important;
-    --ac-dark-more: #f59e0b !important;
+    /* Custom dark palette */
+    --bg-dark: #19183B !important;           /* Dark Blue/Navy */
+    --fg-dark: #E7F2EF !important;           /* Very Light Blue-Grey/Off-White */
+    --bg-dark-less: #708993 !important;      /* Muted Blue-Grey */
+    --fg-dark-less: #A1C2BD !important;      /* Light Blue-Green/Mint */
+    --bg-dark-more: #19183B !important;      /* Dark Blue/Navy (same as default) */
+    --fg-dark-more: #E7F2EF !important;      /* Very Light Blue-Grey/Off-White */
+    --ac-dark: #A1C2BD !important;           /* Light Blue-Green/Mint as accent */
+    --ac-dark-less: #A1C2BD !important;      /* Light Blue-Green/Mint */
+    --ac-dark-more: #A1C2BD !important;      /* Light Blue-Green/Mint */
 }
 
 /* Force dark mode colors */
 @media (prefers-color-scheme: dark) {
     body {
-        --bg: #1e293b !important;
-        --fg: #e2e8f0 !important;
-        --ac: #f59e0b !important;
-        --mid: #64748b !important;
+        --bg: #19183B !important;            /* Dark Blue/Navy */
+        --fg: #E7F2EF !important;            /* Very Light Blue-Grey/Off-White */
+        --ac: #A1C2BD !important;            /* Light Blue-Green/Mint */
+        --mid: #708993 !important;           /* Muted Blue-Grey */
     }
 }
 
 /* Less contrast dark mode */
 @media (prefers-color-scheme: dark) and (prefers-contrast: less) {
     body {
-        --bg: #334155 !important;
-        --fg: #cbd5e1 !important;
-        --ac: #fbbf24 !important;
-        --mid: #6b7280 !important;
+        --bg: #708993 !important;            /* Muted Blue-Grey */
+        --fg: #A1C2BD !important;            /* Light Blue-Green/Mint */
+        --ac: #A1C2BD !important;            /* Light Blue-Green/Mint */
+        --mid: #A1C2BD !important;           /* Light Blue-Green/Mint */
     }
 }
 
 /* More contrast dark mode */
 @media (prefers-color-scheme: dark) and (prefers-contrast: more) {
     body {
-        --bg: #0f172a !important;
-        --fg: #f1f5f9 !important;
-        --ac: #f59e0b !important;
-        --mid: #4b5563 !important;
+        --bg: #19183B !important;            /* Dark Blue/Navy */
+        --fg: #E7F2EF !important;            /* Very Light Blue-Grey/Off-White */
+        --ac: #A1C2BD !important;            /* Light Blue-Green/Mint */
+        --mid: #708993 !important;           /* Muted Blue-Grey */
     }
 }
 
