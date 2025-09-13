@@ -1,6 +1,6 @@
 ---
 title: "Large-Scale Training: FSDP, QLoRA, and More"
-date: 2025-01-27T00:00:00Z
+date: 2025-09-13T00:00:00Z
 draft: false
 type: post
 language: "en"
@@ -22,48 +22,48 @@ The choice of numerical format (FP32, FP16, BF16, FP8, INT8, etc.) constitutes o
 
 
 
-### ¿Por qué Importa la Precisión?
+### Why is Precision Important?
 
 
 
 
-Primero, necesitamos entender que intentan hacer los formatos de punto flotante. Principalmente, intentan representar un valor real de manera aproximada, y lo hacen con dos componentes clave: la _mantisa_ y el _exponente_.
+First, we need to understand what floating point formats aim to do. Primarily, they aim to approximate a real value, and they do it with two key components: the _mantissa_ and the _exponent_.
 
 
-Un número en punto flotante representa aproximadamente un valor real mediante la fórmula:
+A floating point number represents approximately a real value using the formula:
 
 
 $$\text{valor} \approx \text{signo} \times \text{mantisa} \times \text{base}^{\text{exponente}}$$
 
 
 donde:
-- **Mantisa**: Controla la resolución fina (cuántos pasos discretos entra en el intervalo 1.0 - 2.0)
-- **Exponente**: Determina el rango dinámico (qué tan grandes o pequeños pueden ser los números representables)
+- **Mantisa**: Controls the fine resolution (how many discrete steps fit into the interval 1.0 - 2.0)
+- **Exponente**: Determines the dynamic range (how large or small the representable numbers can be)
 - **Base**: En IEEE 754 es 2.
 
 
-Más bits para la mantisa $\rightarrow$ mayor precisión; más bits para el exponente $\rightarrow$ mayor rango
+More bits for the mantissa $\rightarrow$ greater precision; more bits for the exponent $\rightarrow$ greater range
 
 
 <figure>
- <img src="images/layout.png" alt="Representación de Punto Flotante de 32 bits (FP32)" style="width: 100%; height: auto;">
+ <img src="images/layout.png" alt="Representation of 32-bit Floating Point (FP32)" style="width: 100%; height: auto;">
  <figcaption style="text-align: center; font-size: 0.95em; color: #666;">
-   Esquema de la representación de un número en punto flotante de 32 bits (FP32) según el estándar IEEE 754. <br>
+   Scheme of the representation of a 32-bit floating point number (FP32) according to the IEEE 754 standard. <br>
   
  </figcaption>
 </figure>
 
 
-Pero, ¿por qué es importante?
+But, why is it important?
 
 
-Bueno, hay tres razones principales por las que la precisión numérica es crucial en el entrenamiento de modelos de gran escala.
+There are three main reasons why numerical precision is crucial in the training of large-scale models.
 
 
-- **Eficiencia computacional**: Los formatos de menor ancho de bits aceleran el cómputo en Tensor Cores/TPUs y reducen significativamente el uso de memoria.
+- **Computational efficiency**: Lower-bit formats accelerate computation on Tensor Cores/TPUs and significantly reduce memory usage.
 
 
-- **Estabilidad numérica**: El rango dinámico y la granularidad de representación afectan directamente el underflow/overflow y el ruido numérico durante el entrenamiento.
+- **Numerical stability**: The dynamic range and representation granularity directly affect underflow/overflow and numerical noise during training.
 
 
 - **Escabilidad**: Entrenar LLMs a gran escala requiere aprovechar la precisión mixta para que el costo computacional sea viable económicamente.

@@ -1,6 +1,6 @@
 ---
 title: "Entrenamiento a Gran Escala: FSDP, QLoRA, y más."
-date: 2025-01-27T00:00:00Z
+date: 2025-09-13T00:00:00Z
 draft: false
 type: post
 language: "es"
