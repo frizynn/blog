@@ -71,6 +71,8 @@
                 {{- end -}}
                 {{- $label_text -}}
             </a>
+            {{- /* Social icons next to the site title */ -}}
+            {{- partial "social_icons.html" (dict "align" "left") -}}
             {{- end }}
             <div class="logo-switches">
                 {{- if (not site.Params.disableThemeToggle) }}
@@ -151,9 +153,7 @@
                 </a>
             </li>
             {{- end }}
-            <li class="social-inline">
-                {{- partial "social_icons.html" (dict "align" "right") -}}
-            </li>
         </ul>
+        {{/* social icons moved next to logo */}}
     </nav>
 </header>
