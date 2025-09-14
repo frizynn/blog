@@ -8,4 +8,4 @@ sitemap:
 ---
 
 
-Aquí puedes encontrar todos mis posts del blog sobre tecnología, desarrollo y más.
+Acá están todos mis posts del blog.

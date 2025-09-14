@@ -21,6 +21,16 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 mainSections = ["post", "posts"]
 
+# Enable KaTeX via partial when page param `.Params.math` is true
+# Set `params.math = true` to enable globally (optional)
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    noClasses = false
+
 # Social icons
 [[params.socialIcons]]
 name = "twitter"

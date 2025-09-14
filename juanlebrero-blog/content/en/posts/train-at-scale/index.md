@@ -8,6 +8,7 @@ author: "Juan Francisco Lebrero"
 description: ""
 tags: ["LoRA", "QLoRA", "LLMs", "finetuning", "quantization", "4-bit", "deepspeed", "fsdp", "zero", "precision", "JAX", "bfloat16", "fp16"]
 categories: ["AI", "LLMs"]
+math: true
 ---
 
 
@@ -282,7 +283,6 @@ def mixed_precision_forward_pass(x, W, b):
    # Convertir de vuelta a FP16 para eficiencia de memoria
    return y.astype(jnp.float16)
 ```
-
 
 
 
