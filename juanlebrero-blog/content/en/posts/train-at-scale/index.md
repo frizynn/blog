@@ -1,5 +1,5 @@
 ---
-title: "Large-Scale Training: FSDP, QLoRA, and More"
+title: "Large-Scale Training: FSDP, QLoRA, and More."
 date: 2025-09-13T00:00:00Z
 draft: false
 type: post
@@ -11,279 +11,114 @@ categories: ["AI", "LLMs"]
 math: true
 ---
 
+To train models at scale, we need to understand several concepts that help optimize training performance and stability. That’s why we will cover numerical precision, data parallelism, quantization, LoRA, and more.  
 
-To train models at large scale, we need to understand various concepts that will help us optimize performance and training stability. That's why in this guide, we'll look at concepts like numerical precision, data parallelism, quantization, LoRA, and more.
+## Numerical Precision  
 
+The choice of numerical format (FP32, FP16, BF16, FP8, INT8, etc.) is one of the most critical factors for performance, memory usage, and training stability of large-scale models. It is therefore essential to understand how numerical precision works and how it affects model performance, which will be explained in this section.  
 
-## Numerical Precision
+### Why Does Precision Matter?  
 
+How would you represent the number $\pi$, which has INFINITE decimals, in something FINITE like a computer? The answer lies in floating-point numbers.  
 
-The choice of numerical format (FP32, FP16, BF16, FP8, INT8, etc.) constitutes one of the most determining factors for performance, memory usage, and stability of large-scale model training. That's why it's important to understand how numerical precision works and how it affects model performance, which will be explained in this section.
+Floating-point numbers approximate real values using two key components: the *mantissa* and the *exponent*.  
 
+A floating-point number approximately represents a real value with the formula:  
 
+$$\text{value} \approx \text{sign} \times \text{mantissa} \times \text{base}^{\text{exponent}}$$  
 
+Where:  
+- **Mantissa**: Controls fine resolution (how many discrete steps fit between 1.0 and 2.0).  
+- **Exponent**: Determines the dynamic range (how large or small numbers can be represented).  
+- **Base**: In IEEE 754 it is 2.  
 
-### Why is Precision Important?
-
-
-
-
-First, we need to understand what floating point formats aim to do. Primarily, they aim to approximate a real value, and they do it with two key components: the _mantissa_ and the _exponent_.
-
-
-A floating point number represents approximately a real value using the formula:
-
-
-$$\text{valor} \approx \text{signo} \times \text{mantisa} \times \text{base}^{\text{exponente}}$$
-
-
-donde:
-- **Mantisa**: Controls the fine resolution (how many discrete steps fit into the interval 1.0 - 2.0)
-- **Exponente**: Determines the dynamic range (how large or small the representable numbers can be)
-- **Base**: En IEEE 754 es 2.
-
-
-More bits for the mantissa $\rightarrow$ greater precision; more bits for the exponent $\rightarrow$ greater range
-
+More bits for the mantissa $\rightarrow$ higher precision.  
+More bits for the exponent $\rightarrow$ wider range.  
 
 <figure>
- <img src="images/layout.png" alt="Representation of 32-bit Floating Point (FP32)" style="width: 100%; height: auto;">
+ <img src="images/layout.png" alt="32-bit Floating Point Representation (FP32)" style="width: 100%; height: auto;">
  <figcaption style="text-align: center; font-size: 0.95em; color: #666;">
-   Scheme of the representation of a 32-bit floating point number (FP32) according to the IEEE 754 standard. <br>
-  
+   Figure 1. Schematic of 32-bit floating-point representation (FP32) according to IEEE 754. <br>
  </figcaption>
-</figure>
+</figure>  
 
+But why does this matter for us?  
 
-But, why is it important?
+There are three main reasons why numerical precision is critical in large-scale model training:  
 
-
-There are three main reasons why numerical precision is crucial in the training of large-scale models.
-
-
-- **Computational efficiency**: Lower-bit formats accelerate computation on Tensor Cores/TPUs and significantly reduce memory usage.
-
-
-- **Numerical stability**: The dynamic range and representation granularity directly affect underflow/overflow and numerical noise during training.
-
-
-- **Escabilidad**: Entrenar LLMs a gran escala requiere aprovechar la precisión mixta para que el costo computacional sea viable económicamente.
-
-
-
-
-
-
-## Formatos de precisión numérica
-Los formatos de punto flotante son muy variados, pero los más comunes son:
-
+- **Computational efficiency**: Lower bit-width formats accelerate computation on Tensor Cores/TPUs and significantly reduce memory usage.  
+- **Numerical stability**: If the number format lacks sufficient range or detail, values may become too large, too small, or lose accuracy, leading to errors or strange results during training.  
+- **Scalability**: When training large-scale LLMs, mixed precision is crucial to prevent computational costs from skyrocketing.  
 
 <figure>
- <img src="images/floating_point.png" alt="Comparativa de formatos de punto flotante: BF16, FP32 y FP16">
+ <img src="images/floating_point.png" alt="Floating Point Format Comparison: BF16, FP32, FP16">
  <figcaption style="text-align: center; font-size: 0.95em; color: #666;">
-   Comparación visual de los formatos de punto flotante más utilizados en deep learning: <b>BF16</b>, <b>FP32</b> y <b>FP16</b>. <br>
-  
+   Figure 2. Visual comparison of the most widely used floating-point formats in deep learning: <b>BF16</b>, <b>FP32</b>, and <b>FP16</b>. <br>
  </figcaption>
-</figure>
+</figure>  
 
+### FP32 (IEEE 754, Single Precision)  
 
+This is the “standard” format most commonly used. It stores numbers with 1 bit for the sign, 8 for the exponent, and 23 for the mantissa. It can represent very small and very large values, from $1.18\times10^{-38}$ to $3.4\times10^{38}$, with high precision ($\varepsilon \approx 1.19\times10^{-7}$).  
 
+In machine learning, FP32 is considered “full precision.” Even when other formats are used to save memory, critical calculations (such as gradient accumulation) are often done in FP32 to maintain stability.  
 
-### FP32 (IEEE 754, precisión simple)
+### FP16 (IEEE 754, Half Precision)  
 
+FP16 uses fewer bits than FP32, which reduces memory usage and speeds up computations.  
 
-Este es el punto de referencia para casi todo. Usa 1 bit de signo, 8 de exponente y 23 de mantisa. Su épsilon es $\varepsilon \approx 2^{-23} \approx 1.19\times10^{-7}$ y cubre un rango amplio, desde $1.18\times10^{-38}$ hasta $3.4\times10^{38}$.
+Pros: Faster and cheaper training/inference, lower memory footprint.  
+Cons: Reduced detail and range may cause very small numbers to vanish (requiring techniques like [loss scaling](https://picdictionary.com/ml-dictionary/loss-scaling-in-ai-and-deep-learning)) or very large numbers to saturate.  
 
+### BF16 (Brain Floating Point)  
 
-En práctica de ML lo tomamos como “precisión plena”. Incluso cuando trabajamos con precisión mixta, los acumuladores de gradientes se mantienen en FP32 para que el entrenamiento no se desestabilice.
+BF16 is widely used today for training large models on TPUs and modern GPUs (like the H100).  
 
+It stores numbers similarly to FP32 but with fewer mantissa bits. Importantly, it can represent the same large and small values as FP32, so it avoids breakdowns with extreme values. Unlike FP16, BF16 typically does not require loss scaling and is stable enough for training large models (such as LLMs).  
 
-### FP16 (IEEE 754, half)
+## Precision Comparison  
 
+To compare precisions, we’ll use JAX, a framework developed by Google that allows efficient execution on GPUs and TPUs. Unlike PyTorch, JAX lets us explore “raw” operation parallelization and memory optimization later on.  
 
-Acá buscamos velocidad y ahorro de memoria. FP16 tiene 1 bit de signo, 5 de exponente y 10 de mantisa, con $\varepsilon \approx 2^{-10} \approx 9.77\times10^{-4}$ y rango aproximado de $6.1\times10^{-5}$ a $6.55\times10^{4}$. Suele acelerar tanto el entrenamiento como la inferencia, aunque conviene usar <a href="https://picdictionary.com/ml-dictionary/loss-scaling-in-ai-and-deep-learning" target="_blank" rel="noopener">loss scaling</a> para que los gradientes chicos no desaparezcan.
+...  
 
+(Runs same code examples in English)  
 
-Además, ofrece mejor resolución fraccional que BF16, pero el rango dinámico es más corto, así que se puede llegar a saturar con activaciones o gradientes grandes y “apagar” señales muy chiquititas.
+...  
 
+At first glance, one might think: “So FP64 is the best.” But in reality, that’s not true. These results are explained by several factors:  
 
-### BF16 (Brain Floating Point)
+1. **CPUs are optimized for certain types**: Processors like the M1 run better with FP32 and FP64 because the libraries they rely on (like Accelerate on Mac) are optimized for those formats. FP16 and BF16 are often not as well supported on CPU, so the system internally converts them to FP32/FP64, making them slower for small problems.  
 
+2. **Size matters**: In the table examples, matrices and networks are small. When data sizes are small, most time goes into setup (initialization, conversions, synchronization) rather than the math itself. This makes FP64 appear “faster” because its execution path is more direct and optimized.  
 
-El favorito actual para entrenar modelos grandes en TPUs y GPUs, como una H100. Tiene 1 bit de signo, 8 de exponente y 7 de mantisa, con $\varepsilon \approx 2^{-7} \approx 7.81\times10^{-3}$. Lo clave es que comparte el mismo rango que FP32, de $1.18\times10^{-38}$ a $3.4\times10^{38}$. En la práctica suele funcionar sin _loss scaling_. Mantiene el rango amplio que evita overflows y underflows molestos, y aunque la resolución fraccional sea menor que en FP16, para LLMs entrenando en serio suele alcanzar sin dramas.
+3. **On GPU it’s the opposite**: GPUs run FP16 and BF16 much faster, thanks to specialized hardware (like NVIDIA’s Tensor Cores) that process these formats in parallel, with lower memory and bandwidth usage.  
 
+To confirm this yourself, try running the tests on a GPU with much larger matrices—you’ll clearly see the difference.  
 
-## Comparación de precisiones
+<div style="display: flex; justify-content: center;">
+  <figure>
+    <img src="images/nvidia-a100-matmul-tflops.png" alt="Precision Comparison" style="max-width: 350px; height: auto;">
+    <figcaption style="text-align: center; font-size: 0.95em; color: #666;">
+      Figure 3. Precision comparison. <br>
+    </figcaption>
+  </figure>
+</div>  
 
+Finally, as a conclusion to this section, here’s an example of mixed precision training, which is the standard practice for training large-scale models.  
 
-Para comparar las precisiones, voy a usar JAX, que es un framework de ML hecho por Google, que permite realizar operaciones de manera eficiente en GPUs y TPUs. La razón de utilizar JAX y no PyTorch, por ejemplo, es que JAX nos permitirá más adelante ver en "crudo" la paralelización de las operaciones y la optimización de la memoria.
-
-
-Primero, importamos JAX y vemos la versión y el backend, así como los dispositivos disponibles:
-
-
-```python
-import jax
-
-
-# Configuración de JAX
-print(f"JAX version: {jax.__version__}")
-print(f"JAX backend: {jax.default_backend()}")
-print(f"Available devices: {jax.devices()}")
-```
-
-
-Para medir el rendimiento y la memoria, necesitamos funciones para obtener el uso de memoria y medir el tiempo de ejecución. Para esto, vamos a usar `psutil`, `tracemalloc` y `time`.
-
-
-```python
-import jax.numpy as jnp
-import psutil
-import tracemalloc
-import time
-
-
-def get_memory_usage():
-   """Obtiene el uso actual de memoria en MB"""
-   process = psutil.Process()
-   return process.memory_info().rss / 1024 / 1024
-
-
-def measure_memory_and_time(func):
-   def wrapper(*args, **kwargs):
-       tracemalloc.start()
-       start_memory = get_memory_usage()
-      
-       start_time = time.time()
-       result = func(*args, **kwargs)
-       jax.block_until_ready(result)
-       end_time = time.time()
-      
-       end_memory = get_memory_usage()
-       current, peak = tracemalloc.get_traced_memory()
-       tracemalloc.stop()
-      
-       return {
-           'result': result,
-           'execution_time': end_time - start_time,
-           'memory_delta': end_memory - start_memory,
-           'peak_memory': peak / 1024 / 1024,
-           'current_memory': current / 1024 / 1024
-       }
-   return wrapper
-```
-
-
-Ahora, vamos a medir el rendimiento y la memoria de la multiplicación de matrices y la red neuronal. Para esto, vamos a usar la función `measure_memory_and_time` que definimos anteriormente.
-
-
-
+The idea is simple: the parts of the model that require numerical stability are computed in FP32, while intermediate results, gradients, and parameters are stored in FP16 or BF16, taking advantage of memory savings and higher hardware throughput.  
 
 ```python
-@measure_memory_and_time
-def matrix_multiplication_test(dtype, shape):
-   """Prueba de multiplicación de matrices con precisión dada"""
-   key = jax.random.PRNGKey(42)
-   key1, key2 = jax.random.split(key)
-  
-   def matmul_operation():
-       a = jax.random.normal(key1, shape, dtype=dtype)
-       b = jax.random.normal(key2, shape, dtype=dtype)
-       return jnp.dot(a, b)
-  
-   return matmul_operation()
-
-
-
-
-@measure_memory_and_time
-def neural_network_forward_pass_test(dtype, input_size, hidden_size, output_size):
-   """Prueba de pase forward de red neuronal simple"""
-   key = jax.random.PRNGKey(123)
-   keys = jax.random.split(key, 3)
-  
-   def nn_forward():
-       # Inicialización de pesos
-       W1 = jax.random.normal(keys[0], (input_size, hidden_size), dtype=dtype)
-       b1 = jax.random.normal(keys[1], (hidden_size,), dtype=dtype)
-       W2 = jax.random.normal(keys[2], (hidden_size, output_size), dtype=dtype)
-       b2 = jax.random.normal(keys[2], (output_size,), dtype=dtype)
-      
-       # Datos de entrada
-       x = jax.random.normal(keys[0], (input_size,), dtype=dtype)
-      
-       # Pase forward
-       h = jnp.tanh(jnp.dot(x, W1) + b1)
-       y = jnp.dot(h, W2) + b2
-      
-       return y
-  
-   return nn_forward()
-```
-Para correr las pruebas, simplemente llamamos a las funciones `matrix_multiplication_test` y `neural_network_forward_pass_test` con los tipos de precisión y las dimensiones de las matrices y la red neuronal, por ejemplo:
-
-
-```python
-matrix_multiplication_test(jnp.float16, (5000, 5000))
-neural_network_forward_pass_test(jnp.float16, 784, 256, 10)
-```
-
-
-Corriendo las pruebas en un M1, obtenemos los siguientes resultados para la multiplicación de matrices:
-
-
-| Precisión | Tiempo (s) | Memoria Delta (MB) | Memoria Pico (MB) |
-|-----------|------------|-------------------|-------------------|
-| FP16      | 1.024      | 448.61           | 0.013             |
-| BF16      | 0.978      | 49.33            | 0.008             |
-| FP32      | 0.943      | -49.25           | 0.008             |
-| FP64      | 0.928      | 7.84             | 0.009             |
-
-
-Y para la red neuronal:
-
-
-| Precisión | Tiempo (s) | Memoria Delta (MB) | Memoria Pico (MB) |
-|-----------|------------|-------------------|-------------------|
-| FP16      | 0.007      | 11.59            | 0.020             |     
-| BF16      | 0.004      | 4.81             | 0.015             |     
-| FP32      | 0.003      | 7.16             | 0.015             |     
-| FP64      | 0.002      | 0.14             | 0.016             |     
-
-
-**NOTA**: NOTAR QUE FP64 ES EL MÁS RÁPIDO, EXTRAÑAMENTE. ESTOS RESULTADOS SON PARA UN CPU. CABE DESTACAR QUE JAX ESTÁ OPTIMIZADO PARA GPUs, ADEMÁS DE QUE:
-
-
-1. **En CPUs modernos** (como el M1), las operaciones FP64 pueden ser más eficientes debido a optimizaciones específicas del hardware y la arquitectura ARM.
-2. **En GPUs**, el rendimiento se invierte dramáticamente: FP16/BF16 son significativamente más rápidos que FP32/FP64 debido a:
-  - Unidades de procesamiento especializadas (Tensor Cores en NVIDIA)
-  - Mayor paralelización de operaciones de menor precisión
-  - Menor uso de memoria y ancho de banda
-3. **JAX utiliza XLA** (Accelerated Linear Algebra) que optimiza automáticamente el código para el hardware disponible, lo que puede explicar estas diferencias de rendimiento.
-4. **Para entrenamiento real**, se recomienda usar FP16/BF16 en GPUs para obtener el mejor rendimiento y eficiencia de memoria.
-
-
-## Precisión Mixta y Optimizaciones
-
-
-### Implementación de Precisión Mixta
-
-
-```python
-# Ejemplo de entrenamiento con precisión mixta
+# Example of mixed precision training
 def mixed_precision_forward_pass(x, W, b):
-   # Convertir a FP32 para cómputo
+   # Convert to FP32 for computation
    x_fp32 = x.astype(jnp.float32)
    W_fp32 = W.astype(jnp.float32)
    b_fp32 = b.astype(jnp.float32)
   
-   # Pase forward
+   # Forward pass
    y = jnp.dot(x_fp32, W_fp32) + b_fp32
   
-   # Convertir de vuelta a FP16 para eficiencia de memoria
+   # Convert back to FP16 for memory efficiency
    return y.astype(jnp.float16)
-```
-
-
-
-

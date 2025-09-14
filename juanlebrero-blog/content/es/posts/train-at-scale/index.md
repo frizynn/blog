@@ -115,8 +115,6 @@ Primero, importamos JAX y vemos la versión y el backend, así como los disposit
 
 ```python
 import jax
-
-
 # Configuración de JAX
 print(f"JAX version: {jax.__version__}")
 print(f"JAX backend: {jax.default_backend()}")
@@ -124,7 +122,7 @@ print(f"Available devices: {jax.devices()}")
 ```
 
 
-Para medir el rendimiento y la memoria, necesitamos funciones para obtener el uso de memoria y medir el tiempo de ejecución. Para esto, vamos a usar `psutil`, `tracemalloc` y `time`.
+Necesitamos funciones para obtener el uso de memoria y medir el tiempo de ejecución. Para esto, vamos a usar `psutil`, `tracemalloc` y `time`.
 
 
 ```python
