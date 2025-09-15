@@ -1,6 +1,10 @@
 /* Social icons next to site title in header */
 .nav { position: relative; flex-wrap: nowrap; }
 
+/* Tighter line-height for the site title to avoid large
+   vertical gap when it wraps on narrow screens */
+.logo a { line-height: 1.15; white-space: nowrap; }
+
 .logo .social-icons {
   display: inline-flex;
   align-items: center;
@@ -22,4 +26,16 @@
 /* Hide on very small screens to avoid crowding */
 @media (max-width: 520px) {
   .logo .social-icons { display: none; }
+}
+
+/* On small screens, allow the header to wrap so elements don't squash */
+@media (max-width: 720px) {
+  .nav { flex-wrap: wrap; }
+  .logo { width: 100%; align-items: center; }
+  /* ensure menu moves to next row nicely */
+  #menu { width: 100%; margin-top: 6px; }
+}
+
+@media (max-width: 480px) {
+  .logo a { font-size: 20px; }
 }
