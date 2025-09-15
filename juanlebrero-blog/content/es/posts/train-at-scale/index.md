@@ -1,5 +1,5 @@
 ---
-title: "El tamaño importa: Guía para entrenar modelos a gran escala"
+title: "Entrenamiento a Gran Escala: FSDP, QLoRA, y más."
 date: 2025-09-13T00:00:00Z
 draft: false
 type: post
