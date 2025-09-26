@@ -6,6 +6,7 @@
         {{- partial "language_switch.html" . -}}
         <main class="page-content" aria-label="Content">
             <div class="w">
+                {{- partial "breadcrumbs.html" . -}}
                 {{- block "main" . }}{{- end }}
                 {{ partial "footer.html" }}
             </div>

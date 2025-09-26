@@ -1,0 +1,14 @@
+{{- /* Do not render breadcrumbs on home */ -}}
+{{- if not .IsHome -}}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {{- $ancestors := .Ancestors -}}
+    {{- range $i, $p := ($ancestors.Reverse) -}}
+    <li>
+      <a href="{{ $p.Permalink }}">{{ $p.LinkTitle | default $p.Title }}</a>
+    </li>
+    {{- end -}}
+    <li aria-current="page">{{ .LinkTitle | default .Title }}</li>
+  </ol>
+</nav>
+{{- end -}}
