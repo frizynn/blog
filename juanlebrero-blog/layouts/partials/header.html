@@ -44,7 +44,10 @@
         <div class="logo">
             {{- $label_text := (site.Params.label.text | default site.Title) }}
             {{- if site.Title }}
-            <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
+            {{- $homeHref := ("" | relLangURL) -}}
+            {{- $homeHref = replaceRE `^https?://[^/]+` "" $homeHref -}}
+            {{- $homeHref = replaceRE `^//[^/]+` "" $homeHref -}}
+            <a href="{{ $homeHref }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
                 {{- if site.Params.label.icon }}
                 {{- $img := resources.Get site.Params.label.icon }}
                 {{- if $img }}
@@ -113,7 +116,10 @@
                     {{- range . -}}
                     {{- if ne $lang .Lang }}
                     <li>
-                        <a href="{{- .Permalink -}}" title="{{ .Language.Params.languageAltTitle | default (.Language.LanguageName | emojify) | default (.Lang | title) }}"
+                        {{- $translationHref := .RelPermalink -}}
+                        {{- $translationHref = replaceRE `^https?://[^/]+` "" $translationHref -}}
+                        {{- $translationHref = replaceRE `^//[^/]+` "" $translationHref -}}
+                        <a href="{{- $translationHref -}}" title="{{ .Language.Params.languageAltTitle | default (.Language.LanguageName | emojify) | default (.Lang | title) }}"
                             aria-label="{{ .Language.LanguageName | default (.Lang | title) }}">
                             {{- if (and site.Params.displayFullLangName (.Language.LanguageName)) }}
                             {{- .Language.LanguageName | emojify -}}
@@ -131,13 +137,25 @@
         {{- $currentPage := . }}
         <ul id="menu">
             {{- range site.Menus.main }}
-            {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | absLangURL }}
-            {{- $page_url:= $currentPage.Permalink | absLangURL }}
+            {{- $menuURL := .URL }}
+            {{- $normalizedMenuURL := cond (strings.HasSuffix $menuURL "/") $menuURL (printf "%s/" $menuURL) }}
+            {{- $isInternal := hasPrefix $menuURL "/" }}
+            {{- $menuHref := cond $isInternal ($menuURL | relLangURL) $menuURL }}
+            {{- $menuActiveURL := cond $isInternal ($normalizedMenuURL | relLangURL) "" }}
+            {{- $pageRel := $currentPage.RelPermalink -}}
+            {{- $pageRel = replaceRE `^https?://[^/]+` "" $pageRel -}}
+            {{- $pageRel = replaceRE `^//[^/]+` "" $pageRel -}}
             {{- $is_search := eq (site.GetPage .KeyName).Layout `search` }}
             <li>
-                <a href="{{ .URL | absLangURL }}" title="{{ .Title | default .Name }} {{- cond $is_search (" (Alt + /)" | safeHTMLAttr) ("" | safeHTMLAttr ) }}"
+                {{- if $isInternal -}}
+                    {{- $menuHref = replaceRE `^https?://[^/]+` "" $menuHref -}}
+                    {{- $menuHref = replaceRE `^//[^/]+` "" $menuHref -}}
+                    {{- $menuActiveURL = replaceRE `^https?://[^/]+` "" $menuActiveURL -}}
+                    {{- $menuActiveURL = replaceRE `^//[^/]+` "" $menuActiveURL -}}
+                {{- end -}}
+                <a href="{{ $menuHref }}" title="{{ .Title | default .Name }} {{- cond $is_search (" (Alt + /)" | safeHTMLAttr) ("" | safeHTMLAttr ) }}"
                 {{- cond $is_search (" accesskey=/" | safeHTMLAttr) ("" | safeHTMLAttr ) }}>
-                    <span {{- if eq $menu_item_url $page_url }} class="active" {{- end }}>
+                    <span {{- if and $isInternal (eq $menuActiveURL $pageRel) }} class="active" {{- end }}>
                         {{- .Pre }}
                         {{- .Name -}}
                         {{ .Post -}}
