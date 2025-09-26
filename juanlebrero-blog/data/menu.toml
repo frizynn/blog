@@ -1,0 +1,15 @@
+[[entries]]
+title = "About"
+url = "about"
+
+[[entries]]
+title = "Posts"
+url = "posts"
+
+[[entries]]
+title = "Contact"
+url = "contact"
+
+[[entries]]
+title = "RSS"
+url = "index.xml"

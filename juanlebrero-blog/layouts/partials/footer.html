@@ -1,0 +1,13 @@
+{{- /* Custom footer */}}
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; {{ now.Format "2006" }} {{ site.Title }}. {{ cond (eq .Lang "es") "Todos los derechos reservados." "All rights reserved." }}</p>
+    <div class="footer-links">
+      <a href="{{ "about/" | relLangURL }}">{{ cond (eq .Lang "es") "Sobre mí" "About" }}</a>
+      <span class="separator">•</span>
+      <a href="{{ "contact/" | relLangURL }}">{{ cond (eq .Lang "es") "Contacto" "Contact" }}</a>
+      <span class="separator">•</span>
+      <a href="{{ "index.xml" | relLangURL }}">RSS</a>
+    </div>
+  </div>
+</footer>

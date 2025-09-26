@@ -1,7 +1,7 @@
 baseURL = 'https://juanlebrero.com/'
 languageCode = 'en-us'
 title = 'Juan Lebrero'
-theme = 'hugo-PaperMod'
+theme = 'hugo-theme-nostyleplease'
 
 # Multilingual configuration
 [languages]
@@ -20,6 +20,14 @@ contentDir = "content/es"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 mainSections = ["post", "posts"]
+
+# Theme configuration
+[params.theme_config]
+appearance = "auto"
+back_home_text = ".."
+date_format = "2006-01-02"
+isListGroupByDate = false
+isShowFooter = true
 
 # Enable KaTeX via partial when page param `.Params.math` is true
 # Set `params.math = true` to enable globally (optional)
@@ -48,9 +56,19 @@ url = "/"
 weight = 1
 
 [[menu.main]]
+name = "About"
+url = "/about/"
+weight = 2
+
+[[menu.main]]
 name = "Posts"
 url = "/posts/"
-weight = 2
+weight = 3
+
+[[menu.main]]
+name = "Contact"
+url = "/contact/"
+weight = 4
 
 # English menu
 [languages.en.menu]
@@ -60,9 +78,19 @@ url = "/"
 weight = 1
 
 [[languages.en.menu.main]]
+name = "About"
+url = "/about/"
+weight = 2
+
+[[languages.en.menu.main]]
 name = "Posts"
 url = "/posts/"
-weight = 2
+weight = 3
+
+[[languages.en.menu.main]]
+name = "Contact"
+url = "/contact/"
+weight = 4
 
 # Spanish menu
 [languages.es.menu]
@@ -72,9 +100,19 @@ url = "/es/"
 weight = 1
 
 [[languages.es.menu.main]]
+name = "Sobre mí"
+url = "/es/about/"
+weight = 2
+
+[[languages.es.menu.main]]
 name = "Posts"
 url = "/es/posts/"
-weight = 2
+weight = 3
+
+[[languages.es.menu.main]]
+name = "Contacto"
+url = "/es/contact/"
+weight = 4
 
 # Home hero content (per language)
 [languages.en.params]

@@ -425,7 +425,7 @@ $$</div>
 
 En la práctica este gradiente se normaliza por la cantidad de elementos que comparten la misma escala, lo que estabiliza la actualización. Acá aparece el concepto per-tensor y per-channel. 
 
-Considerá una capa lineal con pesos $W\in\mathbb{R}^{C_o\times C_i}$ que recibe activaciones $X\in\mathbb{R}^{T\times C_i}$, donde $T$ es la cantidad de tokens, $C_i$ los canales de entrada y $C_o$ los de salida. 
+Definimos una capa lineal con pesos $W\in\mathbb{R}^{C_o\times C_i}$ que recibe activaciones $X\in\mathbb{R}^{T\times C_i}$, donde $T$ es la cantidad de tokens, $C_i$ los canales de entrada y $C_o$ los de salida. 
 
 - En per-tensor se usa una sola escala para todo $X$ y una sola escala para todo $W$. Esa elección simplifica el cómputo y la normalización del gradiente de $s$ se hace sobre todos los elementos del bloque, pero si los rangos internos difieren mucho se desperdicia resolución. 
 

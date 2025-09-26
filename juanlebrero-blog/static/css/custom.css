@@ -1,77 +1,49 @@
-/* Custom color scheme - PaperMod inspired */
-:root {
-    /* Default contrast - softer colors */
-    --ac-light: #2563eb !important;
-    --fg-light: #1f2937 !important;
-    --bg-light: #f8fafc !important;
-    --midtone: #64748b !important;
-    --fg-dark: #e2e8f0 !important;
-    --bg-dark: #1e293b !important;
-    --ac-dark: #f59e0b !important;
-
-    /* Less contrast - even softer */
-    --ac-light-less: #3b82f6 !important;
-    --fg-light-less: #374151 !important;
-    --bg-light-less: #f1f5f9 !important;
-    --midtone-less: #6b7280 !important;
-    --fg-dark-less: #cbd5e1 !important;
-    --bg-dark-less: #334155 !important;
-    --ac-dark-less: #fbbf24 !important;
-
-    /* More contrast - still readable but not harsh */
-    --ac-light-more: #1d4ed8 !important;
-    --fg-light-more: #111827 !important;
-    --bg-light-more: #ffffff !important;
-    --midtone-more: #4b5563 !important;
-    --fg-dark-more: #f1f5f9 !important;
-    --bg-dark-more: #0f172a !important;
-    --ac-dark-more: #f59e0b !important;
-
-    /* Highlight colors */
-    --hl: #fef3c7 !important;
+/* Paper texture background - subtle and elegant */
+body {
+    background-color: #fefefe !important;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(0,0,0,0.01) 50%);
+    background-size: 20px 20px, 2px 2px, 2px 2px;
+    background-position: 0 0, 0 0, 0 0;
+    background-attachment: fixed;
 }
 
-/* Light mode - PaperMod inspired */
-@media (prefers-color-scheme: light) {
-    body {
-        --bg: var(--bg-light) !important;
-        --fg: var(--fg-light) !important;
-        --ac: var(--ac-light) !important;
-        --mid: var(--midtone) !important;
-    }
-}
-
-/* Dark mode - softer colors */
+/* Dark mode paper texture */
 @media (prefers-color-scheme: dark) {
     body {
-        --bg: var(--bg-dark) !important;
-        --fg: var(--fg-dark) !important;
-        --ac: var(--ac-dark) !important;
-        --mid: var(--midtone) !important;
+        background-color: #000000 !important;
+        background-image: 
+            radial-gradient(circle at 1px 1px, rgba(255,255,255,0.02) 1px, transparent 0),
+            linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.01) 50%),
+            linear-gradient(0deg, transparent 50%, rgba(255,255,255,0.01) 50%);
+        background-size: 20px 20px, 2px 2px, 2px 2px;
+        background-position: 0 0, 0 0, 0 0;
+        background-attachment: fixed;
     }
 }
 
-/* Less contrast mode */
-@media (prefers-contrast: less) {
-    body {
-        --bg: var(--bg-dark-less) !important;
-        --fg: var(--fg-dark-less) !important;
-        --ac: var(--ac-dark-less) !important;
-        --mid: var(--midtone-less) !important;
-    }
+/* Override for theme switcher */
+body[a="light"] {
+    background-color: #f0f0f0 !important;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(0,0,0,0.01) 50%);
+    background-size: 20px 20px, 2px 2px, 2px 2px;
+    background-position: 0 0, 0 0, 0 0;
+    background-attachment: fixed;
 }
 
-/* More contrast mode */
-@media (prefers-contrast: more) {
-    body {
-        --bg: var(--bg-dark-more) !important;
-        --fg: var(--fg-dark-more) !important;
-        --ac: var(--ac-dark-more) !important;
-        --mid: var(--midtone-more) !important;
-    }
+body[a="dark"] {
+    background-color: #131212 !important;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(255,255,255,0.01) 50%);
+    background-size: 20px 20px, 2px 2px, 2px 2px;
+    background-position: 0 0, 0 0, 0 0;
+    background-attachment: fixed;
 }
 
-/* Smooth transitions */
-* {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
-}

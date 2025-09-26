@@ -1,15 +1,26 @@
-{{- /* Custom home info with CTA and scroll anchor */}}
+{{- /* Enhanced home info with improved hero section */}}
 {{- $p := or .Language.Params.homeInfoParams site.Params.homeInfoParams -}}
 {{- with $p }}
-<article class="first-entry home-info hero minimal">
+<article class="first-entry home-info hero enhanced">
   <header class="entry-header">
-    <h1>{{ .Title | markdownify }}</h1>
+    <h1 class="hero-title">{{ .Title | markdownify }}</h1>
+    <div class="hero-subtitle">
+      {{ .Content | markdownify }}
+    </div>
   </header>
-  <div class="entry-content">
-    {{ .Content | markdownify }}
-  </div>
   <div class="hero-actions">
-    <a class="link-cta" href="{{ "posts/" | relLangURL }}">{{ cond (eq $.Lang "es") "Ver posts →" "Read posts →" }}</a>
+    <a class="link-cta primary" href="{{ "posts/" | relLangURL }}">{{ cond (eq $.Lang "es") "Ver posts →" "Read posts →" }}</a>
+    <a class="link-cta secondary" href="{{ "about/" | relLangURL }}">{{ cond (eq $.Lang "es") "Sobre mí" "About me" }}</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-number">{{ len (where site.RegularPages "Section" "posts") }}</span>
+      <span class="stat-label">{{ cond (eq $.Lang "es") "Artículos" "Articles" }}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">{{ len (where site.RegularPages "Type" "page") }}</span>
+      <span class="stat-label">{{ cond (eq $.Lang "es") "Páginas" "Pages" }}</span>
+    </div>
   </div>
 </article>
 <div id="posts" aria-hidden="true"></div>
