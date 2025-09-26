@@ -1,40 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Juan Lebrero</title>
-    <link>https://juanlebrero.com/es/</link>
-    <description>Recent content on Juan Lebrero</description>
-    <generator>Hugo</generator>
-    <language>es</language>
-    <lastBuildDate>Sat, 13 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://juanlebrero.com/es/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Entrenamiento a Gran Escala: FSDP, QLoRA, y más.</title>
-      <link>https://juanlebrero.com/es/posts/train-at-scale/</link>
-      <pubDate>Sat, 13 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>https://juanlebrero.com/es/posts/train-at-scale/</guid>
-      <description>&lt;p&gt;Para poder entrenar modelos a gran escala, necesitamos entender diversos conceptos que nos van a ayudar a optimizar el rendimiento y la estabilidad del entrenamiento. Por eso, vamos a ver conceptos como precisión numérica, paralelización de datos, cuantización, LoRA, y más.&lt;/p&gt;&#xA;&lt;h2 id=&#34;precisión-numérica&#34;&gt;Precisión numérica&lt;/h2&gt;&#xA;&lt;p&gt;La elección del formato numérico (FP32, FP16, BF16, FP8, INT8, etc.) constituye uno de los factores más determinantes para el rendimiento, el uso de memoria y la estabilidad del entrenamiento de modelos de gran escala. Por eso, es importante entender como funciona la precisión numérica y como afecta al rendimiento de los modelos, lo que se explicará en esta sección.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Acerca de mí</title>
-      <link>https://juanlebrero.com/es/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://juanlebrero.com/es/about/</guid>
-      <description>&lt;p&gt;Soy un Ingeniero de IA/ML y Asistente de Investigación en LiNAR, Universidad de San Andrés (UdeSA), actualmente cursando Ingeniería de Inteligencia Artificial. Me apasiona construir soluciones de IA prácticas que generen un impacto real.&lt;/p&gt;&#xA;&lt;h2 id=&#34;trabajo-actual&#34;&gt;Trabajo Actual&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Asistente de Investigación en LiNAR, UdeSA&lt;/strong&gt; (Ago 2025 – Presente)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Investigando SLAM semántico y campos bayesianos&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Científico de Datos Senior en SOFLEX&lt;/strong&gt; (Jun 2025 – Presente)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Diseñé un agente híbrido RAG+DSL en 200M incidentes 911; responde en &amp;lt; 5s y 76% menos tiempo de análisis&lt;/li&gt;&#xA;&lt;li&gt;Construí ASR en tiempo real y clasificación de llamadas para 911, priorizando alertas críticas&lt;/li&gt;&#xA;&lt;li&gt;Investigando desruido, VAD y ASR streaming para endurecer transcripciones en entornos operativos ruidosos&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Ingeniero de Machine Learning en PSAG&lt;/strong&gt; (Abr 2025 – Presente)&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Contacto</title>
-      <link>https://juanlebrero.com/es/contact/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://juanlebrero.com/es/contact/</guid>
-      <description>&lt;h1 id=&#34;contacto&#34;&gt;Contacto&lt;/h1&gt;&#xA;&lt;p&gt;¡Siempre estoy interesado en conectar con otros ingenieros ML, investigadores y cualquiera apasionado por la IA!&lt;/p&gt;&#xA;&lt;h2 id=&#34;ponte-en-contacto&#34;&gt;Ponte en Contacto&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Twitter/X&lt;/strong&gt;: &lt;a href=&#34;https://x.com/lebrious&#34;&gt;@lebrious&lt;/a&gt; - Actualizaciones rápidas y pensamientos&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;LinkedIn&lt;/strong&gt;: &lt;a href=&#34;https://www.linkedin.com/in/lebrero-juan-francisco/&#34;&gt;Juan Francisco Lebrero&lt;/a&gt; - Networking profesional&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: &lt;a href=&#34;mailto:contact@juanlebrero.com&#34;&gt;contact@juanlebrero.com&lt;/a&gt; - Comunicación directa&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;en-qué-estoy-interesado&#34;&gt;En qué estoy Interesado&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Colaboración&lt;/strong&gt;: Abierto a discutir proyectos ML e investigación&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Charlas&lt;/strong&gt;: Disponible para hablar sobre entrenamiento a gran escala e ingeniería ML&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Consultoría&lt;/strong&gt;: Interesado en ayudar con infraestructura ML y desafíos de entrenamiento&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Mentoría&lt;/strong&gt;: Feliz de compartir conocimiento y ayudar a otros en el campo&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;tiempo-de-respuesta&#34;&gt;Tiempo de Respuesta&lt;/h2&gt;&#xA;&lt;p&gt;Típicamente respondo a mensajes en 24-48 horas. Para asuntos urgentes, Twitter/X suele ser la forma más rápida de contactarme.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Sobre mí</title>
-      <link>https://juanlebrero.com/es/about-2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://juanlebrero.com/es/about-2/</guid>
-      <description>&lt;p&gt;Soy un Ingeniero de IA/ML y Asistente de Investigación en LiNAR, Universidad de San Andrés (UdeSA), actualmente cursando mi Licenciatura en Ingeniería de Inteligencia Artificial. Me apasiona construir soluciones de IA prácticas que generen un impacto real.&lt;/p&gt;&#xA;&lt;h2 id=&#34;trabajo-actual&#34;&gt;Trabajo Actual&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Asistente de Investigación en LiNAR, UdeSA&lt;/strong&gt; (Ago 2025 – Presente)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Investigando SLAM semántico y campos bayesianos&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Científico de Datos Senior en SOFLEX&lt;/strong&gt; (Jun 2025 – Presente)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Diseñé un agente híbrido RAG+DSL en 200M incidentes 911; responde en &amp;lt; 5s y 76% menos tiempo de análisis&lt;/li&gt;&#xA;&lt;li&gt;Construí ASR en tiempo real y clasificación de llamadas para 911, priorizando alertas críticas&lt;/li&gt;&#xA;&lt;li&gt;Investigando desruido, VAD y ASR streaming para endurecer transcripciones en entornos operativos ruidosos&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Ingeniero de Machine Learning en PSAG&lt;/strong&gt; (Abr 2025 – Presente)&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Juan Lebrero</title><link>https://juanlebrero.com/es/</link><description>Recent content on Juan Lebrero</description><generator>Hugo</generator><language>es</language><lastBuildDate>Sat, 13 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://juanlebrero.com/es/index.xml" rel="self" type="application/rss+xml"/><item><title>Entrenamiento a Gran Escala: FSDP, QLoRA, y más.</title><link>https://juanlebrero.com/es/posts/train-at-scale/</link><pubDate>Sat, 13 Sep 2025 00:00:00 +0000</pubDate><guid>https://juanlebrero.com/es/posts/train-at-scale/</guid><description>&lt;p&gt;Para poder entrenar modelos a gran escala, necesitamos entender diversos conceptos que nos van a ayudar a optimizar el rendimiento y la estabilidad del entrenamiento. Por eso, vamos a ver conceptos como precisión numérica, paralelización de datos, cuantización, LoRA, y más.&lt;/p&gt;
+&lt;h2 id="precisión-numérica"&gt;Precisión numérica&lt;/h2&gt;
+&lt;p&gt;La elección del formato numérico (FP32, FP16, BF16, FP8, INT8, etc.) constituye uno de los factores más determinantes para el rendimiento, el uso de memoria y la estabilidad del entrenamiento de modelos de gran escala. Por eso, es importante entender como funciona la precisión numérica y como afecta al rendimiento de los modelos, lo que se explicará en esta sección.&lt;/p&gt;</description></item><item><title>Acerca de mí</title><link>https://juanlebrero.com/es/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://juanlebrero.com/es/about/</guid><description>&lt;p&gt;Soy un Ingeniero de IA/ML y Asistente de Investigación en LiNAR, Universidad de San Andrés (UdeSA), actualmente cursando Ingeniería de Inteligencia Artificial. Me apasiona construir soluciones de IA prácticas que generen un impacto real.&lt;/p&gt;
+&lt;h2 id="trabajo-actual"&gt;Trabajo Actual&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Asistente de Investigación en LiNAR, UdeSA&lt;/strong&gt; (Ago 2025 – Presente)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Investigando SLAM semántico y campos bayesianos&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Científico de Datos Senior en SOFLEX&lt;/strong&gt; (Jun 2025 – Presente)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Diseñé un agente híbrido RAG+DSL en 200M incidentes 911; responde en &amp;lt; 5s y 76% menos tiempo de análisis&lt;/li&gt;
+&lt;li&gt;Construí ASR en tiempo real y clasificación de llamadas para 911, priorizando alertas críticas&lt;/li&gt;
+&lt;li&gt;Investigando desruido, VAD y ASR streaming para endurecer transcripciones en entornos operativos ruidosos&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Ingeniero de Machine Learning en PSAG&lt;/strong&gt; (Abr 2025 – Presente)&lt;/p&gt;</description></item><item><title>Contacto</title><link>https://juanlebrero.com/es/contact/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://juanlebrero.com/es/contact/</guid><description>&lt;h1 id="contacto"&gt;Contacto&lt;/h1&gt;
+&lt;p&gt;¡Siempre estoy interesado en conectar con otros ingenieros ML, investigadores y cualquiera apasionado por la IA!&lt;/p&gt;
+&lt;h2 id="ponte-en-contacto"&gt;Ponte en Contacto&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Twitter/X&lt;/strong&gt;: &lt;a href="https://x.com/lebrious"&gt;@lebrious&lt;/a&gt; - Actualizaciones rápidas y pensamientos&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LinkedIn&lt;/strong&gt;: &lt;a href="https://www.linkedin.com/in/lebrero-juan-francisco/"&gt;Juan Francisco Lebrero&lt;/a&gt; - Networking profesional&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: &lt;a href="mailto:contact@juanlebrero.com"&gt;contact@juanlebrero.com&lt;/a&gt; - Comunicación directa&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="en-qué-estoy-interesado"&gt;En qué estoy Interesado&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Colaboración&lt;/strong&gt;: Abierto a discutir proyectos ML e investigación&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Charlas&lt;/strong&gt;: Disponible para hablar sobre entrenamiento a gran escala e ingeniería ML&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consultoría&lt;/strong&gt;: Interesado en ayudar con infraestructura ML y desafíos de entrenamiento&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mentoría&lt;/strong&gt;: Feliz de compartir conocimiento y ayudar a otros en el campo&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="tiempo-de-respuesta"&gt;Tiempo de Respuesta&lt;/h2&gt;
+&lt;p&gt;Típicamente respondo a mensajes en 24-48 horas. Para asuntos urgentes, Twitter/X suele ser la forma más rápida de contactarme.&lt;/p&gt;</description></item></channel></rss>
