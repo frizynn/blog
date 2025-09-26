@@ -8,7 +8,7 @@ author: "Juan Francisco Lebrero"
 description: ""
 tags: ["LoRA", "QLoRA", "LLMs", "finetuning", "cuantización", "4-bit", "deepspeed", "fsdp", "zero", "precisión", "JAX", "bfloat16", "fp16", "train-at-scale"]
 categories: ["IA", "LLMs"]
-math: true
+mathjax: true
 ---   
 
 

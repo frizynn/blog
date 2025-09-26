@@ -8,7 +8,7 @@ author: "Juan Francisco Lebrero"
 description: ""
 tags: ["LoRA", "QLoRA", "LLMs", "finetuning", "quantization", "4-bit", "deepspeed", "fsdp", "zero", "precision", "JAX", "bfloat16", "fp16"]
 categories: ["AI", "LLMs"]
-math: true
+mathjax: true
 ---
 
 To train models at scale you need a solid grip on a handful of ideas that decide both speed and stability. This walkthrough focuses on numeric precision, data parallelism, quantization, LoRA, and a few other pieces you actually use in practice.
