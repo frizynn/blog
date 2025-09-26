@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Soy un Ingeniero de IA/ML y Asistente de Investigación en LiNAR, Universidad de San Andrés (UdeSA), actualmente cursando Ingeniería de Inteligencia Artificial. Me apasiona construir soluciones de IA prácticas que generen un impacto real.
+Trabajo Actual
+Asistente de Investigación en LiNAR, UdeSA (Ago 2025 – Presente)
+
+Investigando SLAM semántico y campos bayesianos
+
+Científico de Datos Senior en SOFLEX (Jun 2025 – Presente)
+
+Diseñé un agente híbrido RAG&#43;DSL en 200M incidentes 911; responde en &lt; 5s y 76% menos tiempo de análisis
+Construí ASR en tiempo real y clasificación de llamadas para 911, priorizando alertas críticas
+Investigando desruido, VAD y ASR streaming para endurecer transcripciones en entornos operativos ruidosos
+
+Ingeniero de Machine Learning en PSAG (Abr 2025 – Presente)">  
+
+  <title>
+    
+      Acerca de mí
+    
+  </title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.5434bd314af44f6353b8b35a80419909bf984c0348babb07e3b86a5efd2fc42db5940d0d9b717d017ffd0d10fbd3ecc0940019697fd843005791d04967f8f4a4.css" integrity="sha512-VDS9MUr0T2NTuLNagEGZCb&#43;YTANIursH47hqXv0vxC21lA0Nm3F9AX/9DRD70&#43;zAlAAZaX/YQwBXkdBJZ/j0pA==" />
+  
+  
+  <link rel="stylesheet" href="/css/custom.css" />
+  
+  
+</head>
+<body a="auto">
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+  <span class="theme-icon">🌙</span>
+</button>
+
+<style>
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background-color: var(--primary-text-color, #000);
+  color: var(--bg-color, #fff);
+  transform: scale(1.1);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--link-color, #3548cf);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: rotate(180deg);
+}
+
+ 
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1em;
+  }
+}
+</style>
+
+<script>
+(function() {
+  'use strict';
+  
+  
+  const THEME_KEY = 'theme-preference';
+  const THEMES = {
+    LIGHT: 'light', 
+    DARK: 'dark'
+  };
+  
+  
+  const ICONS = {
+    [THEMES.LIGHT]: '☀️',
+    [THEMES.DARK]: '🌙'
+  };
+  
+  
+  function getCurrentTheme() {
+    return localStorage.getItem(THEME_KEY) || THEMES.LIGHT;
+  }
+  
+  
+  function saveTheme(theme) {
+    localStorage.setItem(THEME_KEY, theme);
+  }
+  
+  
+  function applyTheme(theme) {
+    document.body.setAttribute('a', theme);
+  }
+  
+  
+  function updateButtonIcon(theme) {
+    const button = document.getElementById('theme-toggle');
+    const icon = button.querySelector('.theme-icon');
+    icon.textContent = ICONS[theme];
+  }
+  
+  
+  function cycleTheme() {
+    const current = getCurrentTheme();
+    let next;
+    
+    switch(current) {
+      case THEMES.LIGHT:
+        next = THEMES.DARK;
+        break;
+      case THEMES.DARK:
+        next = THEMES.LIGHT;
+        break;
+      default:
+        next = THEMES.LIGHT;
+    }
+    
+    saveTheme(next);
+    applyTheme(next);
+    updateButtonIcon(next);
+  }
+  
+  
+  function initTheme() {
+    const theme = getCurrentTheme();
+    applyTheme(theme);
+    updateButtonIcon(theme);
+  }
+  
+  
+  function addToggleListener() {
+    const button = document.getElementById('theme-toggle');
+    if (button) {
+      button.addEventListener('click', cycleTheme);
+    }
+  }
+  
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initTheme();
+      addToggleListener();
+    });
+  } else {
+    initTheme();
+    addToggleListener();
+  }
+})();
+</script>
+
+<div class="lang-switch-container">
+  <ul class="lang-switch">
+    <li><a href="/about/" title="English" aria-label="English">EN</a>
+    </li>
+  </ul>
+</div>
+<main class="page-content" aria-label="Content">
+            <div class="w"><nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol><li>
+      <a href="https://juanlebrero.com/es/">Juan Lebrero</a>
+    </li><li aria-current="page">Acerca de mí</li>
+  </ol>
+</nav>
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>Acerca de mí</h1>
+
+    
+
+    <p>Soy un Ingeniero de IA/ML y Asistente de Investigación en LiNAR, Universidad de San Andrés (UdeSA), actualmente cursando Ingeniería de Inteligencia Artificial. Me apasiona construir soluciones de IA prácticas que generen un impacto real.</p>
+<h2 id="trabajo-actual">Trabajo Actual</h2>
+<p><strong>Asistente de Investigación en LiNAR, UdeSA</strong> (Ago 2025 – Presente)</p>
+<ul>
+<li>Investigando SLAM semántico y campos bayesianos</li>
+</ul>
+<p><strong>Científico de Datos Senior en SOFLEX</strong> (Jun 2025 – Presente)</p>
+<ul>
+<li>Diseñé un agente híbrido RAG+DSL en 200M incidentes 911; responde en &lt; 5s y 76% menos tiempo de análisis</li>
+<li>Construí ASR en tiempo real y clasificación de llamadas para 911, priorizando alertas críticas</li>
+<li>Investigando desruido, VAD y ASR streaming para endurecer transcripciones en entornos operativos ruidosos</li>
+</ul>
+<p><strong>Ingeniero de Machine Learning en PSAG</strong> (Abr 2025 – Presente)</p>
+<ul>
+<li>Desplegué OCR multimodal con LLMs de visión: 600 pallets/día con 99.8% de precisión</li>
+<li>Entrené YOLOv8 a 60 fps; 28% menos errores de etiquetado y alertas instantáneas para operadores</li>
+</ul>
+<h2 id="experiencia-anterior">Experiencia Anterior</h2>
+<p><strong>Líder de IA y Machine Learning en UK University Mexico</strong> (Ene 2025 – Jun 2025)</p>
+<ul>
+<li>Construí un clasificador de intenciones para 50k leads/mes; +17% de inscripciones e insights operacionales accionables</li>
+<li>Automatizé generación de cursos: de 1 a 280/semana con 99% menos tiempo de entrega</li>
+<li>Lideré estrategia de IA, stack y prototipado end-to-end; entregué MVPs en 1 día</li>
+</ul>
+<p><strong>Ingeniero de Inteligencia Artificial en Notimation</strong> (Oct 2023 – May 2024)</p>
+<ul>
+<li>Introduje LangChain y RAG, reduciendo prototipado de chatbots de 3 semanas a 3 días</li>
+<li>Diseñé orquestación de agentes, triplicando throughput y reduciendo costos de infraestructura en 30%</li>
+</ul>
+<h2 id="habilidades-y-tecnologías">Habilidades y Tecnologías</h2>
+<ul>
+<li><strong>Lenguajes</strong>: Python, C/C++, Java, JS/TS, CUDA</li>
+<li><strong>Frameworks</strong>: PyTorch, TensorFlow, Keras, LangChain/LangGraph, Django/Flask/FastAPI</li>
+<li><strong>Infraestructura</strong>: Docker, Kubernetes, vLLM, Pinecone, GCP, AWS</li>
+<li><strong>Especializaciones</strong>: NLP, Computer Vision, VAEs, GNNs, RL/Deep RL, Estadística Avanzada</li>
+</ul>
+<h2 id="educación-y-logros">Educación y Logros</h2>
+<p><strong>Universidad de San Andrés (UdeSA)</strong> - Licenciatura en Ingeniería de Inteligencia Artificial (2022 – 2027)</p>
+<ul>
+<li>Beca de mérito del 95%, GPA: 8.67/10</li>
+<li>Materias seleccionadas: NLP, Computer Vision, VAEs, GNNs, RL/Deep RL, Bases de Datos, Redes, Algoritmos</li>
+</ul>
+<p><strong>Programación Competitiva</strong></p>
+<ul>
+<li>Dos veces clasificado para Regional Latinoamericana, ICPC (2024, 2025)</li>
+<li>1er lugar, ITBA Computer Society Hackathon 2024</li>
+<li>1er lugar, ITBA Computer Society Game Jam 2023</li>
+<li>Valedictorian, cohorte de secundaria (GPA 9.53/10)</li>
+</ul>
+<h2 id="contacto">Contacto</h2>
+<ul>
+<li><strong>GitHub</strong>: <a href="https://github.com/frizynn">frizynn</a></li>
+<li><strong>LinkedIn</strong>: <a href="https://www.linkedin.com/in/lebrero-juan-francisco/">Juan Francisco Lebrero</a></li>
+<li><strong>Email</strong>: <a href="mailto:lebrerojuanfrancisco@gmail.com">lebrerojuanfrancisco@gmail.com</a></li>
+<li><strong>Ubicación</strong>: Buenos Aires, Argentina</li>
+</ul>
+
+</article>
+
+                
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 Juan Lebrero. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/es/about/">About</a>
+      <span class="separator">•</span>
+      <a href="/es/contact/">Contact</a>
+      <span class="separator">•</span>
+      <a href="/es/index.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+
+            </div>
+        </main>
+    </body>
+</html>

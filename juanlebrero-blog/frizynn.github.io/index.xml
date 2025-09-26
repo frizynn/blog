@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Juan Lebrero</title>
+    <link>https://juanlebrero.com/</link>
+    <description>Recent content on Juan Lebrero</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 13 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://juanlebrero.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Large-Scale Training: FSDP, QLoRA, and More.</title>
+      <link>https://juanlebrero.com/posts/train-at-scale/</link>
+      <pubDate>Sat, 13 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://juanlebrero.com/posts/train-at-scale/</guid>
+      <description>&lt;p&gt;To train models at scale you need a solid grip on a handful of ideas that decide both speed and stability. This walkthrough focuses on numeric precision, data parallelism, quantization, LoRA, and a few other pieces you actually use in practice.&lt;/p&gt;&#xA;&lt;h2 id=&#34;numeric-precision&#34;&gt;Numeric Precision&lt;/h2&gt;&#xA;&lt;p&gt;The numeric format you choose (FP32, FP16, BF16, FP8, INT8, and so on) drives throughput, memory footprint, and training stability. You cannot ignore it if you care about scaling. This section explains how precision works and how it shows up in real training runs.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>https://juanlebrero.com/about-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://juanlebrero.com/about-2/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m an AI/ML Engineer and Research Assistant at LiNAR, University of San Andrés (UdeSA), currently pursuing my B.Sc. in Artificial Intelligence Engineering. I&amp;rsquo;m passionate about building practical AI solutions that make a real impact.&lt;/p&gt;&#xA;&lt;h2 id=&#34;current-work&#34;&gt;Current Work&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Research Assistant at LiNAR, UdeSA&lt;/strong&gt; (Aug 2025 – Present)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Researching semantic SLAM and Bayesian fields&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Senior Data Scientist at SOFLEX&lt;/strong&gt; (Jun 2025 – Present)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Designed a hybrid RAG+DSL agent on 200M 911 incidents; answers in &amp;lt; 5s and 76% less analysis time&lt;/li&gt;&#xA;&lt;li&gt;Built real-time ASR and call classification for 911, prioritizing critical alerts&lt;/li&gt;&#xA;&lt;li&gt;Researching denoising, VAD, and streaming ASR to harden transcripts in noisy operational settings&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Machine Learning Engineer at PSAG&lt;/strong&gt; (Apr 2025 – Present)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>https://juanlebrero.com/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://juanlebrero.com/about/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m an AI/ML Engineer and Research Assistant at LiNAR, University of San Andrés (UdeSA), currently pursuing my B.Sc. in Artificial Intelligence Engineering. I&amp;rsquo;m passionate about building practical AI solutions that make a real impact.&lt;/p&gt;&#xA;&lt;h2 id=&#34;current-work&#34;&gt;Current Work&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Research Assistant at LiNAR, UdeSA&lt;/strong&gt; (Aug 2025 – Present)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Researching semantic SLAM and Bayesian fields&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Senior Data Scientist at SOFLEX&lt;/strong&gt; (Jun 2025 – Present)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Designed a hybrid RAG+DSL agent on 200M 911 incidents; answers in &amp;lt; 5s and 76% less analysis time&lt;/li&gt;&#xA;&lt;li&gt;Built real-time ASR and call classification for 911, prioritizing critical alerts&lt;/li&gt;&#xA;&lt;li&gt;Researching denoising, VAD, and streaming ASR to harden transcripts in noisy operational settings&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Machine Learning Engineer at PSAG&lt;/strong&gt; (Apr 2025 – Present)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>https://juanlebrero.com/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://juanlebrero.com/contact/</guid>
+      <description>&lt;h1 id=&#34;contact&#34;&gt;Contact&lt;/h1&gt;&#xA;&lt;p&gt;I&amp;rsquo;m always interested in connecting with fellow ML engineers, researchers, and anyone passionate about AI!&lt;/p&gt;&#xA;&lt;h2 id=&#34;get-in-touch&#34;&gt;Get in Touch&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Twitter/X&lt;/strong&gt;: &lt;a href=&#34;https://x.com/lebrious&#34;&gt;@lebrious&lt;/a&gt; - Quick updates and thoughts&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;LinkedIn&lt;/strong&gt;: &lt;a href=&#34;https://www.linkedin.com/in/lebrero-juan-francisco/&#34;&gt;Juan Francisco Lebrero&lt;/a&gt; - Professional networking&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: &lt;a href=&#34;mailto:contact@juanlebrero.com&#34;&gt;contact@juanlebrero.com&lt;/a&gt; - Direct communication&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;what-im-interested-in&#34;&gt;What I&amp;rsquo;m Interested In&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Collaboration&lt;/strong&gt;: Open to discussing ML projects and research&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Speaking&lt;/strong&gt;: Available for talks on large-scale training and ML engineering&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Consulting&lt;/strong&gt;: Interested in helping with ML infrastructure and training challenges&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Mentoring&lt;/strong&gt;: Happy to share knowledge and help others in the field&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;response-time&#34;&gt;Response Time&lt;/h2&gt;&#xA;&lt;p&gt;I typically respond to messages within 24-48 hours. For urgent matters, Twitter/X is usually the fastest way to reach me.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
