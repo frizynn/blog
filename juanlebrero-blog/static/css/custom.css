@@ -1,6 +1,7 @@
 /* Paper texture background - subtle and elegant */
+/* Default light mode */
 body {
-    background-color: #fefefe !important;
+    background-color: #f0f0f0 !important;
     background-image: 
         radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0),
         linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.01) 50%),
@@ -13,7 +14,7 @@ body {
 /* Dark mode paper texture */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #000000 !important;
+        background-color: #131212 !important;
         background-image: 
             radial-gradient(circle at 1px 1px, rgba(255,255,255,0.02) 1px, transparent 0),
             linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.01) 50%),
@@ -24,7 +25,7 @@ body {
     }
 }
 
-/* Override for theme switcher */
+/* Override for theme switcher - Light mode */
 body[a="light"] {
     background-color: #f0f0f0 !important;
     background-image: 
@@ -36,12 +37,25 @@ body[a="light"] {
     background-attachment: fixed;
 }
 
+/* Override for theme switcher - Dark mode */
 body[a="dark"] {
     background-color: #131212 !important;
     background-image: 
         radial-gradient(circle at 1px 1px, rgba(255,255,255,0.02) 1px, transparent 0),
         linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.01) 50%),
         linear-gradient(0deg, transparent 50%, rgba(255,255,255,0.01) 50%);
+    background-size: 20px 20px, 2px 2px, 2px 2px;
+    background-position: 0 0, 0 0, 0 0;
+    background-attachment: fixed;
+}
+
+/* Override for theme switcher - Auto mode (same as default) */
+body[a="auto"] {
+    background-color: #f0f0f0 !important;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(0,0,0,0.01) 50%);
     background-size: 20px 20px, 2px 2px, 2px 2px;
     background-position: 0 0, 0 0, 0 0;
     background-attachment: fixed;

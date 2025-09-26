@@ -61,21 +61,19 @@
   // Theme state management
   const THEME_KEY = 'theme-preference';
   const THEMES = {
-    AUTO: 'auto',
     LIGHT: 'light', 
     DARK: 'dark'
   };
   
   // Theme icons
   const ICONS = {
-    [THEMES.AUTO]: '🌓',
     [THEMES.LIGHT]: '☀️',
     [THEMES.DARK]: '🌙'
   };
   
-  // Get current theme from localStorage or default to auto
+  // Get current theme from localStorage or default to light
   function getCurrentTheme() {
-    return localStorage.getItem(THEME_KEY) || THEMES.AUTO;
+    return localStorage.getItem(THEME_KEY) || THEMES.LIGHT;
   }
   
   // Save theme preference
@@ -101,17 +99,14 @@
     let next;
     
     switch(current) {
-      case THEMES.AUTO:
-        next = THEMES.LIGHT;
-        break;
       case THEMES.LIGHT:
         next = THEMES.DARK;
         break;
       case THEMES.DARK:
-        next = THEMES.AUTO;
+        next = THEMES.LIGHT;
         break;
       default:
-        next = THEMES.AUTO;
+        next = THEMES.LIGHT;
     }
     
     saveTheme(next);
