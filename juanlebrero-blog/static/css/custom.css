@@ -61,3 +61,30 @@ body[a="auto"] {
     background-attachment: fixed;
 }
 
+/* Remove violet color from visited links - make them same as unvisited links */
+a:visited {
+    color: inherit !important;
+}
+
+/* Ensure visited links use the same color as unvisited links in both themes */
+body[a="dark"] a:visited {
+    color: #79a8ff !important; /* Same as unvisited link color in dark mode */
+}
+
+body[a="light"] a:visited {
+    color: #3548cf !important; /* Same as unvisited link color in light mode */
+}
+
+/* Handle auto mode for both light and dark preferences */
+@media (prefers-color-scheme: dark) {
+    body[a="auto"] a:visited {
+        color: #79a8ff !important; /* Dark mode unvisited link color */
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body[a="auto"] a:visited {
+        color: #3548cf !important; /* Light mode unvisited link color */
+    }
+}
+

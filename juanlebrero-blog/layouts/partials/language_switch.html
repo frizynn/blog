@@ -1,0 +1,27 @@
+{{- /* Language switcher linking to current page translation if available */ -}}
+{{- $lang := .Lang -}}
+{{- $translations := slice -}}
+{{- if .IsTranslated -}}
+  {{- $translations = .AllTranslations -}}
+{{- else -}}
+  {{- $translations = site.Home.AllTranslations -}}
+{{- end -}}
+{{- with $translations }}
+<div class="lang-switch-container">
+  <ul class="lang-switch">
+    {{- range . -}}
+    {{- if ne $lang .Lang }}
+    <li>
+      <a href="{{- .Permalink -}}" title="{{ .Language.Params.languageAltTitle | default (.Language.LanguageName | emojify) | default (.Lang | title) }}" aria-label="{{ .Language.LanguageName | default (.Lang | title) }}">
+        {{- if (and site.Params.displayFullLangName (.Language.LanguageName)) }}
+        {{- .Language.LanguageName | emojify -}}
+        {{- else }}
+        {{- .Lang | upper -}}
+        {{- end -}}
+      </a>
+    </li>
+    {{- end -}}
+    {{- end}}
+  </ul>
+</div>
+{{- end }}
