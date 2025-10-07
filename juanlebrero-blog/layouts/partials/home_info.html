@@ -1,10 +1,33 @@
 {{- /* Enhanced home info with improved hero section */}}
 {{- $p := or .Language.Params.homeInfoParams site.Params.homeInfoParams -}}
 {{- with $p }}
-<article class="first-entry home-info hero enhanced">
+<article class="first-entry home-info hero enhanced minimal">
   <header class="entry-header">
     <h1 class="hero-title">{{ .Title | markdownify }}</h1>
   </header>
+  {{- with .Content }}
+    <div class="entry-content">
+      {{ . | markdownify }}
+    </div>
+  {{- end }}
+
+  {{- $studySlug := cond (eq $.Site.Language.Lang "es") "estudiar" "study" -}}
+  {{- $studyPage := site.GetPage (printf "/%s" $studySlug) -}}
+  {{- if not $studyPage }}
+    {{- $studyPage = site.GetPage "page" $studySlug -}}
+  {{- end -}}
+  {{- $studyURL := "" -}}
+  {{- if $studyPage -}}
+    {{- $studyURL = $studyPage.RelPermalink -}}
+  {{- else -}}
+    {{- $studyURL = relLangURL (printf "/%s/" $studySlug) -}}
+  {{- end -}}
+  {{- if $studyURL }}
+    {{- $ctaLabel := cond (eq $.Site.Language.Lang "es") "Ir a Estudiar" "Go to Study" -}}
+    <div class="hero-actions">
+      <a class="link-cta" href="{{ $studyURL }}">{{ $ctaLabel }}</a>
+    </div>
+  {{- end }}
 </article>
 <div id="posts" aria-hidden="true"></div>
 {{- end -}}

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="
+La mayor parte del entrenamiento de LLMs usa reconstrucción en espacio de entrada, por ejemplo next-token prediction. En visión, en cambio, las arquitecturas de Joint Embedding Predictive Architectures aprendieron a entrenar en el espacio de embeddings con beneficios claros para la representación. El paper LLM-JEPA propone llevar esa idea a lenguaje y muestra mejoras consistentes en ajuste fino y señales prometedoras en preentrenamiento.
+A continuación te cuento qué es LLM-JEPA, por qué funciona, qué mejoras reporta, y cómo implementarlo en tu stack con LoRA, FSDP y precisión mixta.">  
+
+  <title>
+    
+      LLM-JEPA en la práctica: cómo sumar una pérdida en el espacio de embeddings mejora tus LLMs
+    
+  </title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.28a7439b9550b83d3a5c7595d7a696931ebc2a2ad3d4ca19111b9e621784331c7904e46b7aff95891dc7f536272d85359b62fe0fe14c1c1841e57d9799b774a6.css" integrity="sha512-KKdDm5VQuD06XHWV16aWkx68KirT1MoZERueYheEMxx5BORrev&#43;ViR3H9TYnLYU1m2L&#43;D&#43;FMHBhB5X2Xmbd0pg==" />
+  
+  
+  <link rel="stylesheet" href="/css/custom.css" />
+  
+   <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+</head>
+<body a="auto">
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+  <span class="theme-icon">🌙</span>
+</button>
+
+<style>
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background-color: var(--primary-text-color, #000);
+  color: var(--bg-color, #fff);
+  transform: scale(1.1);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--link-color, #3548cf);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: rotate(180deg);
+}
+
+ 
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1em;
+  }
+}
+</style>
+
+<script>
+(function() {
+  'use strict';
+  
+  
+  const THEME_KEY = 'theme-preference';
+  const THEMES = {
+    LIGHT: 'light', 
+    DARK: 'dark'
+  };
+  
+  
+  const ICONS = {
+    [THEMES.LIGHT]: '☀️',
+    [THEMES.DARK]: '🌙'
+  };
+  
+  
+  function getCurrentTheme() {
+    return localStorage.getItem(THEME_KEY) || THEMES.LIGHT;
+  }
+  
+  
+  function saveTheme(theme) {
+    localStorage.setItem(THEME_KEY, theme);
+  }
+  
+  
+  function applyTheme(theme) {
+    document.body.setAttribute('a', theme);
+  }
+  
+  
+  function updateButtonIcon(theme) {
+    const button = document.getElementById('theme-toggle');
+    const icon = button.querySelector('.theme-icon');
+    icon.textContent = ICONS[theme];
+  }
+  
+  
+  function cycleTheme() {
+    const current = getCurrentTheme();
+    let next;
+    
+    switch(current) {
+      case THEMES.LIGHT:
+        next = THEMES.DARK;
+        break;
+      case THEMES.DARK:
+        next = THEMES.LIGHT;
+        break;
+      default:
+        next = THEMES.LIGHT;
+    }
+    
+    saveTheme(next);
+    applyTheme(next);
+    updateButtonIcon(next);
+  }
+  
+  
+  function initTheme() {
+    const theme = getCurrentTheme();
+    applyTheme(theme);
+    updateButtonIcon(theme);
+  }
+  
+  
+  function addToggleListener() {
+    const button = document.getElementById('theme-toggle');
+    if (button) {
+      button.addEventListener('click', cycleTheme);
+    }
+  }
+  
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initTheme();
+      addToggleListener();
+    });
+  } else {
+    initTheme();
+    addToggleListener();
+  }
+})();
+</script>
+
+<div class="lang-switch-container">
+  <ul class="lang-switch">
+    <li><a href="/" title="English" aria-label="English">EN</a>
+    </li>
+  </ul>
+</div>
+<main class="page-content" aria-label="Content">
+            <div class="w"><nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol><li>
+      <a href="http://localhost:1313/es/">Juan Lebrero</a>
+    </li><li>
+      <a href="http://localhost:1313/es/posts/">Posts</a>
+    </li><li aria-current="page">LLM-JEPA en la práctica: cómo sumar una pérdida en el espacio de embeddings mejora tus LLMs</li>
+  </ol>
+</nav>
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-09-26 00:00:00 &#43;0000 UTC">
+            2025-09-26
+        </time>
+    </p>
+
+    <h1>LLM-JEPA en la práctica: cómo sumar una pérdida en el espacio de embeddings mejora tus LLMs</h1>
+
+    
+
+    <hr>
+<p>La mayor parte del entrenamiento de LLMs usa reconstrucción en espacio de entrada, por ejemplo next-token prediction. En visión, en cambio, las arquitecturas de <strong>Joint Embedding Predictive Architectures</strong> aprendieron a entrenar en el <strong>espacio de embeddings</strong> con beneficios claros para la representación. El paper <strong>LLM-JEPA</strong> propone llevar esa idea a lenguaje y muestra mejoras consistentes en ajuste fino y señales prometedoras en preentrenamiento.</p>
+<p>A continuación te cuento <strong>qué es LLM-JEPA</strong>, por qué funciona, qué mejoras reporta, y cómo implementarlo en tu stack con <strong>LoRA</strong>, <strong>FSDP</strong> y <strong>precisión mixta</strong>.</p>
+<hr>
+<h2 id="idea-central">Idea central</h2>
+<p>LLM-JEPA <strong>suma</strong> a la pérdida generativa estándar una <strong>pérdida JEPA</strong> que alinea vistas diferentes de la misma información en el espacio de embeddings. En NLP es natural usar pares <strong>Texto</strong> y <strong>Código</strong> como dos vistas de un mismo contenido, por ejemplo descripción en lenguaje natural y su regex o su consulta SQL.</p>
+<h3 id="la-pérdida">La pérdida</h3>
+<p>$$
+\mathcal{L}<em>{\text{LLM-JEPA}} ;=;
+\underbrace{\sum</em>{\ell=2}^{L}\mathcal{L}<em>{\text{LLM}}(\text{Text}</em>{1:\ell-1}, \text{Text}<em>{\ell})}</em>{\text{capacidad generativa}}
+;+;
+\lambda \cdot d!\left(\mathrm{Pred}(\mathrm{Enc}(\text{Text})), \mathrm{Enc}(\text{Code})\right)
+$$</p>
+<ul>
+<li><strong>Enc</strong>: embedding del último token de la última capa del LLM por cada vista.</li>
+<li><strong>Pred</strong>: predictor atado a los pesos del LLM, se materializa con <strong>tokens especiales [PRED]</strong> al final de la secuencia, lo que permite una proyección no lineal sin añadir cabezales externos.</li>
+<li><strong>d</strong>: distancia en embeddings, típicamente similitud coseno.</li>
+<li><strong>λ</strong>: peso que equilibra la pérdida JEPA y la generativa.</li>
+</ul>
+<p>En el apéndice introducen además <strong>γ</strong> para controlar explícitamente el peso de la parte generativa, lo que muestra que <strong>el término generativo sigue siendo esencial</strong> para que el modelo no colapse su salida.</p>
+<h3 id="coste-computacional">Coste computacional</h3>
+<p>Necesitás <strong>dos pases extra</strong> durante el entrenamiento para obtener Enc(Text) y Enc(Code). No afecta la inferencia. Los autores discuten posibles optimizaciones futuras con enmascarado de self-attention para evaluar todo en un único forward.</p>
+<hr>
+<h2 id="qué-reporta-el-paper">Qué reporta el paper</h2>
+<h3 id="mejora-en-ajuste-fino">Mejora en ajuste fino</h3>
+<p>LLM-JEPA supera de forma consistente al entrenamiento con pérdida generativa sola en múltiples datasets y familias de modelos, por ejemplo <strong>NL-RX</strong> para regex, <strong>GSM8K</strong> para razonamiento aritmético y <strong>Spider</strong> para Text-to-SQL, con Llama 3, Gemma 2, OpenELM y OLMo.</p>
+<p>Con <strong>LoRA</strong>, el método <strong>no solo sube la accuracy</strong>, también <strong>converge más rápido</strong>, y en <strong>rango 512</strong> alcanza la accuracy de full fine-tuning en NL-RX-SYNTH, mientras que la línea base con solo pérdida generativa queda por detrás.</p>
+<h3 id="señales-en-preentrenamiento">Señales en preentrenamiento</h3>
+<p>En <strong>preentrenamiento</strong> sobre NL-RX-SYNTH se observan mejoras frente a next-token prediction. También preentrenar con la pérdida JEPA sobre un dataset de <strong>paráfrasis</strong> mejora luego el rendimiento de ajuste fino en <strong>Rotten Tomatoes</strong> y <strong>Yelp</strong>, aun cuando el fine-tuning ya no usa el término JEPA.</p>
+<h3 id="por-qué-podría-funcionar">Por qué podría funcionar</h3>
+<p>El análisis de representaciones muestra que LLM-JEPA induce una <strong>transformación casi lineal</strong> entre <strong>Enc(Text)</strong> y <strong>Enc(Code)</strong>, con <strong>valores singulares</strong> marcadamente menores en la diferencia de embeddings. También se ve una <strong>estructura más clara</strong> en t-SNE para ambas vistas. En otras palabras, el modelo aprende un espacio donde las vistas se alinean de forma controlada, lo que puede explicar la generalización mejor.</p>
+<h3 id="limitaciones-y-trade-offs">Limitaciones y trade-offs</h3>
+<ul>
+<li><strong>Costo 3×</strong> en entrenamiento por los pases adicionales.</li>
+<li><strong>Tuning</strong> de dos hiperparámetros extra, λ y <strong>k</strong> (número de tokens [PRED] que actúan como predictor). El óptimo puede variar por dataset y modelo, aunque puntos adyacentes en la grilla tienden a rendir similar.</li>
+<li>Requiere datasets con <strong>vistas no triviales</strong> del mismo conocimiento, algo natural en Texto↔Código, pero menos directo en otras tareas.</li>
+</ul>
+<hr>
+<h2 id="cómo-llevar-llm-jepa-a-tu-stack">Cómo llevar LLM-JEPA a tu stack</h2>
+<h3 id="1-datos-construir-vistas">1. Datos, construir vistas</h3>
+<p>Usá pares que compartan semántica:</p>
+<ul>
+<li><strong>NL ↔ Regex</strong>, <strong>NL ↔ SQL</strong>, <strong>issue ↔ code diff</strong>, <strong>enunciado ↔ programa</strong>. Prepará prompts separados para cada vista y asegura alineación uno a uno.</li>
+</ul>
+<h3 id="2-modelo-y-precisión">2. Modelo y precisión</h3>
+<ul>
+<li>Cualquier LLM causal sirve.</li>
+<li>Entrená en <strong>bf16</strong> cuando el hardware lo permita, con acumulación de gradientes y <strong>gradient checkpointing</strong> en capas atencionales largas.</li>
+</ul>
+<h3 id="3-lora-y-fsdp">3. LoRA y FSDP</h3>
+<ul>
+<li><strong>LoRA</strong> para eficiencia, por ejemplo r en [64, 512]. El paper ve ganancias para todos los rangos evaluados.</li>
+<li><strong>FSDP</strong> o equivalente para sharding de parámetros y estados, sobre todo en modelos medianos o cuando sumás los pases extra de JEPA.</li>
+<li>Usa mixed precision en activaciones y mantén acumulación de gradientes en fp32 para estabilidad.</li>
+</ul>
+<h3 id="4-la-pérdida-en-código-versión-pytorch">4. La pérdida en código, versión PyTorch</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># supongamos un LLM causal que devuelve hidden_states de la última capa</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># y logits para next-token. k tokens [PRED] al final de la vista &#34;Text&#34;.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encode_last_hidden</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span> <span class="n">output_hidden_states</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># embedding del último token</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">hidden_states</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">predictor_with_pred_tokens</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_ids_with_pred</span><span class="p">,</span> <span class="n">attention_mask_with_pred</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids_with_pred</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask_with_pred</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">output_hidden_states</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># tomamos el embedding del último [PRED]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">hidden_states</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">loss_llm_jepa</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># batch contiene vistas tokenizadas: text_ids, code_ids</span>
+</span></span><span class="line"><span class="cl">    <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">batch</span><span class="o">.</span><span class="n">text_ids</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="n">batch</span><span class="o">.</span><span class="n">text_mask</span><span class="p">)</span><span class="o">.</span><span class="n">logits</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ntp</span> <span class="o">=</span> <span class="n">cross_entropy_shifted</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">text_labels</span><span class="p">)</span>   <span class="c1"># next-token prediction</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># encoder por vista</span>
+</span></span><span class="line"><span class="cl">    <span class="n">enc_text</span> <span class="o">=</span> <span class="n">encode_last_hidden</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">text_ids</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">text_mask</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">enc_code</span> <span class="o">=</span> <span class="n">encode_last_hidden</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">code_ids</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">code_mask</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># predictor con k tokens [PRED] ya añadidos en el preprocesamiento</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pred_text</span> <span class="o">=</span> <span class="n">predictor_with_pred_tokens</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                           <span class="n">batch</span><span class="o">.</span><span class="n">text_pred_ids</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                           <span class="n">batch</span><span class="o">.</span><span class="n">text_pred_mask</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                           <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># distancia por coseno</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jepa</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine_sim</span><span class="p">(</span><span class="n">pred_text</span><span class="p">,</span> <span class="n">enc_code</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">ntp</span> <span class="o">+</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">jepa</span>
+</span></span></code></pre></div><p><strong>Detalles importantes</strong></p>
+<ul>
+<li><strong>[PRED]</strong> deben ser IDs de tokens reservados, añadidos al final de la vista <strong>Text</strong> repetidos <strong>k</strong> veces.</li>
+<li>Para <strong>Enc(*)</strong> se usa el <strong>último hidden state del último token</strong> de cada vista, tal como en el paper.</li>
+<li><strong>Distancia</strong> por coseno sobre los embeddings.</li>
+<li><strong>γ y λ</strong> se tunean con una grilla pequeña, por ejemplo $k \in {0,1,2,3,4}$, $\lambda \in {0.5,1,2,4}$.</li>
+</ul>
+<h3 id="5-recetas-de-entrenamiento">5. Recetas de entrenamiento</h3>
+<ul>
+<li><strong>Búsqueda de LR</strong>: elegí el mejor LR con la línea base sin JEPA, reutilizalo para JEPA y barajá $k, \lambda$. Esta es la estrategia que siguen los autores.</li>
+<li><strong>LoRA</strong>: si el presupuesto es ajustado, empezá con r en 128 o 256. Los autores observan que añadir JEPA reduce overfitting y acelera la subida de accuracy con LoRA.</li>
+<li><strong>Early stopping</strong> por métrica de exact match o ejecución correcta en SQL, según tarea.</li>
+</ul>
+<h3 id="6-preentrenamiento-con-vistas-débiles">6. Preentrenamiento con vistas débiles</h3>
+<p>Si no tenés pares Texto↔Código, podés usar <strong>grupos de paráfrasis</strong> como vistas. El paper lo hace para luego ajustar en clasificación de sentimiento y ve mejoras, aun sin aplicar JEPA en el fine-tuning.</p>
+<hr>
+<h2 id="resultados-clave-para-tener-presentes">Resultados clave para tener presentes</h2>
+<ul>
+<li><strong>Sube accuracy</strong> en NL-RX, GSM8K y Spider en varias familias de modelos.</li>
+<li><strong>Con LoRA</strong> la ganancia es clara y llega a igualar full FT en r altos.</li>
+<li><strong>Preentrenar con JEPA</strong> sobre paráfrasis ayuda en downstream de clasificación.</li>
+<li><strong>Representaciones</strong> más estructuradas y alineadas entre vistas, con mapeo casi lineal.</li>
+<li><strong>Costo</strong>: tres forward por batch en entrenamiento, tuning de $k$ y $\lambda$.</li>
+</ul>
+<hr>
+<h2 id="checklist-rápida-para-producción">Checklist rápida para producción</h2>
+<ol>
+<li>Datos con vistas bien alineadas, por ejemplo Texto↔Regex o Texto↔SQL.</li>
+<li>LLM causal con extracción del último hidden state.</li>
+<li>Tokens <strong>[PRED]</strong> al final de la vista <strong>Text</strong> para el predictor atado.</li>
+<li>Pérdida $\mathcal{L} = \gamma \cdot \mathcal{L}_{\text{LLM}} + \lambda \cdot d(\mathrm{Pred}(\mathrm{Enc}(\text{Text})), \mathrm{Enc}(\text{Code}))$.</li>
+<li>Entrenamiento en <strong>bf16</strong>, <strong>FSDP</strong>, <strong>LoRA</strong> si el presupuesto lo pide.</li>
+<li>Grilla pequeña en $k, \lambda$, LR heredado de la línea base.</li>
+</ol>
+<hr>
+<h2 id="cierre">Cierre</h2>
+<p>LLM-JEPA es sencillo de integrar y ataca un ángulo complementario a la generación, la <strong>calidad de la representación</strong>. En tareas con vistas ricas, como Texto↔Código, ofrece una palanca pragmática para subir rendimiento con pocos cambios de arquitectura, con un costo claro en cómputo y tuning que suele amortizarse con LoRA y precisión mixta. Si ya tenés un pipeline de fine-tuning, añadir este término y dos loaders de vistas te deja listo para experimentar.</p>
+<p>¿Querés que lo deje listo en un repo de ejemplo con scripts de entrenamiento usando tu stack actual de FSDP y QLoRA, más un par de datasets Texto↔SQL y Texto↔Regex?</p>
+
+</article>
+
+                
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 Juan Lebrero. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/es/about/">About</a>
+      <span class="separator">•</span>
+      <a href="/es/contact/">Contact</a>
+      <span class="separator">•</span>
+      <a href="/es/index.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+
+            </div>
+        </main>
+    </body>
+</html>

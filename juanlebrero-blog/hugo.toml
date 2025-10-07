@@ -122,7 +122,7 @@ weight = 4
 [languages.en.params]
 [languages.en.params.homeInfoParams]
 Title = "Juan Francisco Lebrero"
-Content = "AI/ML Engineer & Research Assistant at LiNAR, UdeSA. Building autonomous vehicles with semantic SLAM, developing RAG+DSL agents for 911 systems, and deploying multimodal OCR solutions. ICPC Latin American qualifier, passionate about LLMs, computer vision, and large-scale ML systems."
+
 
 [languages.es.params]
 [languages.es.params.homeInfoParams]
