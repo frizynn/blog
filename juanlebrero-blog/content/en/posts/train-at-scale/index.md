@@ -1,7 +1,7 @@
 ---
 title: "Large-Scale Training: FSDP, QLoRA, and More."
 date: 2025-09-13T00:00:00Z
-draft: false
+draft: true
 type: post
 language: "en"
 author: "Juan Francisco Lebrero"

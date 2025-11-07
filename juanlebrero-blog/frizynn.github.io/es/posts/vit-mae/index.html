@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Imaginá intentar aprender un idioma viendo solo el 25% de cada oración. Suena como una idea terrible, ¿no?
+Bueno, resulta que esto es exactamente lo que hacen los Vision Transformer Masked Autoencoders (ViT-MAE) con las imágenes. El paper &ldquo;Masked Autoencoders Are Scalable Vision Learners&rdquo; de He et al. mostró algo bastante loco: si ocultás el 75% de una imagen (dividiéndola en parches y enmascarando aleatoriamente el 75% de ellos) y le pedís a un modelo que la reconstruya, obtenés representaciones visuales sorprendentemente poderosas.">  
+
+  <title>
+    
+      Haciendo sufrir a los autoencoders: El caso de los Masked Autoencoders
+    
+  </title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.28a7439b9550b83d3a5c7595d7a696931ebc2a2ad3d4ca19111b9e621784331c7904e46b7aff95891dc7f536272d85359b62fe0fe14c1c1841e57d9799b774a6.css" integrity="sha512-KKdDm5VQuD06XHWV16aWkx68KirT1MoZERueYheEMxx5BORrev&#43;ViR3H9TYnLYU1m2L&#43;D&#43;FMHBhB5X2Xmbd0pg==" />
+  
+  
+  <link rel="stylesheet" href="/css/custom.css" />
+  
+   <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+</head>
+<body a="auto">
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+  <span class="theme-icon">🌙</span>
+</button>
+
+<style>
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background-color: var(--primary-text-color, #000);
+  color: var(--bg-color, #fff);
+  transform: scale(1.1);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--link-color, #3548cf);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: rotate(180deg);
+}
+
+ 
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1em;
+  }
+}
+</style>
+
+<script>
+(function() {
+  'use strict';
+  
+  
+  const THEME_KEY = 'theme-preference';
+  const THEMES = {
+    LIGHT: 'light', 
+    DARK: 'dark'
+  };
+  
+  
+  const ICONS = {
+    [THEMES.LIGHT]: '☀️',
+    [THEMES.DARK]: '🌙'
+  };
+  
+  
+  function getCurrentTheme() {
+    return localStorage.getItem(THEME_KEY) || THEMES.LIGHT;
+  }
+  
+  
+  function saveTheme(theme) {
+    localStorage.setItem(THEME_KEY, theme);
+  }
+  
+  
+  function applyTheme(theme) {
+    document.body.setAttribute('a', theme);
+  }
+  
+  
+  function updateButtonIcon(theme) {
+    const button = document.getElementById('theme-toggle');
+    const icon = button.querySelector('.theme-icon');
+    icon.textContent = ICONS[theme];
+  }
+  
+  
+  function cycleTheme() {
+    const current = getCurrentTheme();
+    let next;
+    
+    switch(current) {
+      case THEMES.LIGHT:
+        next = THEMES.DARK;
+        break;
+      case THEMES.DARK:
+        next = THEMES.LIGHT;
+        break;
+      default:
+        next = THEMES.LIGHT;
+    }
+    
+    saveTheme(next);
+    applyTheme(next);
+    updateButtonIcon(next);
+  }
+  
+  
+  function initTheme() {
+    const theme = getCurrentTheme();
+    applyTheme(theme);
+    updateButtonIcon(theme);
+  }
+  
+  
+  function addToggleListener() {
+    const button = document.getElementById('theme-toggle');
+    if (button) {
+      button.addEventListener('click', cycleTheme);
+    }
+  }
+  
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initTheme();
+      addToggleListener();
+    });
+  } else {
+    initTheme();
+    addToggleListener();
+  }
+})();
+</script>
+
+<div class="lang-switch-container">
+  <ul class="lang-switch">
+    <li><a href="/posts/vit-mae/" title="English" aria-label="English">EN</a>
+    </li>
+  </ul>
+</div>
+<main class="page-content" aria-label="Content">
+            <div class="w"><nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol><li>
+      <a href="http://localhost:1313/es/">Juan Lebrero</a>
+    </li><li>
+      <a href="http://localhost:1313/es/posts/">Posts</a>
+    </li><li aria-current="page">Haciendo sufrir a los autoencoders: El caso de los Masked Autoencoders</li>
+  </ol>
+</nav>
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-11-06 00:00:00 &#43;0000 UTC">
+            2025-11-06
+        </time>
+    </p>
+
+    <h1>Haciendo sufrir a los autoencoders: El caso de los Masked Autoencoders</h1>
+
+    
+
+    <p>Imaginá intentar aprender un idioma viendo solo el 25% de cada oración. Suena como una idea terrible, ¿no?</p>
+<p>Bueno, resulta que esto es exactamente lo que hacen los Vision Transformer Masked Autoencoders (ViT-MAE) con las imágenes. El paper &ldquo;Masked Autoencoders Are Scalable Vision Learners&rdquo; de He et al. mostró algo bastante loco: si ocultás el 75% de una imagen (dividiéndola en parches y enmascarando aleatoriamente el 75% de ellos) y le pedís a un modelo que la reconstruya, obtenés representaciones visuales sorprendentemente poderosas.</p>
+<h2 id="arquitectura-general">Arquitectura General</h2>
+<p>ViT-MAE tiene tres componentes principales: patchificación, una arquitectura asimétrica encoder-decoder y una pérdida de reconstrucción. Vamos a ver cada uno en detalle.</p>
+<p>El siguiente diagrama ilustra la arquitectura completa y el flujo de datos:</p>
+<p><img src="/es/posts/vit-mae/example-arch-vitmae.png" alt="Figura 1: Arquitectura ViT-MAE">
+<br>
+<small><b>Figura 1:</b> El flujo de la arquitectura ViT-MAE: (1) Imagen de entrada con el 75% de los parches enmascarados, (2) Los parches visibles se extraen y se pasan al encoder, (3) El encoder procesa solo los parches visibles para producir embeddings ricos, (4) Se agregan tokens de máscara para los parches faltantes, (5) El decoder reconstruye todos los parches incluyendo los enmascarados, (6) Imagen final reconstruida con todos los parches rellenados.</small></p>
+<h3 id="patchificación-convirtiendo-imágenes-en-secuencias">Patchificación: Convirtiendo Imágenes en Secuencias</h3>
+<p>Los Vision Transformers tratan las imágenes como secuencias de parches, similar a cómo los modelos de lenguaje tratan el texto como secuencias de tokens. Cada parche se convierte en un token al que el transformer puede atender. Acá te muestro cómo podés <em>patchificar</em> una imagen en <code>pytorch</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">patchify</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">batch</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">height</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">width</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">unfold</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Unfold</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">patches</span> <span class="o">=</span> <span class="n">unfold</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">patches</span>
+</span></span></code></pre></div><p>Para una imagen RGB de 224x224 con parches de 16x16, obtenemos 196 parches (grid de 14x14). Cada parche se aplana en un vector de tamaño $3 \times 16 \times 16 = 768$ dimensiones. La operación <code>Unfold</code> extrae estos parches eficientemente, y transponemos para obtener el formato de secuencia <code>[batch, num_patches, patch_dim]</code>.</p>
+<p>La operación inversa, <code>unpatchify</code>, reconstruye la imagen a partir de los parches:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">unpatchify</span><span class="p">(</span><span class="n">patches</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">224</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">224</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">batch</span><span class="p">,</span> <span class="n">num_patches</span><span class="p">,</span> <span class="n">patch_size</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fold</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Fold</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">=</span> <span class="n">fold</span><span class="p">(</span><span class="n">patches</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span>
+</span></span></code></pre></div><h3 id="enmascaramiento-aleatorio-el-arte-de-ocultar">Enmascaramiento Aleatorio: El Arte de Ocultar</h3>
+<p>La idea del enmascaramiento es literalmente tapar parte de la imagen al azar, como si agarraras post-its y los pegaras encima. Básicamente, tomamos todos los parches, mezclamos el orden y elegimos unos pocos para dejar visibles; el resto los tapamos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">random_masking</span><span class="p">(</span><span class="n">num_patches</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">keep_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">perm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randperm</span><span class="p">(</span><span class="n">num_patches</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">keep</span> <span class="o">=</span> <span class="n">perm</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">num_patches</span> <span class="o">*</span> <span class="n">keep_ratio</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mask</span> <span class="o">=</span> <span class="n">perm</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">num_patches</span> <span class="o">*</span> <span class="n">keep_ratio</span><span class="p">):]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">restore</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">keep</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">restore</span>
+</span></span></code></pre></div><p>El truco está en <code>restore</code>: después de todo el lío de desordenar parches y ocultar unos cuantos, necesitamos devolver todo a su lugar original. El encoder solamente procesa los parches que dejamos destapados (<code>keep</code>), y el decoder tiene que &ldquo;adivinar&rdquo; cómo eran los tapados (<code>mask</code>) y volver a armar la secuencia como si nada. Por eso hace falta reordenar, así todo queda bien cuadradito al final.</p>
+<h3 id="dando-sentido-a-lo-visible-codificadores-y-mecanismos-de-atención">Dando Sentido a lo Visible: Codificadores y Mecanismos de Atención</h3>
+<p>El codificador, en pocas palabras, es un Vision Transformer típico que solo ve los parches que quedaron sin tapar:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_dim</span><span class="o">=</span><span class="mi">768</span><span class="p">,</span> <span class="n">d_e</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">heads</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">npos</span><span class="o">=</span><span class="mi">196</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">patch_embed</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">patch_dim</span><span class="p">,</span> <span class="n">d_e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pos_e</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">npos</span><span class="p">,</span> <span class="n">d_e</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">TransformerBlock</span><span class="p">(</span><span class="n">d_e</span><span class="p">,</span> <span class="n">heads</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="n">visible_indices</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">patch_embed</span><span class="p">(</span><span class="n">patches</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_e</span><span class="p">[:,</span> <span class="n">visible_indices</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">visible_tokens</span> <span class="o">=</span> <span class="n">tokens</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">visible_tokens</span> <span class="o">=</span> <span class="n">block</span><span class="p">(</span><span class="n">visible_tokens</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">visible_tokens</span>
+</span></span></code></pre></div><p>Fijate que los embeddings posicionales solo los sumamos para los parches que están visibles, o sea, los que el codificador sí puede ver. Justamente esa es la gracia: con solo el 25% de los parches, el encoder tiene que arreglárselas y tratar de entender la textura, la estructura y en general el contexto visual de la imagen. Si lo pensás, el modelo está obligado a volverse bastante &ldquo;vivo&rdquo; para exprimir al máximo lo poco que ve.</p>
+<p>Los bloques transformer en sí usan la típica atención multi-cabeza y un par de capas feed-forward, nada raro:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TransformerBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">mlp_mult</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pre_attention_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">self_attention</span> <span class="o">=</span> <span class="n">MHSA</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">heads</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pre_mlp_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">feed_forward</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">mlp_mult</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">self_attention</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_attention_norm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">feed_forward</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_mlp_norm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span>
+</span></span></code></pre></div><p>Algo que siempre quise probar (pero todavía no me puse) es una variante llamada <em>Deformable Attention</em>. Básicamente la idea es que, en vez de que cada token mire a todos los demás (como pasa en atención estándar, que termina siendo carísimo cuando hay muchos tokens), le decís que solo preste atención a los $k$ tokens más relevantes. Es como pasar de un &ldquo;todos contra todos&rdquo; a un &ldquo;solo miro a los importantes&rdquo;.</p>
+<p>Normalmente, la atención completa implica que cada consulta calcula scores con todos los tokens (si tenés $n$ tokens, es una matriz de $n \times n$). Eso es potente pero pesado, sobre todo si la secuencia es larga.</p>
+<p>En cambio, con Deformable Attention, cada token de consulta se conecta solo con $k$ tokens (y $k$ suele ser mucho menor que $n$), bajando la cuenta a $O(n \times k)$. La gracia es que el modelo aprende solito a elegir a cuáles mirar, y así queda un sistema mucho más eficiente, sin resignar tanta capacidad.</p>
+<p>Fijate este diagrama:</p>
+<p><img src="/es/posts/vit-mae/full-vs-def-att.png" alt="Figura 2: Atención Completa vs Atención Deformable">
+<br>
+<small><b>Figura 2:</b> Izquierda: atención completa (cada token mira a todos, la clásica matriz densa). Derecha: atención deformable con <i>k=4</i> (cada token solo mira a sus cuatro vecinos más útiles, y el patrón se adapta según la consulta). Así, podemos procesar imágenes grandes con menos recursos sin perder tanto en calidad.</small></p>
+<p>Del lado izquierdo, la atención completa es una marea de valores: cada consulta contra cada entrada (acá lo ves con una matriz $6 \times 6$). A la derecha, con deformable y $k=4$, cada consulta solo atiende a 4, formando una matriz mucho más liviana. Además, la ventana de atención puede correrse según cada token, porque el modelo aprende dónde conviene enfocarse.</p>
+<p>Este método se vuelve especialmente útil cuando trabajás con imágenes grandes y la cantidad de parches se dispara. En algún momento lo voy a implementar para comparar frente al transformer clásico, seguro da para un buen experimento.</p>
+<h3 id="reconstruyendo-lo-faltante-mask-tokens-y-recuperación-de-píxeles">Reconstruyendo lo Faltante: Mask Tokens y Recuperación de Píxeles</h3>
+<p>Acá es donde ocurre la magia de la reconstrucción: el decodificador. A diferencia del codificador, este módulo es más chiquito, con menos capas (por ejemplo, 8 en vez de 12) y un ancho menor (512 dimensiones vs 1024). ¿Por qué? Porque su laburo es más sencillo: agarrar las representaciones que salen del codificador y tratar de recuperar los valores de los píxeles originales.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_embedd</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">d_decoder</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                 <span class="n">npos</span><span class="o">=</span><span class="mi">196</span><span class="p">,</span> <span class="n">patch_dim</span><span class="o">=</span><span class="mi">768</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_embedd</span><span class="p">,</span> <span class="n">d_decoder</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">mask_token</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d_decoder</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pos_d</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">npos</span><span class="p">,</span> <span class="n">d_decoder</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">TransformerBlock</span><span class="p">(</span><span class="n">d_decoder</span><span class="p">,</span> <span class="n">heads</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_decoder</span><span class="p">,</span> <span class="n">patch_dim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible_embeddings</span><span class="p">,</span> <span class="n">visible_indices</span><span class="p">,</span> <span class="n">masked_indices</span><span class="p">,</span> <span class="n">restore_indices</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">visible_embeddings</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">projected_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="p">(</span><span class="n">visible_embeddings</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">num_patches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">visible_indices</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">masked_indices</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">full_sequence</span> <span class="o">=</span> <span class="n">projected_embeddings</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_patches</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                                        <span class="n">projected_embeddings</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># Ponemos los embeddings visibles en sus posiciones correspondientes</span>
+</span></span><span class="line"><span class="cl">        <span class="n">full_sequence</span><span class="p">[:,</span> <span class="n">visible_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">projected_embeddings</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># Ponemos el mask token (un vector aprendible) donde faltan parches</span>
+</span></span><span class="line"><span class="cl">        <span class="n">full_sequence</span><span class="p">[:,</span> <span class="n">masked_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask_token</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">batch_size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">masked_indices</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># Restauramos el orden espacial y sumamos los embeddings posicionales</span>
+</span></span><span class="line"><span class="cl">        <span class="n">full_sequence</span> <span class="o">=</span> <span class="n">full_sequence</span><span class="p">[:,</span> <span class="n">restore_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_d</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">full_sequence</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">block</span><span class="p">(</span><span class="n">decoder_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">decoder_input</span><span class="p">)</span>
+</span></span></code></pre></div><p>En resumen, el decodificador se encarga de tomar:</p>
+<ul>
+<li>Los embeddings que sí vio el codificador</li>
+<li>Los mask tokens, que son como &ldquo;placeholders&rdquo; aprendibles para los parches tapados</li>
+<li>Los embeddings posicionales, para recordar dónde va cada cosa</li>
+</ul>
+<p>El mask token es simplemente un vector aprendible — uno solo — que se copia todas las veces necesarias para tapar los huecos. Gracias a la atención del decodificador, estos mask tokens pueden mirar a los patches visibles y a los otros mask tokens, aprendiendo así a completar lo que falta en la imagen.</p>
+<h3 id="la-pérdida-aprendiendo-lo-que-importa">La Pérdida: Aprendiendo lo que Importa</h3>
+<p>La pérdida del modelo solo se fija en los parches de la imagen que fueron tapados, no en los que ya veía. Esto es re importante: si también le sumáramos la pérdida de los visibles, el modelo podría simplemente copiarlos tal cual y no aprendería nada útil.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mae_loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">target_patches</span><span class="p">,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="n">norm_pix_loss</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">norm_pix_loss</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Normalizamos cada parche usando su propia media y varianza</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mean_target</span> <span class="o">=</span> <span class="n">target_patches</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">var_target</span> <span class="o">=</span> <span class="n">target_patches</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unbiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">norm_target</span> <span class="o">=</span> <span class="p">(</span><span class="n">target_patches</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">mean_target</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">var_target</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">mean_pred</span> <span class="o">=</span> <span class="n">pred</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">var_pred</span> <span class="o">=</span> <span class="n">pred</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unbiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">norm_pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">mean_pred</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">var_pred</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">((</span><span class="n">norm_pred</span> <span class="o">-</span> <span class="n">norm_target</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">((</span><span class="n">pred</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">target_patches</span><span class="p">[:,</span> <span class="n">mask_idx</span><span class="p">,</span> <span class="p">:])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span></code></pre></div><p>Ese <code>norm_pix_loss</code> lo que hace es normalizar cada parche antes de calcular el error, así el modelo no se distrae con diferencias de brillo o color y se concentra en aprender la estructura de la imagen. Básicamente, en vez de pedirle que acierte el color exacto de una casa, le estamos pidiendo que entienda la forma y el patrón general.</p>
+<h2 id="por-qué-esto-funciona">Por Qué Esto Funciona</h2>
+<p>¿Por qué funciona tan bien ViT-MAE? Pensalo así: es como si te dieran un rompecabezas de 1000 piezas, pero solo te dejaran ver 250. No podés simplemente copiar lo que ves, tenés que adivinar y entender cómo encajan las partes que faltan. El modelo está obligado a captar el sentido general de la imagen, no pueden hacer trampa porque no hay de dónde copiar.</p>
+<p>La clave está en esta división de roles: el codificador (encoder) es el que de verdad piensa y trata de entender la info limitada que recibe. El decodificador es mucho más simple y solo ayuda a reconstruir la imagen al final. Durante el entrenamiento, usamos ambos. Después, solo nos quedamos con el codificador, que es el que aprendió realmente a “ver”.</p>
+<p>A diferencia de otros métodos más complejos, como el aprendizaje contrastivo, acá la consigna es directa: “Reconstruí lo que falta”. Los transformers son perfectos para esto porque se la bancan entendiendo relaciones entre partes de la imagen, incluso si la mayoría fue ocultada. Por eso, el modelo aprende representaciones visuales poderosas, a pesar de que se le oculta casi todo.</p>
+<h2 id="poniéndolo-todo-junto">Poniéndolo Todo Junto</h2>
+<p>Así sería el &ldquo;forward&rdquo; entero del modelo ViT-MAE:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ViTMAE</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 1. Convertimos la imagen en parches</span>
+</span></span><span class="line"><span class="cl">        <span class="n">patches</span> <span class="o">=</span> <span class="n">patchify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 2. Elegimos aleatoriamente qué parches dejar visibles y cuáles tapar</span>
+</span></span><span class="line"><span class="cl">        <span class="n">keep</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">restore</span> <span class="o">=</span> <span class="n">random_masking</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_patches</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_ratio</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">keep</span> <span class="o">=</span> <span class="n">keep</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">restore</span> <span class="o">=</span> <span class="n">restore</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 3. Solo los parches visibles pasan por el encoder</span>
+</span></span><span class="line"><span class="cl">        <span class="n">visible_patches</span> <span class="o">=</span> <span class="n">patches</span><span class="p">[:,</span> <span class="n">keep</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">visible_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">visible_patches</span><span class="p">,</span> <span class="n">keep</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 4. El decoder trata de reconstruir todos los parches (los visibles y los tapados)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">reconstructed_patches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">visible_embeddings</span><span class="p">,</span> <span class="n">keep</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">restore</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">reconstructed_patches</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="n">mask</span>
+</span></span></code></pre></div><p>En el entrenamiento, la gracia está en comparar la reconstrucción con los parches tapados (no con todos), sacar la pérdida, y hacer el backpropagation como siempre. Al final, el encoder aprende a sacar el jugo clave de imágenes medio ocultas, y eso después sirve un montón para tareas como clasificación, detección o segmentación, aunque no haya visto la mayoría de la imagen durante el pre-entrenamiento.</p>
+<h2 id="el-panorama-general">El Panorama General</h2>
+<p>En resumen, ViT-MAE es una idea tan simple que hasta parece absurda: tapá gran parte de la imagen y pedile al modelo que adivine el resto. Y resulta que eso lo obliga a aprender en serio, entendiendo la estructura y el significado de las imágenes, sin que nadie le diga qué es qué.</p>
+<p>Este método, por más raro que suene, funcionó tan bien que inspiró un montón de variantes: desde MAE para video hasta mezclas con texto y otros dominios. Los investigadores siguen probando cómo ocultar cosas para que los modelos aprendan mejor. Pero si lo pensás, el truco no cambia: escondé lo suficiente como para que el modelo no pueda hacer trampa, y dejá que resuelva el rompecabezas con lo poco que tiene. Si logra reconstruir una imagen a partir de solo un cuarto de los datos, está claro que entendió mucho más de lo que parece.</p>
+<p>Así que, quién te dice, la próxima vez que te quieras desafiar de verdad, probá tapar parte del problema. Si funciona para los transformers, capaz te sorprende a vos también.</p>
+
+</article>
+
+                
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 Juan Lebrero. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/es/about/">About</a>
+      <span class="separator">•</span>
+      <a href="/es/contact/">Contact</a>
+      <span class="separator">•</span>
+      <a href="/es/index.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+
+            </div>
+        </main>
+    </body>
+</html>

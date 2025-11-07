@@ -1,3 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Juan Lebrero</title><link>https://juanlebrero.com/es/posts/</link><description>Recent content in Posts on Juan Lebrero</description><generator>Hugo</generator><language>es</language><lastBuildDate>Sat, 13 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://juanlebrero.com/es/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Entrenamiento a Gran Escala: FSDP, QLoRA, y más.</title><link>https://juanlebrero.com/es/posts/train-at-scale/</link><pubDate>Sat, 13 Sep 2025 00:00:00 +0000</pubDate><guid>https://juanlebrero.com/es/posts/train-at-scale/</guid><description>&lt;p&gt;Para poder entrenar modelos a gran escala, necesitamos entender diversos conceptos que nos van a ayudar a optimizar el rendimiento y la estabilidad del entrenamiento. Por eso, vamos a ver conceptos como precisión numérica, paralelización de datos, cuantización, LoRA, y más.&lt;/p&gt;
-&lt;h2 id="precisión-numérica"&gt;Precisión numérica&lt;/h2&gt;
-&lt;p&gt;La elección del formato numérico (FP32, FP16, BF16, FP8, INT8, etc.) constituye uno de los factores más determinantes para el rendimiento, el uso de memoria y la estabilidad del entrenamiento de modelos de gran escala. Por eso, es importante entender como funciona la precisión numérica y como afecta al rendimiento de los modelos, lo que se explicará en esta sección.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Juan Lebrero</title>
+    <link>http://localhost:1313/es/posts/</link>
+    <description>Recent content in Posts on Juan Lebrero</description>
+    <generator>Hugo</generator>
+    <language>es</language>
+    <lastBuildDate>Thu, 06 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/es/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Haciendo sufrir a los autoencoders: El caso de los Masked Autoencoders</title>
+      <link>http://localhost:1313/es/posts/vit-mae/</link>
+      <pubDate>Thu, 06 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/es/posts/vit-mae/</guid>
+      <description>&lt;p&gt;Imaginá intentar aprender un idioma viendo solo el 25% de cada oración. Suena como una idea terrible, ¿no?&lt;/p&gt;&#xA;&lt;p&gt;Bueno, resulta que esto es exactamente lo que hacen los Vision Transformer Masked Autoencoders (ViT-MAE) con las imágenes. El paper &amp;ldquo;Masked Autoencoders Are Scalable Vision Learners&amp;rdquo; de He et al. mostró algo bastante loco: si ocultás el 75% de una imagen (dividiéndola en parches y enmascarando aleatoriamente el 75% de ellos) y le pedís a un modelo que la reconstruya, obtenés representaciones visuales sorprendentemente poderosas.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

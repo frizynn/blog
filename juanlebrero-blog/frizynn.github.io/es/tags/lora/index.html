@@ -1,7 +1,219 @@
-<!doctype html><html lang=es><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>LoRA</title><link rel="shortcut icon" type=image/x-icon href=/><link rel=stylesheet href=/css/main.5434bd314af44f6353b8b35a80419909bf984c0348babb07e3b86a5efd2fc42db5940d0d9b717d017ffd0d10fbd3ecc0940019697fd843005791d04967f8f4a4.css integrity="sha512-VDS9MUr0T2NTuLNagEGZCb+YTANIursH47hqXv0vxC21lA0Nm3F9AX/9DRD70+zAlAAZaX/YQwBXkdBJZ/j0pA=="><link rel=stylesheet href=/css/custom.css></head><body a=auto><button id=theme-toggle class=theme-toggle aria-label="Toggle theme">
-<span class=theme-icon>🌙</span></button><style>.theme-toggle{background:0 0;border:none;cursor:pointer;font-size:1.2em;padding:.5rem;border-radius:50%;transition:all .3s ease;position:fixed;top:1rem;right:1rem;z-index:1000;width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center}.theme-toggle:hover{background-color:var(--primary-text-color,#000);color:var(--bg-color,#fff);transform:scale(1.1)}.theme-toggle:focus{outline:2px solid var(--link-color,#3548cf);outline-offset:2px}.theme-icon{transition:transform .3s ease}.theme-toggle:hover .theme-icon{transform:rotate(180deg)}@media(max-width:768px){.theme-toggle{top:.5rem;right:.5rem;width:2rem;height:2rem;font-size:1em}}</style><script>(function(){"use strict";const t="theme-preference",e={LIGHT:"light",DARK:"dark"},r={[e.LIGHT]:"☀️",[e.DARK]:"🌙"};function n(){return localStorage.getItem(t)||e.LIGHT}function c(e){localStorage.setItem(t,e)}function s(e){document.body.setAttribute("a",e)}function o(e){const t=document.getElementById("theme-toggle"),n=t.querySelector(".theme-icon");n.textContent=r[e]}function l(){const i=n();let t;switch(i){case e.LIGHT:t=e.DARK;break;case e.DARK:t=e.LIGHT;break;default:t=e.LIGHT}c(t),s(t),o(t)}function i(){const e=n();s(e),o(e)}function a(){const e=document.getElementById("theme-toggle");e&&e.addEventListener("click",l)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",function(){i(),a()}):(i(),a())})()</script><div class=lang-switch-container><ul class=lang-switch><li><a href=/tags/lora/ title=English aria-label=English>EN</a></li></ul></div><main class=page-content aria-label=Content><div class=w><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=https://juanlebrero.com/es/>Juan Lebrero</a></li><li><a href=https://juanlebrero.com/es/tags/>Tags</a></li><li aria-current=page>LoRA</li></ol></nav><a href=/>..</a><h1>LoRA</h1><ul><li><span>2025-09-13</span>
-<a href=/es/posts/train-at-scale/>Entrenamiento a Gran Escala: FSDP, QLoRA, y más.</a></li></ul><footer class=footer><div class=footer-content><p>&copy; 2025 Juan Lebrero. All rights reserved.</p><div class=footer-links><a href=/es/about/>About</a>
-<span class=separator>•</span>
-<a href=/es/contact/>Contact</a>
-<span class=separator>•</span>
-<a href=/es/index.xml>RSS</a></div></div></footer></div></main></body></html>
+<!DOCTYPE html>
+<html lang="es"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+
+  <title>
+    
+      LoRA
+    
+  </title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.28a7439b9550b83d3a5c7595d7a696931ebc2a2ad3d4ca19111b9e621784331c7904e46b7aff95891dc7f536272d85359b62fe0fe14c1c1841e57d9799b774a6.css" integrity="sha512-KKdDm5VQuD06XHWV16aWkx68KirT1MoZERueYheEMxx5BORrev&#43;ViR3H9TYnLYU1m2L&#43;D&#43;FMHBhB5X2Xmbd0pg==" />
+  
+  
+  <link rel="stylesheet" href="/css/custom.css" />
+  
+  
+</head>
+<body a="auto">
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+  <span class="theme-icon">🌙</span>
+</button>
+
+<style>
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background-color: var(--primary-text-color, #000);
+  color: var(--bg-color, #fff);
+  transform: scale(1.1);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--link-color, #3548cf);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: rotate(180deg);
+}
+
+ 
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1em;
+  }
+}
+</style>
+
+<script>
+(function() {
+  'use strict';
+  
+  
+  const THEME_KEY = 'theme-preference';
+  const THEMES = {
+    LIGHT: 'light', 
+    DARK: 'dark'
+  };
+  
+  
+  const ICONS = {
+    [THEMES.LIGHT]: '☀️',
+    [THEMES.DARK]: '🌙'
+  };
+  
+  
+  function getCurrentTheme() {
+    return localStorage.getItem(THEME_KEY) || THEMES.LIGHT;
+  }
+  
+  
+  function saveTheme(theme) {
+    localStorage.setItem(THEME_KEY, theme);
+  }
+  
+  
+  function applyTheme(theme) {
+    document.body.setAttribute('a', theme);
+  }
+  
+  
+  function updateButtonIcon(theme) {
+    const button = document.getElementById('theme-toggle');
+    const icon = button.querySelector('.theme-icon');
+    icon.textContent = ICONS[theme];
+  }
+  
+  
+  function cycleTheme() {
+    const current = getCurrentTheme();
+    let next;
+    
+    switch(current) {
+      case THEMES.LIGHT:
+        next = THEMES.DARK;
+        break;
+      case THEMES.DARK:
+        next = THEMES.LIGHT;
+        break;
+      default:
+        next = THEMES.LIGHT;
+    }
+    
+    saveTheme(next);
+    applyTheme(next);
+    updateButtonIcon(next);
+  }
+  
+  
+  function initTheme() {
+    const theme = getCurrentTheme();
+    applyTheme(theme);
+    updateButtonIcon(theme);
+  }
+  
+  
+  function addToggleListener() {
+    const button = document.getElementById('theme-toggle');
+    if (button) {
+      button.addEventListener('click', cycleTheme);
+    }
+  }
+  
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initTheme();
+      addToggleListener();
+    });
+  } else {
+    initTheme();
+    addToggleListener();
+  }
+})();
+</script>
+
+<div class="lang-switch-container">
+  <ul class="lang-switch">
+    <li><a href="/tags/lora/" title="English" aria-label="English">EN</a>
+    </li>
+  </ul>
+</div>
+<main class="page-content" aria-label="Content">
+            <div class="w"><nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol><li>
+      <a href="http://localhost:1313/es/">Juan Lebrero</a>
+    </li><li>
+      <a href="http://localhost:1313/es/tags/">Tags</a>
+    </li><li aria-current="page">LoRA</li>
+  </ol>
+</nav>
+<a href="/">..</a>
+
+
+<h1>LoRA</h1>
+
+
+
+    <ul><li>
+            <span>2025-09-13</span>
+            <a href="/es/posts/train-at-scale/">Entrenamiento a Gran Escala: FSDP, QLoRA, y más.</a>
+        </li>
+        
+    </ul>
+
+
+
+                
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 Juan Lebrero. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/es/about/">About</a>
+      <span class="separator">•</span>
+      <a href="/es/contact/">Contact</a>
+      <span class="separator">•</span>
+      <a href="/es/index.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+
+            </div>
+        </main>
+    </body>
+</html>

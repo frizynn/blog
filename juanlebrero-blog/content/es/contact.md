@@ -5,27 +5,25 @@ type: "page"
 language: "es"
 ---
 
-# Contacto
+Siempre me entusiasma conectar con otros ingenieros de Machine Learning, investigadores o cualquier persona apasionada por la inteligencia artificial.
 
-¡Siempre estoy interesado en conectar con otros ingenieros ML, investigadores y cualquiera apasionado por la IA!
+## Cómo contactarme
 
-## Ponte en Contacto
+- **Twitter/X**: [@lebrious](https://x.com/lebrious) – Para novedades rápidas y reflexiones
+- **LinkedIn**: [Juan Francisco Lebrero](https://www.linkedin.com/in/lebrero-juan-francisco/) – Para networking profesional
+- **Email**: [lebrerojuanfrancisco@gmail.com](mailto:lebrerojuanfrancisco@gmail.com) – Para comunicación directa
 
-- **Twitter/X**: [@lebrious](https://x.com/lebrious) - Actualizaciones rápidas y pensamientos
-- **LinkedIn**: [Juan Francisco Lebrero](https://www.linkedin.com/in/lebrero-juan-francisco/) - Networking profesional
-- **Email**: [contact@juanlebrero.com](mailto:contact@juanlebrero.com) - Comunicación directa
+## Qué me interesa
 
-## En qué estoy Interesado
+- **Colaboración**: Siempre abierto a debatir proyectos o ideas relacionadas con ML e investigación
+- **Charlas**: Disponible para conferencias o charlas sobre entrenamiento a gran escala e ingeniería ML
+- **Consultoría**: Interesado en asesorar sobre infraestructura para ML y resolver retos de entrenamiento
+- **Mentoría**: Me encanta compartir lo que sé y ayudar a quienes empiezan o quieren profundizar en esta área
 
-- **Colaboración**: Abierto a discutir proyectos ML e investigación
-- **Charlas**: Disponible para hablar sobre entrenamiento a gran escala e ingeniería ML
-- **Consultoría**: Interesado en ayudar con infraestructura ML y desafíos de entrenamiento
-- **Mentoría**: Feliz de compartir conocimiento y ayudar a otros en el campo
+## Tiempo de respuesta
 
-## Tiempo de Respuesta
-
-Típicamente respondo a mensajes en 24-48 horas. Para asuntos urgentes, Twitter/X suele ser la forma más rápida de contactarme.
+Suelo responder los mensajes en 24-48 horas. Si es algo urgente, el correo suele ser el canal más rápido.
 
 ---
 
-*¡Espero saber de ti!*
+*¡Será un gusto saber de vos!*

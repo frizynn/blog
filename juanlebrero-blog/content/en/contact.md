@@ -5,7 +5,6 @@ type: "page"
 language: "en"
 ---
 
-# Contact
 
 I'm always interested in connecting with fellow ML engineers, researchers, and anyone passionate about AI!
 
@@ -13,7 +12,7 @@ I'm always interested in connecting with fellow ML engineers, researchers, and a
 
 - **Twitter/X**: [@lebrious](https://x.com/lebrious) - Quick updates and thoughts
 - **LinkedIn**: [Juan Francisco Lebrero](https://www.linkedin.com/in/lebrero-juan-francisco/) - Professional networking
-- **Email**: [contact@juanlebrero.com](mailto:contact@juanlebrero.com) - Direct communication
+- **Email**: [lebrerojuanfrancisco@gmail.com](mailto:lebrerojuanfrancisco@gmail.com) - Direct communication
 
 ## What I'm Interested In
 
@@ -24,7 +23,7 @@ I'm always interested in connecting with fellow ML engineers, researchers, and a
 
 ## Response Time
 
-I typically respond to messages within 24-48 hours. For urgent matters, Twitter/X is usually the fastest way to reach me.
+I typically respond to messages within 24-48 hours. For urgent matters, Mail is usually the fastest way to reach me.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Entrenamiento a Gran Escala: FSDP, QLoRA, y más."
 date: 2025-09-13T00:00:00Z
-draft: false
+draft: true
 type: post
 language: "es"
 author: "Juan Francisco Lebrero"
@@ -13,20 +13,20 @@ mathjax: true
 
 
 
-Para poder entrenar modelos a gran escala, necesitamos entender diversos conceptos que nos van a ayudar a optimizar el rendimiento y la estabilidad del entrenamiento. Por eso, vamos a ver conceptos como precisión numérica, paralelización de datos, cuantización, LoRA, y más.
+Para poder entrenar modelos a gran escala, necesitamos entender varios conceptos que nos van a ayudar a optimizar el rendimiento y la estabilidad del entrenamiento. Por eso, vamos a ver conceptos como precisión numérica, paralelización de datos, cuantización, LoRA, y más.
 
 
 ## Precisión numérica
 
 
-La elección del formato numérico (FP32, FP16, BF16, FP8, INT8, etc.) constituye uno de los factores más determinantes para el rendimiento, el uso de memoria y la estabilidad del entrenamiento de modelos de gran escala. Por eso, es importante entender como funciona la precisión numérica y como afecta al rendimiento de los modelos, lo que se explicará en esta sección.
+La elección del formato numérico (FP32, FP16, BF16, FP8, INT8, etc.) es uno de los factores más importantes para el rendimiento, el uso de memoria y la estabilidad del entrenamiento de modelos de gran escala. Por eso, es clave entender cómo funciona la precisión numérica y cómo afecta al rendimiento de los modelos, lo que vamos a ver en esta sección.
 
 
 
 ### ¿Por qué Importa la Precisión?
 
 
-¿Como representarías el número $\pi$, un número con decimales INFINITOS, en algo FINITO como lo es una computadora? De está pregunta, surge como respuesta el punto flotante.
+¿Cómo representarías el número $\pi$, un número con decimales INFINITOS, en algo FINITO como lo es una computadora? De esta pregunta surge como respuesta el punto flotante.
 
 Los números representados con punto flotante representan, de manera aproximada, a los números reales, y lo hacen con dos componentes clave: la _mantisa_ y el _exponente_.
 
@@ -62,14 +62,11 @@ Pero, ¿por qué nos interesa a nosotros?
 
 Bueno, hay tres razones principales por las que la precisión numérica es crucial en el entrenamiento de modelos de gran escala:
 
-
 - **Eficiencia computacional**: Los formatos de menor ancho de bits aceleran el cómputo en Tensor Cores/TPUs y reducen bastante el uso de memoria.
-
 
 - **Estabilidad numérica**: Básicamente, si el formato de número no tiene suficiente rango o detalle, los números pueden volverse demasiado grandes, demasiado chiquitos o perder precisión, lo que puede causar errores o resultados raros durante el entrenamiento.
 
-
-- **Escabilidad**: Cuando entrenamos LLMs a gran escala, aprovechar la precisión mixta es crucial para que el costo computacional no se nos vaya a la luna.
+- **Escalabilidad**: Cuando entrenamos LLMs a gran escala, aprovechar la precisión mixta es clave para que el costo computacional no se nos vaya a la luna.
 
 <figure>
  <img src="images/floating_point.png" alt="Comparativa de formatos de punto flotante: BF16, FP32 y FP16">
@@ -107,7 +104,7 @@ Guarda los números de una forma parecida a FP32 (el formato “normal”), pero
 ## Comparación de precisiones
 
 
-Para comparar las precisiones, voy a usar JAX, un framework de ML hecho por Google, que permite realizar operaciones de manera eficiente en GPUs y TPUs. La razón de utilizar JAX y no PyTorch, por ejemplo, es que JAX nos permitirá más adelante ver en "crudo" la paralelización de las operaciones y la optimización de la memoria.
+Para comparar las precisiones, voy a usar JAX, un framework de ML hecho por Google, que permite realizar operaciones de manera eficiente en GPUs y TPUs. La razón de usar JAX y no PyTorch, por ejemplo, es que JAX nos va a permitir más adelante ver en "crudo" la paralelización de las operaciones y la optimización de la memoria.
 
 
 Primero, importamos JAX y vemos la versión y el backend, así como los dispositivos disponibles:
@@ -258,7 +255,7 @@ A simple vista, uno pensaría que este blog no sirve de nada y que todo lo que d
 3. **En GPU es al revés**: En las GPUs, FP16 y BF16 son mucho más rápidos porque el hardware tiene partes especiales (como Tensor Cores en NVIDIA) que están hechas para trabajar con estos formatos de baja precisión y pueden hacer muchas operaciones a la vez, usando menos memoria y ancho de banda.
 
 
-Para que lo comprueben ustedes mismos, si se ejecutan las pruebas en una GPU usando matrices de dimensiones mucho mayores, se va a ver la diferencia. A continuación muestro una gráfica que la ilustra claramente medido en TFLOPS (Teraflops), calculado como el número de operaciones de punto flotante por segundo.
+Para que lo comprueben ustedes mismos, si ejecutan las pruebas en una GPU usando matrices de dimensiones mucho mayores, van a ver la diferencia. Acá abajo muestro una gráfica que lo ilustra claramente medido en TFLOPS (Teraflops), calculado como el número de operaciones de punto flotante por segundo.
 
 
 <div style="display: flex; justify-content: center;">
@@ -271,7 +268,7 @@ Para que lo comprueben ustedes mismos, si se ejecutan las pruebas en una GPU usa
 </div>
 
 
-Por útimo, a modo de conclusión de esta sección, les dejo un ejemplo de implementación de precisión mixta, que es lo que suele hacerse en la práctica para entrenar modelos a gran escala.
+Por último, a modo de conclusión de esta sección, les dejo un ejemplo de implementación de precisión mixta, que es lo que suele hacerse en la práctica para entrenar modelos a gran escala.
 
 La idea central es simple: las partes del modelo que requieren estabilidad numérica se calculan en FP32, mientras que los resultados intermedios, gradientes y parámetros se almacenan en FP16 o BF16, aprovechando así el ahorro de memoria y el mayor throughput del hardware.
 
@@ -294,7 +291,7 @@ def mixed_precision_forward_pass(x, W, b):
 # Cuantización
 
 
-Cuando entrenamos modelos, solemos utilizar FP32 para los pesos y FP16 para los gradientes, pero al llevar el modelo a producción surge un desafío: necesitamos reducir el consumo de memoria y la latencia sin sacrificar la calidad. Acá entra en juego la cuantización. Este proceso consiste en representar los pesos y activaciones con menos bits, lo que permite ahorrar memoria y acelerar la inferencia, a cambio de introducir un pequeño error numérico controlado.
+Cuando entrenamos modelos, solemos usar FP32 para los pesos y FP16 para los gradientes, pero al llevar el modelo a producción surge un desafío: necesitamos reducir el consumo de memoria y la latencia sin sacrificar la calidad. Acá entra en juego la cuantización. Este proceso consiste en representar los pesos y activaciones con menos bits, lo que permite ahorrar memoria y acelerar la inferencia, a cambio de introducir un pequeño error numérico controlado.
 
 Hay 2 enfoques principales: Post Training Quantization (PTQ) y Quantization Aware Training (QAT).
 
@@ -376,7 +373,7 @@ En PTQ el paso crítico es calibrar correctamente las activaciones. Una estrateg
   </p>
 </div>
 
-PTQ es rápido y útil cuando la caída de desempeño es chiquita; si no alcanza, se recurre a QAT.
+PTQ es rápido y útil cuando la caída de desempeño es chica; si no alcanza, se recurre a QAT.
 
 
 
@@ -400,7 +397,7 @@ $$</div>
 
 donde $u=\tfrac{w}{s}+z$ es la versión escalada y desplazada de $w$ para pasar por el cuantizador, $s>0$ es la escala y $z$ es el zero point que alinea el cero real con un entero. $[q_{\min},q_{\max}]$ es el rango entero permitido por el ancho de bits. $\tilde w$ es la versión de $w$ de-cuantizada que se usa para computar la salida y la pérdida. El forward siempre se hace con $\tilde w$, no con $w$ directo.
 
-Como $\operatorname{round}$ y $\operatorname{clip}$ no son diferenciables en sentido estricto, QAT usa el estimador <a href="https://hassanaskary.medium.com/intuitive-explanation-of-straight-through-estimators-with-pytorch-implementation-71d99d25d9d0" target="_blank">straight through</a> en el backward. La idea es dejar pasar gradiente como si el redondeo fuera la identidad y hacer que el clip tenga derivada uno dentro del rango útil y cero en saturación. Con $u=\tfrac{w}{s}+z$ queda
+Como $\operatorname{round}$ y $\operatorname{clip}$ no son diferenciables en sentido estricto, QAT usa el estimador <a href="https://hassanaskary.medium.com/intuitive-explanation-of-straight-through-estimators-with-pytorch-implementation-71d99d25d9d0" target="_blank">straight through</a> en el backward. La idea es dejar pasar gradiente como si el redondeo fuera la identidad y hacer que el clip tenga derivada uno dentro del rango útil y cero en saturación. Con $u=\tfrac{w}{s}+z$ nos queda
 
 <div class="math">$$
 \frac{\partial \tilde w}{\partial w}\ \approx\ 
@@ -439,7 +436,7 @@ Definimos una capa lineal con pesos $W\in\mathbb{R}^{C_o\times C_i}$ que recibe 
   \(X\in\mathbb{R}^{T\times C_i}\) son activaciones y \(W\in\mathbb{R}^{C_o\times C_i}\) son pesos. Arriba se ilustra per-tensor, con \(\Delta X[1]\) y \(\Delta W[1]\) como escalas únicas para todo \(X\) y todo \(W\). Abajo se muestra per-token más per-channel, con \(\Delta X[T\times 1]\) como una escala por fila de \(X\) y \(\Delta W[1\times C_o]\) como una escala por canal de salida de \(W\). Las zonas punteadas indican el alcance de cada escala.
 </p>
 
-Por último, todo esto se entrena como riesgo empírico con mini batches y con el mismo esquema de cuantización usado en el forward. En cada paso se calcula la salida con $\tilde w=s\,(q-z)$ aplicando las escalas per-tensor o per-channel de los pesos y, si corresponde, per-token en las activaciones; se evalúa la pérdida; y se hace backward con STE. El problema queda
+Por último, todo esto se entrena como riesgo empírico con mini batches y con el mismo esquema de cuantización usado en el forward. En cada paso se calcula la salida con $\tilde w=s\,(q-z)$ aplicando las escalas per-tensor o per-channel de los pesos y, si corresponde, per-token en las activaciones; se evalúa la pérdida; y se hace backward con STE. El problema nos queda
 
 <div class="math">$$
 \min_{w}\ \frac{1}{B}\sum_{i=1}^{B} L\big(f_{\tilde w}(x_i),\,y_i\big),
