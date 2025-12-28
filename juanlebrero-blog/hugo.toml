@@ -1,4 +1,5 @@
 baseURL = 'https://juanlebrero.com/'
+publishDir = 'frizynn.github.io'
 languageCode = 'en-us'
 title = 'Juan Lebrero'
 theme = 'hugo-theme-nostyleplease'

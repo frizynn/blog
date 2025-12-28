@@ -1,0 +1,14 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+
+# Hugo generated - public goes to frizynn.github.io submodule
+public/
+resources/_gen/
+
+# Hugo lock file
+.hugo_build.lock
+
+# OpenCode
+.opencode/

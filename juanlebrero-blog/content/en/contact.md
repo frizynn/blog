@@ -10,7 +10,6 @@ I'm always interested in connecting with fellow ML engineers, researchers, and a
 
 ## Get in Touch
 
-- **Twitter/X**: [@lebrious](https://x.com/lebrious) - Quick updates and thoughts
 - **LinkedIn**: [Juan Francisco Lebrero](https://www.linkedin.com/in/lebrero-juan-francisco/) - Professional networking
 - **Email**: [lebrerojuanfrancisco@gmail.com](mailto:lebrerojuanfrancisco@gmail.com) - Direct communication
 

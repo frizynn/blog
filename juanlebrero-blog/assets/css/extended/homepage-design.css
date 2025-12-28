@@ -1,0 +1,67 @@
+/* Homepage Design Override */
+
+/* Ensure the main container takes up full height for vertical centering */
+.page-content {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    animation: fadeIn 1.2s ease-out;
+}
+
+.homepage-content .home-quote {
+    font-family: 'Italiana', serif;
+    font-size: 3.2rem;
+    line-height: 1.2;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--primary-text-color);
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+.homepage-content .home-quote cite {
+    display: block;
+    font-family: monospace;
+    /* Monospace for the cite matches the blog vibe better */
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 1.5rem;
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hide the default page title if it appears automatically */
+.first-entry.home-info {
+    display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .homepage-content .home-quote {
+        font-size: 2rem;
+    }
+}

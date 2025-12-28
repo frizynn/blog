@@ -2,13 +2,10 @@
 {{- $p := or .Language.Params.homeInfoParams site.Params.homeInfoParams -}}
 {{- with $p }}
 <article class="first-entry home-info hero enhanced minimal">
-  <header class="entry-header">
-    <h1 class="hero-title">{{ .Title | markdownify }}</h1>
-  </header>
   {{- with .Content }}
-    <div class="entry-content">
-      {{ . | markdownify }}
-    </div>
+  <div class="entry-content">
+    {{ . | markdownify }}
+  </div>
   {{- end }}
 
 </article>

@@ -1,3 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+@import "extended/homepage-design.css";
+
+/* Header Controls Alignment & Aura */
+.header-controls {
+  position: fixed;
+  top: 1.5rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 1000;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 1;
+    transform: none !important;
+    /* Reset any previous transform */
+    background: none !important;
+  }
+}
+
+.lang-switch {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-decoration: none !important;
+    opacity: 0.7;
+    color: currentColor;
+    border: none !important;
+    /* Reset border */
+    background: none !important;
+    /* Reset background */
+    padding: 0 !important;
+
+    &:hover {
+      opacity: 1;
+      text-decoration: underline !important;
+    }
+  }
+}
+
 // -------------- THEME SWITCHER -------------- //
 @mixin theme($--bg-color, $--primary-text-color, $--secondary-text-color, $--link-color, $--visited-link-color, $--highlight) {
   background-color: $--bg-color;
@@ -5,8 +73,18 @@
   color: $--primary-text-color;
 
   a {
-    color: $--link-color;
-    &:visited { color: $--visited-link-color; }
+    color: currentColor;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: currentColor;
+    }
   }
 
   details {
@@ -33,9 +111,11 @@
   *:target {
     background: $--highlight;
     color: $--primary-text-color;
-   }
+  }
 
-  table, th, td {
+  table,
+  th,
+  td {
     border: thin solid $--primary-text-color;
   }
 
@@ -44,7 +124,9 @@
     padding: 1rem;
   }
 
-  figcaption { color: $--secondary-text-color; }
+  figcaption {
+    color: $--secondary-text-color;
+  }
 
   blockquote {
     border: thin solid $--primary-text-color;
@@ -59,20 +141,31 @@
   @include theme(#ffffff, #000000, #595959, #3548cf, #8f0075, #dae5ec); // modus-operandi
 }
 
-body[a="dark"] { @include dark-appearance; }
-body[a="light"] { @include light-appearance; }
+body[a="dark"] {
+  @include dark-appearance;
+}
+
+body[a="light"] {
+  @include light-appearance;
+}
 
 @media (prefers-color-scheme: dark) {
-  body[a="auto"] { @include dark-appearance; }
+  body[a="auto"] {
+    @include dark-appearance;
+  }
 }
 
 @media (prefers-color-scheme: light) {
-  body[a="auto"] { @include light-appearance; }
+  body[a="auto"] {
+    @include light-appearance;
+  }
 }
 
 // -------------------------------------------- //
 
-html { height: 100%; }
+html {
+  height: 100%;
+}
 
 body {
   font-family: monospace;
@@ -83,15 +176,28 @@ body {
   overflow-wrap: break-word;
 }
 
-h2, h3, h4, h5, h6 { margin-top: 1.5rem; }
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 1.5rem;
+}
 
-p { margin: 1rem 0; }
+p {
+  margin: 1rem 0;
+}
 
-li { margin: 0.4rem 0; }
+li {
+  margin: 0.4rem 0;
+}
 
 a {
   text-decoration: none;
-  &:hover { text-decoration: underline; }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 hr {
@@ -99,18 +205,28 @@ hr {
   border: 0;
   margin: 2rem 0;
 
-  &:before { content: '/////' }
-  &:after { content: attr(data-content) '/////' }
+  &:before {
+    content: '/////'
+  }
+
+  &:after {
+    content: attr(data-content) '/////'
+  }
 }
 
 pre {
   padding: 1em;
-  overflow-x: auto; /* Fix pre content overflowing parent without scroll bar */
+  overflow-x: auto;
+  /* Fix pre content overflowing parent without scroll bar */
 }
 
-table { width: 100%; }
+table {
+  width: 100%;
+}
 
-table, th, td {
+table,
+th,
+td {
   border-collapse: collapse;
   padding: 0.4rem;
 }
@@ -137,7 +253,9 @@ code.has-jax {
 blockquote {
   padding: 1rem;
 
-  p { margin: 0; }
+  p {
+    margin: 0;
+  }
 }
 
 img {
@@ -164,16 +282,75 @@ details[open] summary {
   padding-bottom: 0.5em;
 }
 
-.post-meta {
+.header {
+  padding: 2rem 0;
+}
+
+.nav {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  letter-spacing: -0.05em;
+
+  a {
+    font-family: monospace;
+    /* Matching the menu and user preference */
+    font-weight: 800;
+    color: currentColor;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 1.5rem;
+    /* Balanced size for monospace header */
+
+    &:hover {
+      text-decoration: none;
+      opacity: 0.8;
+    }
+  }
+}
+
+#menu {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 1.5rem;
+
+  a {
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-transform: lowercase;
+    text-decoration: none !important;
+    opacity: 1;
+
+    &:before {
+      content: "/";
+      opacity: 0.5;
+      margin-right: 0.2rem;
+    }
+  }
+
+  .active {
+    background-color: transparent;
+    /* AURA: No more black bar */
+    color: currentColor;
+    font-weight: 900;
+    border-bottom: 2px solid currentColor;
+    /* Minimalist indicator */
+    padding-bottom: 2px;
+  }
 }
 
 .w {
-  max-width: 640px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 0 2rem 4rem;
 }
 
 .toc {
@@ -201,7 +378,7 @@ details[open] summary {
   align-items: center;
 }
 
-.breadcrumbs li + li:before {
+.breadcrumbs li+li:before {
   content: "/";
   opacity: 0.6;
   margin: 0 0.4rem;
@@ -227,7 +404,10 @@ details[open] summary {
   margin: 0;
 }
 
-.lang-switch li { margin: 0; padding: 0; }
+.lang-switch li {
+  margin: 0;
+  padding: 0;
+}
 
 .lang-switch a {
   display: inline-block;
@@ -237,9 +417,61 @@ details[open] summary {
   text-decoration: none;
 }
 
+
 @media (max-width: 768px) {
   .lang-switch-container {
     top: 0.5rem;
     right: calc(0.5rem + 2rem + 0.5rem);
+  }
+}
+
+/* Home Hero & Quote */
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.home-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+  font-style: italic;
+  max-width: 800px;
+  margin: 0;
+  padding: 0;
+  border: none !important;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+
+  cite {
+    display: block;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-family: monospace;
+    font-weight: normal;
+    margin-top: 2rem;
+    opacity: 0.6;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+@keyframes revealQuote {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-quote {
+    font-size: 1.8rem;
   }
 }

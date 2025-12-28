@@ -1,0 +1,32 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Hugo generated
+public/
+resources/_gen/
+
+# Hugo lock file
+.hugo_build.lock
+
+# Backup files
+*.backup
+*.bak
+*-backup-*.txt
+git-backup-*.txt
+frizynn-git-backup-*.txt
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OpenCode
+.opencode/

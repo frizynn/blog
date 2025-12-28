@@ -12,7 +12,8 @@
     {{ end }}
   </title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="{{ $.Site.Params.favicon | relURL }}" />
+  <link rel="icon" type="image/x-icon" href="{{ $.Site.Params.favicon | default "favicon.ico" | absURL }}" />
+  <link rel="icon" type="image/png" href="{{ $.Site.Params.faviconPNG | default "favicon.png" | absURL }}" />
   
   <!-- Theme CSS -->
   {{ $options := (dict "outputStyle" "compressed" "enableSourceMap" (not hugo.IsProduction)) }}

@@ -1,20 +1,8 @@
 {{ define "main" }}
-  {{- partial "home_info.html" . -}}
-
-  {{- with .Content }}
-    {{ . }}
-  {{- end }}
-
-  {{- with site.Menus.main }}
-    <ul class="home-menu">
-      {{- range . }}
-        {{- $url := .URL -}}
-        {{- $isExternal := or (hasPrefix $url "http://") (hasPrefix $url "https://") (hasPrefix $url "//") -}}
-        {{- $href := cond $isExternal $url ($url | relLangURL) -}}
-        <li>
-          <a href="{{ $href }}">{{ .Name }}</a>
-        </li>
-      {{- end }}
-    </ul>
-  {{- end }}
+<div class="homepage-container">
+    <div class="homepage-content">
+        {{/* Only render the content (quote) from _index.md */}}
+        {{ .Content }}
+    </div>
+</div>
 {{ end }}

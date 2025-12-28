@@ -9,7 +9,6 @@ Siempre me entusiasma conectar con otros ingenieros de Machine Learning, investi
 
 ## Cómo contactarme
 
-- **Twitter/X**: [@lebrious](https://x.com/lebrious) – Para novedades rápidas y reflexiones
 - **LinkedIn**: [Juan Francisco Lebrero](https://www.linkedin.com/in/lebrero-juan-francisco/) – Para networking profesional
 - **Email**: [lebrerojuanfrancisco@gmail.com](mailto:lebrerojuanfrancisco@gmail.com) – Para comunicación directa
 

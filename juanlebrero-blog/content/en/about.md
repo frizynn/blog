@@ -6,56 +6,28 @@ language: "en"
 ---
 
 
-I'm an AI/ML Engineer and Research Assistant at LiNAR, University of San Andrés (UdeSA), currently pursuing my B.Sc. in Artificial Intelligence Engineering. I'm passionate about building practical AI solutions that make a real impact.
+I am Juan Francisco Lebrero, an AI enthusiast dedicated to exploring how artificial intelligence can transform our reality. My journey is defined by a search for solutions that are not only technically rigorous but also hold tangible impact in the world around us. Currently, I am pursuing a B.Sc. in Artificial Intelligence Engineering at the University of San Andrés (UdeSA), where I delve into the frontiers of this discipline.
 
-## Current Work
+## A Journey through Innovation
 
-**Research Assistant at LiNAR, UdeSA** (Aug 2025 – Present)
-- Researching semantic SLAM and Bayesian fields 
+In my current role as a Research Assistant at LiNAR, I focus on one of the most compelling applications of computer vision: the non-invasive assessment of embryos in IVF processes. My work involves developing models to predict viability without the need for biopsies, utilizing advanced time-lapse imaging techniques.
 
+Simultaneously, I contribute to the data science efforts at SOFLEX. There, we face the challenge of processing and understanding human language within the context of public safety. I have directed the training of language models tailored to Argentine Spanish and the development of intelligence platforms that analyze millions of incidents in real-time, enabling faster and more precise emergency responses.
 
-**Senior Data Scientist at SOFLEX** (Jun 2025 – Present)
-- Designed a hybrid RAG+DSL agent on 200M 911 incidents; answers in < 5s and 76% less analysis time
-- Built real-time ASR and call classification for 911, prioritizing critical alerts
-- Researching denoising, VAD, and streaming ASR to harden transcripts in noisy operational settings
+My experience also spans the industrial and educational sectors. At Papelera San Andrés de Giles, I implemented multimodal vision systems for large-scale product detection and verification. At UK University Mexico, I led the AI strategy to optimize educational content production and lead management, demonstrating how technology can efficiently scale complex operations. Previously, at Notimation, I explored agent orchestration and RAG systems to streamline human-information interaction.
 
-**Machine Learning Engineer at PSAG** (Apr 2025 – Present)
-- Deployed multimodal OCR with vision LLMs: 600 pallets/day at 99.8% accuracy
-- Trained YOLOv8 at 60 fps; 28% fewer labeling errors and instant operator alerts
+## Perspective and Tools
 
-## Previous Experience
+I view programming and model design as essential tools for solving complex problems. I move fluently between languages such as Python, C/C++, and CUDA, building solutions on modern cloud infrastructures and databases. My academic background has allowed me to specialize in NLP, Computer Vision, and generative models, always with a practical focus.
 
-**AI & Machine Learning Lead at UK University Mexico** (Jan 2025 – Jun 2025)
-- Built an intent classifier for 50k leads/month; +17% enrollment and actionable operational insights
-- Automated course generation: from 1 to 280/week with 99% less turnaround
-- Led AI strategy, stack, and end-to-end prototyping; delivered MVPs in 1 day
-
-**Artificial Intelligence Engineer at Notimation** (Oct 2023 – May 2024)
-- Introduced LangChain and RAG, cutting chatbot prototyping from 3 weeks to 3 days
-- Designed agent orchestration, tripling throughput and reducing infrastructure costs by 30%
-
-## Skills & Technologies
-
-- **Languages**: Python, C/C++, Java, JS/TS, CUDA
-- **Frameworks**: PyTorch, TensorFlow, Keras, LangChain/LangGraph, Django/Flask/FastAPI
-- **Infrastructure**: Docker, Kubernetes, vLLM, Pinecone, GCP, AWS
-- **Specializations**: NLP, Computer Vision, VAEs, GNNs, RL/Deep RL, Advanced Statistics
-
-## Education & Achievements
-
-**University of San Andrés (UdeSA)** - B.Sc. in Artificial Intelligence Engineering (2022 – 2027)
-- 95% merit scholarship, GPA: 8.67/10
-- Selected coursework: NLP, Computer Vision, VAEs, GNNs, RL/Deep RL, Databases, Networks, Algorithms
-
-**Competitive Programming**
-- Two-time Latin American Regional qualifier, ICPC (2024, 2025)
-- 1st place, ITBA Computer Society Hackathon 2024
-- 1st place, ITBA Computer Society Game Jam 2023
-- Valedictorian, high school cohort (GPA 9.53/10)
+Beyond code, I enjoy the challenges of competitive programming and constant innovation. I have had the honor of qualifying for the ICPC regionals and being recognized in various technical competitions—milestones that reflect my commitment to excellence and continuous learning.
 
 ## Contact
+
+If you would like to discuss technology, research, or potential collaborations, please feel free to reach out:
 
 - **GitHub**: [frizynn](https://github.com/frizynn)
 - **LinkedIn**: [Juan Francisco Lebrero](https://www.linkedin.com/in/lebrero-juan-francisco/)
 - **Email**: [lebrerojuanfrancisco@gmail.com](mailto:lebrerojuanfrancisco@gmail.com)
-- **Location**: Buenos Aires, Argentina
+- **Buenos Aires, Argentina**
+
