@@ -328,7 +328,9 @@ details[open] summary {
     font-weight: bold;
     text-transform: lowercase;
     text-decoration: none !important;
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 
     &:before {
       content: "/";
@@ -352,6 +354,9 @@ details[open] summary {
   max-width: 720px;
   margin: 0 auto;
   padding: 0 2rem 4rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .toc {
