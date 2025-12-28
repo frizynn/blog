@@ -2,10 +2,10 @@
 /* Default light mode */
 body {
     background-color: #f0f0f0 !important;
-    background-image: 
-        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0),
-        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.01) 50%),
-        linear-gradient(0deg, transparent 50%, rgba(0,0,0,0.01) 50%);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%);
     background-size: 20px 20px, 2px 2px, 2px 2px;
     background-position: 0 0, 0 0, 0 0;
     background-attachment: fixed;
@@ -15,10 +15,10 @@ body {
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #131212 !important;
-        background-image: 
-            radial-gradient(circle at 1px 1px, rgba(255,255,255,0.02) 1px, transparent 0),
-            linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.01) 50%),
-            linear-gradient(0deg, transparent 50%, rgba(255,255,255,0.01) 50%);
+        background-image:
+            radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.02) 1px, transparent 0),
+            linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%),
+            linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%);
         background-size: 20px 20px, 2px 2px, 2px 2px;
         background-position: 0 0, 0 0, 0 0;
         background-attachment: fixed;
@@ -28,10 +28,10 @@ body {
 /* Override for theme switcher - Light mode */
 body[a="light"] {
     background-color: #f0f0f0 !important;
-    background-image: 
-        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0),
-        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.01) 50%),
-        linear-gradient(0deg, transparent 50%, rgba(0,0,0,0.01) 50%);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%);
     background-size: 20px 20px, 2px 2px, 2px 2px;
     background-position: 0 0, 0 0, 0 0;
     background-attachment: fixed;
@@ -40,10 +40,10 @@ body[a="light"] {
 /* Override for theme switcher - Dark mode */
 body[a="dark"] {
     background-color: #131212 !important;
-    background-image: 
-        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.02) 1px, transparent 0),
-        linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.01) 50%),
-        linear-gradient(0deg, transparent 50%, rgba(255,255,255,0.01) 50%);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%);
     background-size: 20px 20px, 2px 2px, 2px 2px;
     background-position: 0 0, 0 0, 0 0;
     background-attachment: fixed;
@@ -52,10 +52,10 @@ body[a="dark"] {
 /* Override for theme switcher - Auto mode (same as default) */
 body[a="auto"] {
     background-color: #f0f0f0 !important;
-    background-image: 
-        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0),
-        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.01) 50%),
-        linear-gradient(0deg, transparent 50%, rgba(0,0,0,0.01) 50%);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.02) 1px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%);
     background-size: 20px 20px, 2px 2px, 2px 2px;
     background-position: 0 0, 0 0, 0 0;
     background-attachment: fixed;
@@ -68,23 +68,26 @@ a:visited {
 
 /* Ensure visited links use the same color as unvisited links in both themes */
 body[a="dark"] a:visited {
-    color: #79a8ff !important; /* Same as unvisited link color in dark mode */
+    color: #ffffff !important;
+    /* Pure white for dark mode */
 }
 
 body[a="light"] a:visited {
-    color: #3548cf !important; /* Same as unvisited link color in light mode */
+    color: #000000 !important;
+    /* Pure black for light mode */
 }
 
 /* Handle auto mode for both light and dark preferences */
 @media (prefers-color-scheme: dark) {
     body[a="auto"] a:visited {
-        color: #79a8ff !important; /* Dark mode unvisited link color */
+        color: #ffffff !important;
+        /* Pure white for dark mode */
     }
 }
 
 @media (prefers-color-scheme: light) {
     body[a="auto"] a:visited {
-        color: #3548cf !important; /* Light mode unvisited link color */
+        color: #000000 !important;
+        /* Pure black for light mode */
     }
 }
-

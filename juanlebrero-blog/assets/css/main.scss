@@ -134,12 +134,13 @@
 }
 
 @mixin dark-appearance {
-  @include theme(#000000, #ffffff, #000000, #79a8ff, #f78fe7, #2f3849); // modus-vivendi
+  @include theme(#000000, #ffffff, #000000, #ffffff, #ffffff, #333333); // Strictly monochrome
 }
 
 @mixin light-appearance {
-  @include theme(#ffffff, #000000, #595959, #3548cf, #8f0075, #dae5ec); // modus-operandi
+  @include theme(#ffffff, #000000, #595959, #000000, #000000, #e0e0e0); // Strictly monochrome
 }
+
 
 body[a="dark"] {
   @include dark-appearance;
