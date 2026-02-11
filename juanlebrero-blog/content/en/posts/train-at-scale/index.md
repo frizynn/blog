@@ -1,5 +1,5 @@
 ---
-title: "Large-Scale Training: FSDP, QLoRA, and More."
+title: "Train Giant LLMs on Consumer GPUs: The 4-Bit Quantization Playbook Nobody Shows You"
 date: 2025-09-13T00:00:00Z
 draft: true
 type: post
