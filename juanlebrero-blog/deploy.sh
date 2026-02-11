@@ -4,7 +4,7 @@
 # Autor: Juan Lebrero
 # Uso: ./deploy.sh
 
-set -e  # Salir si hay algún error
+set -euo pipefail  # Salir si hay algún error o variable indefinida
 
 echo "🚀 Iniciando despliegue del blog..."
 
@@ -50,8 +50,17 @@ if ! command -v git &> /dev/null; then
     exit 1
 fi
 
-print_status "Generando sitio estático con Hugo..."
-hugo --minify
+# Verificar que rsync está instalado
+if ! command -v rsync &> /dev/null; then
+    print_error "rsync no está instalado. Instálalo primero."
+    exit 1
+fi
+
+BUILD_DIR=".hugo-deploy"
+PUBLISH_DIR="frizynn.github.io"
+
+print_status "Generando sitio estático con Hugo en ${BUILD_DIR}..."
+hugo --minify --cleanDestinationDir --gc --destination "${BUILD_DIR}"
 
 if [ $? -eq 0 ]; then
     print_success "Sitio generado correctamente"
@@ -61,19 +70,33 @@ else
 fi
 
 # Verificar que el submodule existe
-if [ ! -d "frizynn.github.io" ]; then
-    print_error "No se encontró el submodule frizynn.github.io"
+if [ ! -d "${PUBLISH_DIR}" ]; then
+    print_error "No se encontró el submodule ${PUBLISH_DIR}"
     exit 1
 fi
+
+if [ ! -d "${PUBLISH_DIR}/.git" ] && [ ! -f "${PUBLISH_DIR}/.git" ]; then
+    print_error "No se encontró un repositorio git en ${PUBLISH_DIR}. Ejecuta: git submodule update --init --recursive"
+    exit 1
+fi
+
+print_status "Sincronizando artefactos hacia ${PUBLISH_DIR} (preservando .git)..."
+rsync -a --delete --exclude '.git' "${BUILD_DIR}/" "${PUBLISH_DIR}/"
 
 print_status "Cambiando al directorio del submodule..."
-cd frizynn.github.io
+cd "${PUBLISH_DIR}"
 
-# Verificar que estamos en un repositorio git (puede ser un submodule con archivo .git)
-if [ ! -d ".git" ] && [ ! -f ".git" ]; then
-    print_error "No se encontró un repositorio git en frizynn.github.io"
-    exit 1
+# Asegurar que el submodule esté en la rama main (no detached HEAD)
+CURRENT_BRANCH="$(git symbolic-ref --short -q HEAD || true)"
+if [ -z "${CURRENT_BRANCH}" ]; then
+    print_warning "Submodule en detached HEAD. Cambiando a rama main..."
+    git checkout -B main origin/main
 fi
+
+print_status "Sincronizando rama main del submodule..."
+git fetch origin
+git checkout main
+git pull --ff-only origin main
 
 print_status "Agregando archivos al repositorio..."
 git add .
@@ -94,7 +117,7 @@ else
 fi
 
 print_status "Haciendo push a GitHub Pages..."
-git push origin main
+git push origin HEAD:main
 
 if [ $? -eq 0 ]; then
     print_success "Push realizado correctamente"

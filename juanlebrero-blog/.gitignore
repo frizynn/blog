@@ -6,6 +6,7 @@
 # Hugo generated - public goes to frizynn.github.io submodule
 public/
 resources/_gen/
+.hugo-deploy/
 
 # Hugo lock file
 .hugo_build.lock
