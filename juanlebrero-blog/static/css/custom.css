@@ -1,5 +1,5 @@
 /* Paper texture background - subtle and elegant */
-/* Default light mode */
+/* Light mode (default, also covers body[a="light"] and body[a="auto"] under light system) */
 body {
     background-color: #f0f0f0 !important;
     background-image:
@@ -11,33 +11,7 @@ body {
     background-attachment: fixed;
 }
 
-/* Dark mode paper texture */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #131212 !important;
-        background-image:
-            radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.02) 1px, transparent 0),
-            linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%),
-            linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%);
-        background-size: 20px 20px, 2px 2px, 2px 2px;
-        background-position: 0 0, 0 0, 0 0;
-        background-attachment: fixed;
-    }
-}
-
-/* Override for theme switcher - Light mode */
-body[a="light"] {
-    background-color: #f0f0f0 !important;
-    background-image:
-        radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.02) 1px, transparent 0),
-        linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%),
-        linear-gradient(0deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%);
-    background-size: 20px 20px, 2px 2px, 2px 2px;
-    background-position: 0 0, 0 0, 0 0;
-    background-attachment: fixed;
-}
-
-/* Override for theme switcher - Dark mode */
+/* Dark mode: explicit override and auto mode under dark system preference */
 body[a="dark"] {
     background-color: #131212 !important;
     background-image:
@@ -49,16 +23,18 @@ body[a="dark"] {
     background-attachment: fixed;
 }
 
-/* Override for theme switcher - Auto mode (same as default) */
-body[a="auto"] {
-    background-color: #f0f0f0 !important;
-    background-image:
-        radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.02) 1px, transparent 0),
-        linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%),
-        linear-gradient(0deg, transparent 50%, rgba(0, 0, 0, 0.01) 50%);
-    background-size: 20px 20px, 2px 2px, 2px 2px;
-    background-position: 0 0, 0 0, 0 0;
-    background-attachment: fixed;
+@media (prefers-color-scheme: dark) {
+    body[a="auto"],
+    body:not([a="light"]):not([a="dark"]) {
+        background-color: #131212 !important;
+        background-image:
+            radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.02) 1px, transparent 0),
+            linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%),
+            linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.01) 50%);
+        background-size: 20px 20px, 2px 2px, 2px 2px;
+        background-position: 0 0, 0 0, 0 0;
+        background-attachment: fixed;
+    }
 }
 
 /* Remove violet color from visited links - make them same as unvisited links */

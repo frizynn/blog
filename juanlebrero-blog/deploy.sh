@@ -6,6 +6,25 @@
 
 set -euo pipefail  # Salir si hay algún error o variable indefinida
 
+# Prevent concurrent deploys
+LOCK_FILE="/tmp/juanlebrero-deploy.lock"
+exec 9>"${LOCK_FILE}"
+if ! flock -n 9; then
+    echo "Another deploy is in progress (lock: ${LOCK_FILE}). Aborting." >&2
+    exit 1
+fi
+
+ORIG_DIR="$(pwd)"
+cleanup() {
+    local rc=$?
+    cd "${ORIG_DIR}" 2>/dev/null || true
+    if [ "${rc}" -ne 0 ]; then
+        print_error "Despliegue falló (rc=${rc})"
+    fi
+    exit "${rc}"
+}
+trap cleanup EXIT
+
 echo "🚀 Iniciando despliegue del blog..."
 
 # Colores para output
@@ -30,6 +49,26 @@ print_warning() {
 
 print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Run a command with a timeout and 3 retries (exponential backoff: 2s, 4s, 8s).
+retry_with_timeout() {
+    local timeout_secs="$1"; shift
+    local max_attempts=3
+    local attempt=1
+    local delay=2
+    while [ "${attempt}" -le "${max_attempts}" ]; do
+        if timeout "${timeout_secs}" "$@"; then
+            return 0
+        fi
+        if [ "${attempt}" -lt "${max_attempts}" ]; then
+            print_warning "Comando falló (intento ${attempt}/${max_attempts}). Reintento en ${delay}s..."
+            sleep "${delay}"
+            delay=$((delay * 2))
+        fi
+        attempt=$((attempt + 1))
+    done
+    return 1
 }
 
 # Verificar que estamos en el directorio correcto
@@ -60,14 +99,8 @@ BUILD_DIR=".hugo-deploy"
 PUBLISH_DIR="frizynn.github.io"
 
 print_status "Generando sitio estático con Hugo en ${BUILD_DIR}..."
-hugo --minify --cleanDestinationDir --gc --destination "${BUILD_DIR}"
-
-if [ $? -eq 0 ]; then
-    print_success "Sitio generado correctamente"
-else
-    print_error "Error al generar el sitio"
-    exit 1
-fi
+hugo --environment production --minify --gc --cacheDir "${HOME}/.cache/hugo_cache" --destination "${BUILD_DIR}"
+print_success "Sitio generado correctamente"
 
 # Verificar que el submodule existe
 if [ ! -d "${PUBLISH_DIR}" ]; then
@@ -94,12 +127,12 @@ if [ -z "${CURRENT_BRANCH}" ]; then
 fi
 
 print_status "Sincronizando rama main del submodule..."
-git fetch origin
+retry_with_timeout 60 git fetch origin
 git checkout main
-git pull --ff-only origin main
+retry_with_timeout 60 git pull --ff-only origin main
 
 print_status "Agregando archivos al repositorio..."
-git add .
+git add -A -- .
 
 # Verificar si hay cambios para commitear
 if git diff --staged --quiet; then
@@ -107,29 +140,14 @@ if git diff --staged --quiet; then
 else
     print_status "Creando commit..."
     git commit -m "Update blog - $(date '+%Y-%m-%d %H:%M:%S')"
-    
-    if [ $? -eq 0 ]; then
-        print_success "Commit creado correctamente"
-    else
-        print_error "Error al crear el commit"
-        exit 1
-    fi
+    print_success "Commit creado correctamente"
 fi
 
 print_status "Haciendo push a GitHub Pages..."
-git push origin HEAD:main
-
-if [ $? -eq 0 ]; then
-    print_success "Push realizado correctamente"
-    print_success "🎉 Blog desplegado exitosamente!"
-    print_status "Tu blog estará disponible en: https://frizynn.github.io"
-    print_warning "Nota: Puede tomar unos minutos para que GitHub Pages actualice el sitio"
-else
-    print_error "Error al hacer push"
-    exit 1
-fi
-
-# Volver al directorio original
-cd ..
+retry_with_timeout 60 git push origin HEAD:main
+print_success "Push realizado correctamente"
+print_success "🎉 Blog desplegado exitosamente!"
+print_status "Tu blog estará disponible en: https://frizynn.github.io"
+print_warning "Nota: Puede tomar unos minutos para que GitHub Pages actualice el sitio"
 
 print_success "✅ Despliegue completado!"

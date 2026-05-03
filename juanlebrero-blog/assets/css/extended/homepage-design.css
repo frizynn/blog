@@ -15,7 +15,12 @@
     justify-content: center;
     text-align: center;
     padding: 2rem;
-    animation: fadeIn 1.2s ease-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .homepage-container {
+        animation: fadeIn 1.2s ease-out;
+    }
 }
 
 .homepage-content .home-quote {

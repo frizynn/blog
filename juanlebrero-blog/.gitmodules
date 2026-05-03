@@ -1,0 +1,4 @@
+[submodule "frizynn.github.io"]
+	path = frizynn.github.io
+	url = git@github.com:frizynn/frizynn.github.io.git
+	branch = main
