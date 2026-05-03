@@ -1,4 +1,3 @@
-{{- /* TODO: call this via {{ partialCached "head.html" . .Lang }} from baseof.html for build perf */ -}}
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,15 +14,7 @@
 
   <link rel="icon" type="image/x-icon" href="{{ $.Site.Params.favicon | default "favicon.ico" | absURL }}" />
   <link rel="icon" type="image/png" href="{{ $.Site.Params.faviconPNG | default "favicon.png" | absURL }}" />
-
-  <!-- Resource hints -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  {{ if .Params.mathjax }}<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />{{ end }}
-
-  <!-- Google Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" />
-
+  
   <!-- Theme CSS -->
   {{ $options := (dict "outputStyle" "compressed" "enableSourceMap" (not hugo.IsProduction)) }}
   {{ $sass := resources.Get "css/main.scss" }}

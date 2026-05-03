@@ -1,0 +1,30 @@
+/* Home hero minimal */
+.home-info.hero.minimal {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.home-info.hero.minimal .entry-header h1 {
+  margin-bottom: .2rem;
+}
+.home-info.hero.minimal .entry-content {
+  color: var(--tertiary);
+  max-width: 60ch;
+}
+.hero-actions { margin-top: .6rem; }
+.hero-actions .link-cta {
+  text-decoration: none;
+  color: var(--primary);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+}
+.hero-actions .link-cta:hover {
+  color: var(--link);
+  border-color: var(--link);
+}
+.hero-actions .social-icons { display: inline-flex; gap: .5rem; margin-left: .8rem; vertical-align: middle; opacity: .85; }
+.hero-actions .social-icons a { padding: 0; border: 0; }
+.hero-actions .social-icons a:hover { opacity: 1; }
+
+#posts { height: 1px; margin-top: .5rem; }

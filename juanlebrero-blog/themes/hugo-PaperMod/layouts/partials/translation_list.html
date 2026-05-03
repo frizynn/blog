@@ -1,0 +1,17 @@
+{{- if .IsTranslated -}}
+{{- if (ne .Layout "search") }}
+{{- if or .Params.author site.Params.author (.Param "ShowReadingTime") (not .Date.IsZero) }}&nbsp;|&nbsp;{{- end -}}
+{{- end }}
+{{- /* Label with space after colon, then inline links */ -}}
+{{- i18n "translations" | default "Translations" }}: {{ $first := true }}
+{{ range .Translations }}
+    {{ if not $first }}, {{ end }}{{ $first = false }}
+    <a href="{{ .Permalink }}">
+        {{ if (and site.Params.displayFullLangName (.Language.LanguageName)) }}
+            {{ .Language.LanguageName | emojify }}
+        {{ else }}
+            {{ .Lang | title }}
+        {{ end }}
+    </a>
+{{ end }}
+{{- end -}}

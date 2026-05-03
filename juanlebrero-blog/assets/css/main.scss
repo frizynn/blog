@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
 @import "extended/homepage-design.css";
 
 /* Header Controls Alignment & Aura */
@@ -327,12 +328,9 @@ details[open] summary {
     font-weight: bold;
     text-transform: lowercase;
     text-decoration: none !important;
-
-    @media (prefers-reduced-motion: no-preference) {
-      opacity: 0;
-      transform: translateY(10px);
-      animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    }
+    opacity: 0;
+    transform: translateY(10px);
+    animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 
     &:before {
       content: "/";
@@ -356,6 +354,9 @@ details[open] summary {
   max-width: 720px;
   margin: 0 auto;
   padding: 0 2rem 4rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .toc {
@@ -451,12 +452,9 @@ details[open] summary {
   margin: 0;
   padding: 0;
   border: none !important;
-
-  @media (prefers-reduced-motion: no-preference) {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  }
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealQuote 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 
   cite {
     display: block;
@@ -483,5 +481,3 @@ details[open] summary {
     font-size: 1.8rem;
   }
 }
-
-main > .w > * { content-visibility: auto; contain-intrinsic-size: 1px 1000px; }
