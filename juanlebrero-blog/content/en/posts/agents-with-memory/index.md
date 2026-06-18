@@ -31,7 +31,7 @@ I built my own server for this. Something is always running on it. I'm not sayin
 Here is some of what runs on it, around the clock.
 
 - A daily routine wakes up, audits the technical SEO and AI-citation readiness of my SaaS, and opens draft pull requests with content. I review them with coffee.
-- [Reacher](https://reacher.sh), an autonomous prospection agent I wrote, goes out and finds clients for the consultancy. It researches companies, drafts the outreach, sends it, and follows up, at about six cents per company. It works the top of my funnel while I work on everything else.
+- [Reacher](https://reacher.cc), an autonomous prospection agent I wrote, goes out and finds clients for the consultancy. It researches companies, drafts the outreach, sends it, and follows up, at about six cents per company. It works the top of my funnel while I work on everything else.
 - [wa2vault](https://github.com/frizynn/wa2vault) archives WhatsApp conversations into a vault my agents can read, transcribing voice notes locally. Context I would otherwise lose.
 - CLIs I built for the platforms that don't want to be automated, for distribution and reading.
 - When I'm in a meeting, I take notes with [Quent](https://quent.live), my real-time meeting copilot, and hand the transcript straight to the agent that's going to act on it.

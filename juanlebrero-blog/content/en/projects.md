@@ -14,7 +14,7 @@ A selection of what I've built: products I'm taking to market, consulting work, 
 
 **[Quent](https://quent.live)** is a real-time AI meeting copilot. Live transcription and a floating cognitive overlay that answers questions from your own documents (RAG) and generates memory cards while you talk. Electron front end over a multi-agent pipeline on Deepgram, Groq and Cerebras.
 
-**[Reacher](https://reacher.sh)** is an autonomous B2B prospection agent. It researches companies, drafts personalized outreach, sends, monitors replies, and follows up, unattended, at **$0.06 per company**. Custom TypeScript agent harness with observation masking, context compaction and cost tracking.
+**[Reacher](https://reacher.cc)** is an autonomous B2B prospection agent. It researches companies, drafts personalized outreach, sends, monitors replies, and follows up, unattended, at **$0.06 per company**. Custom TypeScript agent harness with observation masking, context compaction and cost tracking.
 
 ## Consulting
 

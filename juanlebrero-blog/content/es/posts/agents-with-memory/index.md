@@ -31,7 +31,7 @@ Me armé mi propio server para esto. Siempre hay algo corriendo. No lo digo para
 Esto es algo de lo que corre, las veinticuatro horas.
 
 - Una rutina diaria se despierta, audita el SEO técnico y la preparación para citas de IA de mi SaaS, y abre pull requests en draft con contenido. Los reviso con el café.
-- [Reacher](https://reacher.sh), un agente autónomo de prospección que escribí, sale a conseguir clientes para la consultora. Investiga empresas, redacta el outreach, lo manda y hace follow-up, a unos seis centavos por empresa. Trabaja la punta de mi embudo mientras yo trabajo en todo lo demás.
+- [Reacher](https://reacher.cc), un agente autónomo de prospección que escribí, sale a conseguir clientes para la consultora. Investiga empresas, redacta el outreach, lo manda y hace follow-up, a unos seis centavos por empresa. Trabaja la punta de mi embudo mientras yo trabajo en todo lo demás.
 - [wa2vault](https://github.com/frizynn/wa2vault) archiva conversaciones de WhatsApp en un vault que mis agentes pueden leer, transcribiendo los audios localmente. Contexto que de otra forma perdería.
 - CLIs que construí para las plataformas que no quieren ser automatizadas, para distribución y lectura.
 - Cuando estoy en una reunión, tomo notas con [Quent](https://quent.live), mi copiloto de reuniones en tiempo real, y le paso la transcripción directo al agente que va a actuar sobre eso.
