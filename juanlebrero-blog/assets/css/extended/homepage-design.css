@@ -15,7 +15,15 @@
     justify-content: center;
     text-align: center;
     padding: 2rem;
+    min-height: 84vh;
+    position: relative;
     animation: fadeIn 1.2s ease-out;
+}
+
+/* On the home page, let content flow from the top so the hero + latest
+   section stack naturally (the hero centers itself within its own height). */
+.page-content:has(.homepage-container) {
+    justify-content: flex-start;
 }
 
 .homepage-content .home-quote {
@@ -57,6 +65,97 @@
 /* Hide the default page title if it appears automatically */
 .first-entry.home-info {
     display: none !important;
+}
+
+/* Scroll cue at the bottom of the hero */
+.scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    color: var(--primary-text-color);
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+    animation: cueIn 1s ease-out 0.9s both;
+}
+
+.scroll-cue:hover {
+    opacity: 0.85;
+}
+
+.scroll-cue .scroll-cue-arrow {
+    font-size: 1.05rem;
+    line-height: 1;
+    animation: cueBounce 1.9s ease-in-out infinite;
+}
+
+@keyframes cueBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+@keyframes cueIn {
+    from { opacity: 0; }
+    to { opacity: 0.4; }
+}
+
+/* Latest writing section */
+.home-latest {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    text-align: left;
+}
+
+.home-latest h2 {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+    margin: 0 0 0.25rem;
+}
+
+.home-latest .home-latest-links {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.88rem;
+}
+
+/* Reveal-on-scroll */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .scroll-cue .scroll-cue-arrow {
+        animation: none;
+    }
 }
 
 /* Responsive adjustments */

@@ -1,0 +1,14 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+
+{{ .Content }}
+
+<ul class="post-list">
+    {{ range (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+    <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <span class="post-list-date">{{ .Date | time.Format site.Params.theme_config.date_format }}</span>
+    </li>
+    {{ end }}
+</ul>
+{{ end }}

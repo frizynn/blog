@@ -66,14 +66,19 @@ url = "/about/"
 weight = 2
 
 [[menu.main]]
+name = "Projects"
+url = "/projects/"
+weight = 3
+
+[[menu.main]]
 name = "Posts"
 url = "/posts/"
-weight = 3
+weight = 4
 
 [[menu.main]]
 name = "Contact"
 url = "/contact/"
-weight = 4
+weight = 5
 
 # English menu
 [languages.en.menu]
@@ -88,14 +93,19 @@ url = "/about/"
 weight = 2
 
 [[languages.en.menu.main]]
+name = "Projects"
+url = "/projects/"
+weight = 3
+
+[[languages.en.menu.main]]
 name = "Posts"
 url = "/posts/"
-weight = 3
+weight = 4
 
 [[languages.en.menu.main]]
 name = "Contact"
 url = "/contact/"
-weight = 4
+weight = 5
 
 # Spanish menu
 [languages.es.menu]
@@ -110,14 +120,19 @@ url = "/es/about/"
 weight = 2
 
 [[languages.es.menu.main]]
+name = "Proyectos"
+url = "/es/projects/"
+weight = 3
+
+[[languages.es.menu.main]]
 name = "Posts"
 url = "/es/posts/"
-weight = 3
+weight = 4
 
 [[languages.es.menu.main]]
 name = "Contacto"
 url = "/es/contact/"
-weight = 4
+weight = 5
 
 # Home hero content (per language)
 [languages.en.params]

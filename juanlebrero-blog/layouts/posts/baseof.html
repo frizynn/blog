@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="{{ $.Site.LanguageCode }}">
+{{- partial "head.html" . -}}
+
+<body a="{{ $.Site.Params.theme_config.appearance | default " auto" }}">
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <a href="{{ "" | relLangURL }}" accesskey="h" title="Home">Juan Francisco Lebrero</a>
+            </div>
+            <ul id="menu">
+                {{- range site.Menus.main }}
+                <li>
+                    <a href="{{ .URL | relLangURL }}" title="{{ .Name }}">
+                        <span {{- if eq .URL $.RelPermalink }} class="active" {{- end }}>{{ .Name }}</span>
+                    </a>
+                </li>
+                {{- end }}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="header-controls">
+        {{- partial "language_switch.html" . -}}
+        {{- partial "theme_toggle.html" . -}}
+    </div>
+    <main class="page-content" aria-label="Content">
+        <div class="w">
+            {{- partial "breadcrumbs.html" . -}}
+            {{- block "main" . }}{{- end }}
+        </div>
+    </main>
+    {{- if .Params.custom_js -}}
+        {{- range .Params.custom_js -}}
+            {{ $js := resources.Get (print "js/" . ".js") }}
+            <script type="text/javascript" src="{{ $js.RelPermalink }}"></script>
+        {{- end -}}
+    {{- end -}}
+</body>
+
+</html>

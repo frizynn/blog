@@ -1,32 +1,46 @@
 ---
 title: "Acerca de mí"
-description: "Acerca de Juan Francisco Lebrero - Ingeniero de IA/ML y Asistente de Investigación"
+description: "Juan Francisco Lebrero, LLM research engineer en Mercado Libre y builder que shippea productos de IA de punta a punta."
 type: "page"
 language: "es"
 ---
 
-Soy Juan Francisco Lebrero, un apasionado de la inteligencia artificial y su capacidad para transformar la realidad. Mi camino está definido por la búsqueda de soluciones que no solo sean técnicamente rigurosas, sino que tengan un impacto tangible en el mundo que nos rodea. Actualmente, curso Ingeniería de Inteligencia Artificial en la Universidad de San Andrés (UdeSA), donde exploro las fronteras de esta disciplina.
 
-## Un Recorrido por la Innovación
+Soy **Juan Francisco Lebrero**, LLM research engineer en Mercado Libre y un builder que shippea productos de punta a punta, desde el modelo hasta la factura.
 
-En mi rol actual como Asistente de Investigación en LiNAR, me dedico a una de las aplicaciones más fascinantes de la visión computacional: la evaluación no invasiva de embriones en procesos de fecundación in vitro. Mi trabajo se centra en desarrollar modelos que puedan predecir la viabilidad sin necesidad de biopsias, utilizando técnicas avanzadas de procesamiento de imágenes temporales.
+De día trabajo en el equipo de **LLM Science** de Mercado Libre: entrenamiento y post-entrenamiento de LLMs in-house, en continued pretraining, supervised fine-tuning, curación de datos y benchmarks de evaluación. En mi tiempo propio llevo adelante una consultora de IA y shippeo productos: un SaaS de comercio que le factura a negocios argentinos, un agente autónomo de prospección, y herramientas open-source que la gente usa de verdad. La mayoría de la gente en IA está de un solo lado de una línea. Investigadores que no shippean, o ingenieros de producto que tratan al modelo como una caja negra. Yo trabajo de los dos lados.
 
-Paralelamente, formo parte de los esfuerzos de ciencia de datos en SOFLEX. Allí, enfrentamos el desafío de procesar y comprender el lenguaje humano en contextos de seguridad ciudadana. He liderado el entrenamiento de modelos de lenguaje adaptados al español argentino y el desarrollo de plataformas de inteligencia que permiten analizar millones de incidentes en tiempo real, facilitando una respuesta más rápida y precisa ante emergencias.
+## En qué estoy
 
-Mi experiencia se extiende también al sector industrial y educativo. En Papelera San Andrés de Giles, implementé sistemas de visión multimodal para la detección y verificación de productos a gran escala. En UK University México, lideré la estrategia de IA para optimizar la producción de contenidos educativos y la gestión de leads, demostrando cómo la tecnología puede escalar operaciones complejas de manera eficiente. Anteriormente, en Notimation, exploré la orquestación de agentes y sistemas RAG para agilizar la interacción humana con la información.
+**Mercado Libre, LLM Science.** Entrenamiento y post-entrenamiento de LLMs in-house: continued pretraining (CPT), supervised fine-tuning (SFT) y adaptación de dominio para comercio a gran escala, además de benchmarks de evaluación de instruction-following, razonamiento, calidad de regresión y confiabilidad entre iteraciones del modelo.
 
-## Perspectiva y Herramientas
+**AWAM** ([awam.lat](https://awam.lat)), mi propio emprendimiento: el sistema operativo de ejecución para marcas de indumentaria argentinas. Una plataforma de comercio AI-first que corre todo el loop, desde el mensaje de WhatsApp de un cliente hasta la recomendación, el checkout, el pago, la factura electrónica, el stock y la recuperación de demanda perdida. Seis runtimes de IA especializados sobre un core durable y multi-tenant.
 
-Entiendo la programación y el diseño de modelos como herramientas para resolver problemas complejos. Me muevo con fluidez entre lenguajes como Python, C/C++ y CUDA, y construyo soluciones sobre infraestructuras modernas de nube y bases de datos. Mi formación académica me ha permitido profundizar en áreas como NLP, Computer Vision y modelos generativos, siempre con un enfoque práctico.
+**sesgo.ai** ([sesgo.ai](https://sesgo.ai)), mi consultora de IA: machine learning, data science, agentes de IA, data engineering y MLOps para equipos de LatAm y Estados Unidos, con foco en ROI medible.
 
-Más allá del código, disfruto de los desafíos que proponen la programación competitiva y la innovación constante. He tenido el honor de clasificar en las regionales del ICPC y de ser distinguido en diversas competencias técnicas, hitos que reflejan mi compromiso con la excelencia y el aprendizaje continuo.
+**Investigación en LiNAR (UdeSA).** Un vision foundation model para la evaluación no invasiva de embriones en FIV: aprendizaje de representaciones self-supervised estilo JEPA sobre imágenes time-lapse, prediciendo viabilidad sin biopsia.
+
+## Trabajo previo seleccionado
+
+**SOFLEX** (Lead Data Scientist, 2025 a 2026). Lideré un equipo de IA construyendo una plataforma de inteligencia de baja latencia sobre **más de 200M de reportes de emergencia**, con situational awareness en tiempo real en **menos de 3 segundos**, más pipelines de LLM y ASR ajustados al español argentino.
+
+**Papelera San Andrés de Giles.** Un pipeline multimodal de verificación de SKUs (VLM + OCR) con **100% de precisión** en tests de despliegue, procesando **600 pallets/día**.
+
+**UK University (México).** AI lead; bajé los ciclos de MVP de una semana a un día, **+17% de matrícula**, **US$108k/año** ahorrados.
+
+## Cómo trabajo
+
+Soy obsesivo con el costo y local-first. Hago benchmarks antes de tener opiniones, escribo mi razonamiento como decision records, y uso mis propias herramientas todos los días. Mido el impacto en números ($0.06 por empresa prospectada, US$108k/año ahorrados, 100% de precisión en 600 pallets/día) porque el impacto que no podés medir es impacto que no podés defender. Construyo mucha infraestructura agéntica, como memoria, orquestación, concurrencia y recuperación, porque esa es la habilidad escasa cuando un equipo pasa de un agente a una flota.
+
+## Formación
+
+Ingeniería en Inteligencia Artificial en la Universidad de San Andrés (beca 95% por excelencia, promedio 8.67/10, top 10 de la cohorte), dos veces clasificado a la regional latinoamericana de ICPC, ganador de hackathon y game jam. Me muevo con fluidez entre Python, C/C++/CUDA y TypeScript.
+
+→ Mirá lo que construí en la página de [Proyectos](/es/projects/).
 
 ## Contacto
-
-Si deseas conversar sobre tecnología, investigación o posibles colaboraciones, no dudes en escribirme:
 
 - **GitHub**: [frizynn](https://github.com/frizynn)
 - **LinkedIn**: [Juan Francisco Lebrero](https://www.linkedin.com/in/lebrero-juan-francisco/)
 - **Email**: [lebrerojuanfrancisco@gmail.com](mailto:lebrerojuanfrancisco@gmail.com)
 - **Buenos Aires, Argentina**
-

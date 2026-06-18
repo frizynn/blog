@@ -1,8 +1,49 @@
 {{ define "main" }}
+{{ $isES := eq site.Language.Lang "es" }}
 <div class="homepage-container">
     <div class="homepage-content">
         {{/* Only render the content (quote) from _index.md */}}
         {{ .Content }}
     </div>
+    <a href="#latest" class="scroll-cue" aria-label="{{ if $isES }}Ir a lo último{{ else }}Scroll to latest{{ end }}">
+        <span class="scroll-cue-text">{{ if $isES }}lo último{{ else }}latest{{ end }}</span>
+        <span class="scroll-cue-arrow" aria-hidden="true">&darr;</span>
+    </a>
 </div>
+
+<section id="latest" class="home-latest reveal">
+    <h2>{{ if $isES }}lo último{{ else }}latest writing{{ end }}</h2>
+    <ul class="post-list">
+        {{ range first 3 (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <span class="post-list-date">{{ .Date | time.Format site.Params.theme_config.date_format }}</span>
+        </li>
+        {{ end }}
+    </ul>
+    <p class="home-latest-links">
+        <a href="{{ "posts/" | relLangURL }}">{{ if $isES }}todos los posts &rarr;{{ else }}all posts &rarr;{{ end }}</a>
+        <a href="{{ "projects/" | relLangURL }}">{{ if $isES }}proyectos &rarr;{{ else }}projects &rarr;{{ end }}</a>
+    </p>
+</section>
+
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+<script>
+    (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+            els.forEach(function (e) { e.classList.add('is-visible'); });
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                    en.target.classList.add('is-visible');
+                    io.unobserve(en.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        els.forEach(function (e) { io.observe(e); });
+    })();
+</script>
 {{ end }}

@@ -15,11 +15,18 @@
   <link rel="icon" type="image/x-icon" href="{{ $.Site.Params.favicon | default "favicon.ico" | absURL }}" />
   <link rel="icon" type="image/png" href="{{ $.Site.Params.faviconPNG | default "favicon.png" | absURL }}" />
   
-  <!-- Theme CSS -->
-  {{ $options := (dict "outputStyle" "compressed" "enableSourceMap" (not hugo.IsProduction)) }}
+  <!-- Theme CSS (transpiler picked by Hugo version: css.Sass on 0.128+, toCSS on older) -->
   {{ $sass := resources.Get "css/main.scss" }}
-  {{ $style := $sass | css.Sass $options | resources.Fingerprint "sha512" }}
+  {{ if $sass }}
+  {{ $opts := (dict "outputStyle" "compressed" "transpiler" "libsass") }}
+  {{ $style := "" }}
+  {{ if ge hugo.Version "0.128.0" }}
+  {{ $style = $sass | css.Sass $opts | resources.Fingerprint "sha512" }}
+  {{ else }}
+  {{ $style = $sass | resources.ToCSS $opts | resources.Fingerprint "sha512" }}
+  {{ end }}
   <link rel="stylesheet" href="{{ $style.Permalink | relURL }}" integrity="{{ $style.Data.Integrity }}" />
+  {{ end }}
   
   <!-- Custom CSS with paper texture -->
   <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}" />
